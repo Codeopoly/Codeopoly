@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {playerThunk} from '../store/testfire'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, handleTest}) => (
   <div>
     <h1>BOILERMAKER</h1>
     <nav>
@@ -19,6 +20,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
+          <button type="button" onClick={handleTest}>
+            Test
+          </button>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
         </div>
@@ -41,6 +45,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+    },
+    handleTest() {
+      dispatch(playerThunk('string'))
     }
   }
 }
