@@ -1,3 +1,5 @@
+// import {getFirestore} from 'redux-firestore'
+
 const CREATE_PLAYER = 'CREATE_PLAYER'
 
 export const playerActionCreator = data => {
@@ -9,8 +11,9 @@ export const playerActionCreator = data => {
 
 export const playerThunk = data => {
   return async (dispatch, {getFirestore}) => {
+    console.log('hello')
     const fireStore = getFirestore()
-    console.log()
+    console.log('hello i am in the player thunk!!!!!')
     try {
       console.log('try block executed')
       await fireStore.collection('players').add({
