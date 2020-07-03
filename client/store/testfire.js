@@ -60,8 +60,10 @@ export const getAllPlayers = data => {
       console.log('try block executed')
       const players = await getFirebase()
         .firestore()
-        .collection('players')
-        .doc('4gXgvHJUskeay9D3AhjN')
+        .collection('codeopoly')
+        .doc('1')
+        .collection('challenges')
+        .doc('1')
       console.log('this is players!!!', players)
       const player = await players.get()
       if (!player.exists) {
