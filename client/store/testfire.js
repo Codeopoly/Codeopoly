@@ -16,7 +16,7 @@ export const playerActionCreator = data => {
 
 export const playerThunk = data => {
   return async (dispatch, getState, {getFirebase}) => {
-    console.log('hello')
+    console.log('hello!')
     // console.log('this is firestore', getFirestore)
     // console.log('this is firebase!!!', getFirebase)
     // console.log('this is firebase invoked!!!', getFirebase())
