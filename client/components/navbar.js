@@ -4,6 +4,9 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {playerThunk} from '../store/testfire'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 const Navbar = ({handleClick, isLoggedIn, handleTest}) => (
   <div>
