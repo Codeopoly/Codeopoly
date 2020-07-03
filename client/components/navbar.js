@@ -21,6 +21,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <button type="button" onClick={handleTest}>
+            Test
+          </button>
         </div>
       )}
     </nav>
@@ -41,6 +44,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+    },
+    handleTest() {
+      dispatch(playerThunk('string'))
     }
   }
 }
