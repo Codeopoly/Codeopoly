@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {playerThunk} from '../store/testfire'
+import {playerThunk, getAllPlayers} from '../store/testfire'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 
-const Navbar = ({handleClick, isLoggedIn, handleTest}) => (
+const Navbar = ({handleClick, isLoggedIn, handleTest, handleTest2}) => (
   <div>
     <h1>BOILERMAKER</h1>
     <nav>
@@ -27,6 +27,9 @@ const Navbar = ({handleClick, isLoggedIn, handleTest}) => (
           <Link to="/signup">Sign Up</Link>
           <button type="button" onClick={handleTest}>
             Test
+          </button>
+          <button type="button" onClick={handleTest2}>
+            get all players
           </button>
         </div>
       )}
@@ -51,6 +54,9 @@ const mapDispatch = dispatch => {
     },
     handleTest() {
       dispatch(playerThunk('string'))
+    },
+    handleTest2() {
+      dispatch(getAllPlayers('string'))
     }
   }
 }

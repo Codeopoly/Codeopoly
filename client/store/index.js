@@ -18,7 +18,7 @@ const reducer = combineReducers({
 })
 const middleware = composeWithDevTools(
   applyMiddleware(
-    thunkMiddleware.withExtraArgument({getFirebase, getFirestore}),
+    thunkMiddleware.withExtraArgument({getFirebase}),
     createLogger({collapsed: true})
   )
 )
