@@ -1,12 +1,26 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
+import {firebaseReducer, getFirebase} from 'react-redux-firebase'
+import {firestoreReducer, getFirestore} from 'redux-firestore'
 import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
+// import {getFirebase} from 'react-redux-firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
+
 import user from './user'
 
-const reducer = combineReducers({user})
+const reducer = combineReducers({
+  user,
+  firebase: firebaseReducer,
+  firestore: firestoreReducer // why is this blue??
+})
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
+  applyMiddleware(
+    thunkMiddleware.withExtraArgument({getFirebase}),
+    createLogger({collapsed: true})
+  )
 )
 const store = createStore(reducer, middleware)
 
