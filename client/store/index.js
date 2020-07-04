@@ -9,10 +9,13 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 
+// Imported Reducers:
 import user from './user'
+import preGame from './preGame'
 
 const reducer = combineReducers({
   user,
+  preGame,
   firebase: firebaseReducer,
   firestore: firestoreReducer // why is this blue??
 })
