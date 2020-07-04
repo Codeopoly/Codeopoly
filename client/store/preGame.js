@@ -1,6 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import {createArray} from '../../utility/preGame'
+import {create} from 'react-test-renderer'
 
 // This file might seem odd at first. Lots of thunks, only 1 action.
 // That's because the only thing we want in state preGame is the Game document.
@@ -67,6 +69,36 @@ export const getGameThunk = gameCode => {
         console.log('dispatching gotGame', theGame.data())
         dispatch(gotGame(theGame.data()))
       }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+// Used when the CREATE GAME button is clicked.
+export const createGameThunk = () => {
+  return async (dispatch, getState, {getFirebase}) => {
+    try {
+      console.log('createGameThunk try block')
+      // .add() returns a DocumentReference object
+      const newGameDR = await getFirebase()
+        .firestore()
+        .collection('codeopoly')
+        .doc('1')
+        .collection('game')
+        .add({
+          completed: false,
+          deckFrontend: createArray(0, 20),
+          deckBackend: createArray(21, 40),
+          deckUI: createArray(41, 60),
+          deckMiddleware: createArray(61, 80),
+          deckAlgorithm: createArray(81, 100),
+          currentPlayer: null,
+          host: null
+        })
+      // await newGameDR.get() is how you use a DocumentReference object to get the newly created document
+      const newGame = await newGameDR.get()
+      dispatch(gotGame(newGame.data()))
     } catch (error) {
       console.log(error)
     }

@@ -8,7 +8,7 @@ const HomePage = props => {
     console.log('this is the game code being sent:', gameCode)
     props.joinGame(gameCode)
   }
-  const handleCreate = props => {
+  const handleCreate = () => {
     console.log('handleCreate ran')
     props.createGame()
   }
