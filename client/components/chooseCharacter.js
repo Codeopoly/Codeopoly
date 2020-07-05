@@ -20,6 +20,11 @@ const chooseCharacter = props => {
     // event.target.src is a giant link... maybe we just want to handle the alt text
     console.log('event.target.alt:', event.target.alt)
     setImg(event.target.alt)
+    const chars = document.getElementsByClassName('responsive-img')
+    for (let i = 0; i < chars.length; i++) {
+      chars[i].classList.remove('selectedChar')
+    }
+    event.target.classList.add('selectedChar')
   }
 
   if (redirectNow) {
