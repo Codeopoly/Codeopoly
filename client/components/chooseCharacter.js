@@ -26,7 +26,7 @@ const chooseCharacter = props => {
     return <Redirect to={`/create/${props.reduxGame.gameCode}`} />
   }
   return (
-    <div>
+    <div className="welcome">
       <div id="title">
         <h1>[Code]opoly</h1>
       </div>
@@ -85,9 +85,13 @@ const chooseCharacter = props => {
       </div>
       <div id="submitBtnBox">
         {props.reduxGame.host === null ? ( // Conditionally render the submit button
-          <button onClick={handleSubmit}>CREATE GAME</button>
+          <button type="button" onClick={handleSubmit}>
+            CREATE GAME
+          </button>
         ) : (
-          <button onClick={handleSubmit}>JOIN GAME</button>
+          <button type="button" onClick={handleSubmit}>
+            JOIN GAME
+          </button>
         )}
       </div>
     </div>

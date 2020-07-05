@@ -28,7 +28,7 @@ const HomePage = props => {
   }
 
   return (
-    <div>
+    <div className="welcome">
       <div id="title">
         <h1>[Code]opoly</h1>
       </div>
@@ -43,17 +43,23 @@ const HomePage = props => {
           startup life! Oh, and don't catch any bugs!
         </div>
       </div>
-      <div id="buttonBox1">
-        <button onClick={handleJoin}>Join Game</button>
-        <input
-          type="text"
-          value={gameCode}
-          placeholder="game code"
-          onChange={handleChange}
-        />
-      </div>
-      <div id="buttonBox2">
-        <button onClick={handleCreate}>Create New Game</button>
+      <div id="buttonArea">
+        <div id="buttonBox1">
+          <button type="button" onClick={handleJoin}>
+            Join Game
+          </button>
+          <input
+            type="text"
+            value={gameCode}
+            placeholder="game code"
+            onChange={handleChange}
+          />
+        </div>
+        <div id="buttonBox2">
+          <button type="button" onClick={handleCreate}>
+            Create New Game
+          </button>
+        </div>
       </div>
     </div>
   )

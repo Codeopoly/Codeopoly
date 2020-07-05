@@ -19,3 +19,35 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+button {
+  margin: 10px;
+}
+
+.welcome {
+  padding: 50px;
+  margin: auto;
+  text-align: center;
+  background-color: gray;
+  width: 75%;
+}
+
+#buttonArea {
+  padding: 20px;
+}
+
+#characterBox {
+  /* display: flex; */
+  width: 70%;
+  margin: auto;
+  padding: 25px;
+}
+
+.responsive-img {
+  height: 5rem;
+  margin: 10px;
+}
+
+.responsive-img:hover {
+  border: goldenrod solid 3px;
+}
