@@ -1,21 +1,27 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import {getGameThunk, createGameThunk} from '../store/preGame'
+import {Redirect} from 'react-router-dom'
 
 const HomePage = props => {
+  // React hooks! This functional component now has local state.
+  const [gameCode, setGameCode] = useState('')
+  const [redirectNow, setRedirectNow] = useState(false)
+  if (redirectNow) {
+    return <Redirect to="/create" />
+  }
+
   const handleJoin = () => {
     console.log('handleJoin ran')
     console.log('this is the game code being sent:', gameCode)
     props.joinGame(gameCode)
+    setRedirectNow(true)
   }
   const handleCreate = () => {
     console.log('handleCreate ran')
     props.createGame()
+    setRedirectNow(true)
   }
-
-  // React hooks! This functional component now has local state.
-  const [gameCode, setGameCode] = useState('')
-
   const handleChange = event => {
     setGameCode(event.target.value)
     // console.log('game code on state:', gameCode)

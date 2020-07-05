@@ -11,22 +11,28 @@ import {create} from 'react-test-renderer'
 const GOT_GAME = 'GOT_GAME'
 
 // Action Creators:
-const gotGame = theGame => {
+const gotGame = (theGame, gameCode) => {
   return {
     type: GOT_GAME,
-    theGame
+    theGame,
+    gameCode
   }
 }
 
 // Thunk Creators:
 // Used when a player presses JOIN GAME after selecting their character and startup name
-export const createPlayerThunk = (gameCode, startupName, characterImg) => {
+export const createPlayerThunk = (
+  gameCode,
+  startupName,
+  characterImg,
+  isHost
+) => {
   return async (dispatch, getState, {getFirebase}) => {
     console.log('createPlayerThunk is running')
     try {
       // First make a player:
       console.log('if this ran, a player was made!')
-      await getFirebase()
+      const newPlayerDR = await getFirebase()
         .firestore()
         .collection('players')
         .add({
@@ -41,9 +47,33 @@ export const createPlayerThunk = (gameCode, startupName, characterImg) => {
           hasMiddleware: 'none',
           hasAlgorithm: 'none'
         })
+      console.log('newPlayerDR:', newPlayerDR.path)
+
+      // Coolio, we made a new player, but we want to add the reference to the game.
+      if (isHost) {
+        await getFirebase()
+          .firestore()
+          .collection('games')
+          .doc(gameCode)
+          .update({
+            host: newPlayerDR.path
+          })
+      }
+      // Let's add the player reference to the players array
+      await getFirebase()
+        .firestore()
+        .collection('games')
+        .doc(gameCode)
+        .update({
+          // I am updating the specific game, arrayUnion
+          playersArray: firebase.firestore.FieldValue.arrayUnion(
+            newPlayerDR.path
+          )
+        })
+
       // Here we do not dispatch an action creator;
       // I'm dispatching another thunk (trying to keep this thunk lightweight)
-      dispatch(getGameThunk())
+      dispatch(getGameThunk(gameCode))
     } catch (error) {
       console.log(error)
     }
@@ -58,16 +88,14 @@ export const getGameThunk = gameCode => {
       console.log('if this ran, a game was read from Firestore!')
       const theGame = await getFirebase()
         .firestore()
-        .collection('codeopoly')
-        .doc('1')
-        .collection('game')
+        .collection('games')
         .doc(gameCode)
         .get()
       if (!theGame.exists) {
         console.log('invalid game code!!!')
       } else {
         console.log('dispatching gotGame', theGame.data())
-        dispatch(gotGame(theGame.data()))
+        dispatch(gotGame(theGame.data(), gameCode))
       }
     } catch (error) {
       console.log(error)
@@ -83,9 +111,7 @@ export const createGameThunk = () => {
       // .add() returns a DocumentReference object
       const newGameDR = await getFirebase()
         .firestore()
-        .collection('codeopoly')
-        .doc('1')
-        .collection('game')
+        .collection('games')
         .add({
           completed: false,
           deckFrontend: createArray(0, 20),
@@ -94,11 +120,12 @@ export const createGameThunk = () => {
           deckMiddleware: createArray(61, 80),
           deckAlgorithm: createArray(81, 100),
           currentPlayer: null,
-          host: null
+          host: null,
+          playersArray: [] // Host is in here too
         })
       // await newGameDR.get() is how you use a DocumentReference object to get the newly created document
       const newGame = await newGameDR.get()
-      dispatch(gotGame(newGame.data()))
+      dispatch(gotGame(newGame.data(), newGameDR.id))
     } catch (error) {
       console.log(error)
     }
@@ -111,7 +138,10 @@ export default function(state = {}, action) {
   switch (action.type) {
     case GOT_GAME:
       console.log('theGame inside the reducer', action.theGame)
-      return action.theGame
+      const newState = action.theGame
+      // Since theGame document doesn't come with its id (go figure), add a property to hold its id:
+      newState.gameCode = action.gameCode
+      return newState
     default:
       return state
   }
