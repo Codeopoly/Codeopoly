@@ -18,7 +18,7 @@ const fbConfig = {}
 const rrfProps = {
   firebase,
   config: {
-    userProfile: 'codeopoly',
+    // userProfile: 'codeopoly',
     useFirestoreForProfile: true
   }, // This config is for firestore profiles (?) as per Chaoo Charles, so we don't add our config file here
   dispatch: store.dispatch,
