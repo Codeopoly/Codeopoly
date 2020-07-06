@@ -34,7 +34,7 @@ const RollingDice = () => {
       key: 'secondDiceRoll',
       repeat: -1,
       frameRate: 15,
-      frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
+      frames: this.anims.generateFrameNames('dice', {start: 2, end: -2})
     })
 
     const first = this.add.sprite(100, 100, 'dice').play('firstDiceRoll')
