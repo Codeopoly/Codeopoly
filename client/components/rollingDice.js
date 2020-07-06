@@ -17,7 +17,7 @@ const RollingDice = () => {
   const game = new Phaser.Game(config)
 
   function preload() {
-    this.load.spritesheet('dice', 'assets/diceRed.png', {
+    this.load.spritesheet('dice', 'assets/dice.png', {
       frameWidth: 64,
       frameHeight: 64
     })
@@ -28,13 +28,13 @@ const RollingDice = () => {
       key: 'firstDiceRoll',
       repeat: -1,
       frameRate: 15,
-      frames: this.anims.generateFrameNames('dice', {start: 0, end: 7})
+      frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
     this.anims.create({
       key: 'secondDiceRoll',
       repeat: -1,
       frameRate: 15,
-      frames: this.anims.generateFrameNames('dice', {start: 0, end: 7})
+      frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
 
     const first = this.add.sprite(100, 100, 'dice').play('firstDiceRoll')
