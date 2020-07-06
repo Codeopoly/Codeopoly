@@ -49,7 +49,9 @@ button {
 }
 
 .responsive-img:hover {
-  border: goldenrod solid 3px;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 10px;
 }
 
 .selectedChar {

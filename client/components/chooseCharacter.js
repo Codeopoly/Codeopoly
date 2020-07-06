@@ -10,7 +10,7 @@ const chooseCharacter = props => {
   const [redirectNow, setRedirectNow] = useState(false)
 
   const handleSubmit = () => {
-    if (props.reduxGame.host === null) {
+    if (props.reduxGame.game.host === null) {
       props.createPlayer(props.reduxGame.gameCode, startupName, img, true)
     } else props.createPlayer(props.reduxGame.gameCode, startupName, img, false)
     setRedirectNow(true)
@@ -89,7 +89,7 @@ const chooseCharacter = props => {
         </div>
       </div>
       <div id="submitBtnBox">
-        {props.reduxGame.host === null ? ( // Conditionally render the submit button
+        {props.reduxGame.game.host === null ? ( // Conditionally render the submit button
           <button type="button" onClick={handleSubmit}>
             CREATE GAME
           </button>

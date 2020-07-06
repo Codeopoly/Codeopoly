@@ -11,16 +11,18 @@ import {create} from 'react-test-renderer'
 const GOT_GAME = 'GOT_GAME'
 
 // Action Creators:
-const gotGame = (theGame, gameCode) => {
+const gotGame = (theGame, gameCode, player, playerId) => {
   return {
     type: GOT_GAME,
     theGame,
-    gameCode
+    gameCode,
+    player,
+    playerId
   }
 }
 
 // Thunk Creators:
-// Used when a player presses JOIN GAME after selecting their character and startup name
+// Used when a player presses JOIN GAME or CREATE GAME on choose character page
 export const createPlayerThunk = (
   gameCode,
   startupName,
@@ -47,7 +49,7 @@ export const createPlayerThunk = (
           hasMiddleware: 'none',
           hasAlgorithm: 'none'
         })
-      console.log('newPlayerDR:', newPlayerDR.path)
+      console.log('newPlayerDR:', newPlayerDR)
 
       // Coolio, we made a new player, but we want to add the reference to the game.
       if (isHost) {
@@ -73,15 +75,48 @@ export const createPlayerThunk = (
 
       // Here we do not dispatch an action creator;
       // I'm dispatching another thunk (trying to keep this thunk lightweight)
-      dispatch(getGameThunk(gameCode))
+      dispatch(getGameThunk(gameCode, newPlayerDR.id))
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-// Used when a player presses JOIN GAME from the home screen AND at player creation screen
-export const getGameThunk = gameCode => {
+// Used when a player presses JOIN GAME on choose character page
+export const getGameThunk = (gameCode, playerId) => {
+  return async (dispatch, getState, {getFirebase}) => {
+    // Grab the game, now containing the newly created player
+    try {
+      //Grab the new player
+      console.log('if this ran, current player was read from Firestore!')
+      const currPlayer = await getFirebase()
+        .firestore()
+        .collection('players')
+        .doc(playerId)
+        .get()
+      console.log(currPlayer.data())
+      //add currPlayer.data() to gotGame or make new action creator
+      // dispatch(gotPlayer(currPlayer.data(), playerId))
+      console.log('if this ran, a game was read from Firestore!')
+      const theGame = await getFirebase()
+        .firestore()
+        .collection('games')
+        .doc(gameCode)
+        .get()
+      if (!theGame.exists) {
+        console.log('invalid game code!!!')
+      } else {
+        console.log('dispatching gotGame', theGame.data())
+        dispatch(gotGame(theGame.data(), gameCode, currPlayer.data(), playerId))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+// Used on "join game" button on home page
+export const getNewGameThunk = gameCode => {
   return async (dispatch, getState, {getFirebase}) => {
     // Grab the game, now containing the newly created player
     try {
@@ -103,7 +138,7 @@ export const getGameThunk = gameCode => {
   }
 }
 
-// Used when the CREATE GAME button is clicked.
+// Used when the CREATE GAME button is clicked on home page
 export const createGameThunk = () => {
   return async (dispatch, getState, {getFirebase}) => {
     try {
@@ -133,14 +168,15 @@ export const createGameThunk = () => {
 }
 
 // Reducer:
-export default function(state = {}, action) {
+export default function(state = {game: {}, state: {}}, action) {
   console.log('the reducer is being accessed!')
   switch (action.type) {
     case GOT_GAME:
       console.log('theGame inside the reducer', action.theGame)
-      const newState = action.theGame
+      const newState = {game: action.theGame, player: action.player}
       // Since theGame document doesn't come with its id (go figure), add a property to hold its id:
       newState.gameCode = action.gameCode
+      newState.playerId = action.playerId
       return newState
     default:
       return state

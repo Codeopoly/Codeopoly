@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {getGameThunk, createGameThunk} from '../store/preGame'
+import {getNewGameThunk, createGameThunk} from '../store/preGame'
 import {Redirect} from 'react-router-dom'
 
 const HomePage = props => {
@@ -68,7 +68,7 @@ const HomePage = props => {
 const mapDispatch = dispatch => {
   return {
     joinGame: gameCode => {
-      dispatch(getGameThunk(gameCode))
+      dispatch(getNewGameThunk(gameCode))
     },
     createGame: () => {
       dispatch(createGameThunk())
