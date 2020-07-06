@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import Phaser, {Tweens} from 'phaser'
 import React, {useEffect} from 'react'
 import ReactDOM from 'react-dom'
 
@@ -41,17 +41,28 @@ const RollingDice = () => {
     const second = this.add.sprite(200, 100, 'dice').play('secondDiceRoll')
 
     var _anims = this.anims
+    this.tweens.add({
+      targets: first,
+      angle: 360.0,
+      duration: 1500,
+      repeat: -1
+    })
+    this.tweens.add({
+      targets: second,
+      angle: 360.0,
+      duration: 1500,
+      repeat: -1
+    })
+    var _tweens = this.tweens
     document.addEventListener('mouseup', function() {
       if (_anims.paused) {
         _anims.resumeAll()
+        _tweens.resumeAll()
       } else {
         _anims.pauseAll()
+        _tweens.pauseAll()
       }
     })
-  }
-
-  function update() {
-    first.rotation += 0.01
   }
 
   return null
