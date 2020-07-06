@@ -44,13 +44,13 @@ const RollingDice = () => {
     this.tweens.add({
       targets: first,
       angle: 360.0,
-      duration: 1500,
+      duration: 50,
       repeat: -1
     })
     this.tweens.add({
       targets: second,
       angle: 360.0,
-      duration: 1500,
+      duration: 50,
       repeat: -1
     })
     var _tweens = this.tweens
