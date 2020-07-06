@@ -2,16 +2,7 @@ import Phaser from 'phaser'
 import React, {useEffect} from 'react'
 import ReactDOM from 'react-dom'
 
-// var game = new Phaser.Game(600, 400, Phaser.AUTO, "demo", {preload:preload, create:create, update:update});
-
 const RollingDice = () => {
-  useEffect(() => {
-    console.log('useEffect ran!')
-    return function cleanup() {
-      console.log('cleanup ran!', game)
-      game.destroy(true)
-    }
-  })
   const config = {
     type: Phaser.AUTO,
     parent: 'phaser-example',
@@ -33,24 +24,34 @@ const RollingDice = () => {
   }
 
   function create() {
-    const dice = this.add.sprite(100, 100, 'dice', 0)
     this.anims.create({
-      key: 'roll',
+      key: 'firstDiceroll',
       repeat: -1,
       frameRate: 15,
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 7})
     })
-    // dice.rotation += 0.01
-    dice.play('roll')
+    this.anims.create({
+      key: 'secondDiceRoll',
+      repeat: -1,
+      frameRate: 15,
+      frames: this.anims.generateFrameNames('dice', {start: 0, end: 7})
+    })
 
-    // this.tweens.add({
-    //   targets: logo,
-    //   y: 450,
-    //   duration: 2000,
-    //   ease: 'Power2',
-    //   yoyo: true,
-    //   loop: -1,
-    // })
+    const first = this.add.sprite(100, 100, 'dice', 0).play('firstDiceroll')
+    this.add.sprite(200, 100, 'dice', 0).play('secondDiceroll')
+
+    var _anims = this.anims
+    document.addEventListener('mouseup', function() {
+      if (_anims.paused) {
+        _anims.resumeAll()
+      } else {
+        _anims.pauseAll()
+      }
+    })
+  }
+
+  function update() {
+    first.rotation += 0.01
   }
 
   return null
