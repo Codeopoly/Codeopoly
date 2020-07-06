@@ -25,7 +25,7 @@ const RollingDice = () => {
 
   function create() {
     this.anims.create({
-      key: 'firstDiceroll',
+      key: 'firstDiceRoll',
       repeat: -1,
       frameRate: 15,
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 7})
@@ -37,8 +37,8 @@ const RollingDice = () => {
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 7})
     })
 
-    const first = this.add.sprite(100, 100, 'dice', 0).play('firstDiceroll')
-    this.add.sprite(200, 100, 'dice', 0).play('secondDiceroll')
+    const first = this.add.sprite(100, 100, 'dice').play('firstDiceRoll')
+    const second = this.add.sprite(200, 100, 'dice').play('secondDiceRoll')
 
     var _anims = this.anims
     document.addEventListener('mouseup', function() {
