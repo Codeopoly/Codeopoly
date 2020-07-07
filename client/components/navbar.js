@@ -10,7 +10,6 @@ import 'firebase/auth'
 
 const Navbar = ({handleClick, isLoggedIn, handleTest, handleTest2}) => (
   <div>
-    <h1>BOILERMAKER</h1>
     <nav>
       {isLoggedIn ? (
         <div>

@@ -2,7 +2,7 @@ import {ReactReduxFirebaseProvider} from 'react-redux-firebase'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import {Router} from 'react-router-dom'
+import {Router, Route, Switch} from 'react-router-dom'
 import {createFirestoreInstance} from 'redux-firestore'
 import firebase from '../config/fbConfig'
 import history from './history'
@@ -11,6 +11,7 @@ import App from './app'
 
 // establishes socket connection
 import './socket'
+import {Game, PanelL, PanelR} from './components'
 
 const fbConfig = {}
 
@@ -34,4 +35,43 @@ ReactDOM.render(
     </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById('app')
+)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/game" component={PanelL} />
+        </Switch>
+      </Router>
+    </ReactReduxFirebaseProvider>
+  </Provider>,
+  document.getElementById('panelL')
+)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/game" component={Game} />
+        </Switch>
+      </Router>
+    </ReactReduxFirebaseProvider>
+  </Provider>,
+  document.getElementById('theGame')
+)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/game" component={PanelR} />
+        </Switch>
+      </Router>
+    </ReactReduxFirebaseProvider>
+  </Provider>,
+  document.getElementById('panelR')
 )
