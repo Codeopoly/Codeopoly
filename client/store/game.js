@@ -17,6 +17,7 @@ const gotGameSnapshot = game => {
 }
 
 //Thunk creators:
+//Ideally, this thunk should set up the snapshot on the specific game doc and update the store accordingly
 export const getGameSnapshot = gameId => dispatch => {
   // try {
   console.log('inside thunk')

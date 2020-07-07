@@ -11,6 +11,7 @@ import {create} from 'react-test-renderer'
 const GOT_GAME = 'GOT_GAME'
 
 // Action Creators:
+// Dispatched from getGameThunk, getNewGameThunk, and createGameThunk
 const gotGame = (theGame, gameCode, player, playerId) => {
   return {
     type: GOT_GAME,
@@ -22,7 +23,8 @@ const gotGame = (theGame, gameCode, player, playerId) => {
 }
 
 // Thunk Creators:
-// Used when a player presses JOIN GAME or CREATE GAME on choose character page
+
+// Used when player presses JOIN GAME or CREATE GAME on choose character page
 export const createPlayerThunk = (
   gameCode,
   startupName,
@@ -82,7 +84,7 @@ export const createPlayerThunk = (
   }
 }
 
-// Used when a player presses JOIN GAME on choose character page
+// Used when player presses JOIN GAME on choose character page (this is called in createPlayerThunk above)
 export const getGameThunk = (gameCode, playerId) => {
   return async (dispatch, getState, {getFirebase}) => {
     // Grab the game, now containing the newly created player
@@ -115,7 +117,7 @@ export const getGameThunk = (gameCode, playerId) => {
   }
 }
 
-// Used on "join game" button on home page
+// Used when player presses JOIN GAME button on home page
 export const getNewGameThunk = gameCode => {
   return async (dispatch, getState, {getFirebase}) => {
     // Grab the game, now containing the newly created player
@@ -138,7 +140,7 @@ export const getNewGameThunk = gameCode => {
   }
 }
 
-// Used when the CREATE GAME button is clicked on home page
+// Used when player presses CREATE GAME button on home page
 export const createGameThunk = () => {
   return async (dispatch, getState, {getFirebase}) => {
     try {
