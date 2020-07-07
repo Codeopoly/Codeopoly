@@ -5,8 +5,6 @@ export default class SceneMain extends Phaser.Scene {
     super('SceneMain')
   }
   preload() {
-    // this.load.image("face", "images/face.png");
-    this.load.image('logo', 'assets/logo.png')
     this.load.image('center', 'assets/Center.png')
   }
   create() {
@@ -18,20 +16,17 @@ export default class SceneMain extends Phaser.Scene {
 
     this.aGrid = new AlignGrid(gridConfig, this.game)
     this.aGrid.showNumbers()
-    //
-    //
-    // this.logo = this.add.image(2, 2, "logo");
+
     this.center = this.add.image(
-      this.game.config.width / 2,
-      this.game.config.height / 2,
+      this.game.config.width / 2, // where the center of the image is placed on the x-axis
+      this.game.config.height / 2, // y-axis
       'center'
     )
-    //   this.aGrid.placeAt(0,0,this.logo);
-    //scale the face
-    // this.logo.displayWidth = this.game.config.width * 0.2;
+
+    //scale the center
     this.center.displayWidth = this.game.config.width * 0.665
-    // this.logo.scaleY = this.logo.scaleX;
     this.center.scaleY = this.center.scaleX
+
     //place the face on the grid
     //this.aGrid.placeAtIndex(65.5, this.center);
   }
