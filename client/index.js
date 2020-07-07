@@ -11,9 +11,6 @@ import App from './app'
 
 // establishes socket connection
 import './socket'
-import {Game, PanelL, PanelR} from './components'
-
-const fbConfig = {}
 
 // Needed for Firestorm v3
 const rrfProps = {
@@ -35,43 +32,4 @@ ReactDOM.render(
     </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById('app')
-)
-
-ReactDOM.render(
-  <Provider store={store}>
-    <ReactReduxFirebaseProvider {...rrfProps}>
-      <Router history={history}>
-        <Switch>
-          <Route exact path="/game" component={PanelL} />
-        </Switch>
-      </Router>
-    </ReactReduxFirebaseProvider>
-  </Provider>,
-  document.getElementById('panelL')
-)
-
-ReactDOM.render(
-  <Provider store={store}>
-    <ReactReduxFirebaseProvider {...rrfProps}>
-      <Router history={history}>
-        <Switch>
-          <Route exact path="/game" component={Game} />
-        </Switch>
-      </Router>
-    </ReactReduxFirebaseProvider>
-  </Provider>,
-  document.getElementById('theGame')
-)
-
-ReactDOM.render(
-  <Provider store={store}>
-    <ReactReduxFirebaseProvider {...rrfProps}>
-      <Router history={history}>
-        <Switch>
-          <Route exact path="/game" component={PanelR} />
-        </Switch>
-      </Router>
-    </ReactReduxFirebaseProvider>
-  </Provider>,
-  document.getElementById('panelR')
 )
