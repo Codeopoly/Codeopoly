@@ -9,7 +9,8 @@ import {
   HomePage,
   ChooseCharacter,
   RollingDice,
-  GameView
+  GameView,
+  HostLobby
 } from './components'
 import {me} from './store'
 
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Route exact path="/dice" component={RollingDice} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/create/lobby" component={HostLobby} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

@@ -1,6 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {firebaseReducer, getFirebase} from 'react-redux-firebase'
-import {firestoreReducer, getFirestore} from 'redux-firestore'
+import {firestoreReducer, createFirestoreInstance} from 'redux-firestore'
 import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
@@ -12,10 +12,12 @@ import 'firebase/auth'
 // Imported Reducers:
 import user from './user'
 import preGame from './preGame'
+import players from './players'
 
 const reducer = combineReducers({
   user,
   preGame,
+  players,
   firebase: firebaseReducer,
   firestore: firestoreReducer // why is this blue??
 })
