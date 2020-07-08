@@ -6,6 +6,7 @@ export default class SceneMain extends Phaser.Scene {
   }
   preload() {
     this.load.image('center', 'assets/Center.png')
+    this.load.image('reactTile', 'assets/react_tile.png')
   }
   create() {
     var gridConfig = {
@@ -13,6 +14,8 @@ export default class SceneMain extends Phaser.Scene {
       cols: 12,
       rows: 12
     }
+
+    this.reactTile = this.add.image()
 
     this.aGrid = new AlignGrid(gridConfig, this.game)
     this.aGrid.showNumbers()
