@@ -3,13 +3,14 @@ import {connect, useSelector, useDispatch} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {useFirestoreConnect} from 'react-redux-firebase'
 import {getPlayersThunk} from '../store/players'
-import {startGameThunk} from '../store/preGame'
 
-const HostLobby = () => {
+const PlayerLobby = () => {
   const gameCode = useSelector(state => state.preGame.gameCode) // Hook into redux store
-  const players = useSelector(state => state.players)
+  const playersArray = useSelector(state => state.players)
+  const [localHost, setLocalHost] = useState(null)
   const [redirectNow, setRedirectNow] = useState(false)
   const dispatch = useDispatch() // Hook into dispatch; go ahead and dispatch actions
+  // let host = playersArray.filter(player => player.isHost === true)
 
   useFirestoreConnect([{collection: 'games', doc: gameCode}])
   const gameFromFirestore = useSelector(({firestore: {data}}) => data)
@@ -25,11 +26,14 @@ const HostLobby = () => {
     },
     [gameFromFirestore]
   )
-
-  const handleStart = () => {
-    console.log('I clicked START GAME')
-    dispatch(startGameThunk(gameCode))
-  }
+  useEffect(
+    () => {
+      let host = playersArray.filter(player => player.isHost === true)[0]
+      console.log("useEffect's host:", host)
+      setLocalHost(host)
+    },
+    [playersArray]
+  )
 
   if (redirectNow) {
     return <Redirect to="/game" /> // This might need to be /game/:gameCode
@@ -40,12 +44,24 @@ const HostLobby = () => {
       <div id="title">
         <h1>[Code]opoly</h1>
         <h4>Room Code: {gameCode}</h4>
-        <button onClick={handleStart}>START GAME</button>
       </div>
       <div>
         <div>
+          <h3>Your host:</h3>
+          {localHost !== undefined && localHost !== null ? (
+            <div key="host" className="playerInLobby">
+              <div>
+                <img className="responsive-img" src={localHost.avatar} />
+              </div>
+              <div>{localHost.name}</div>
+            </div>
+          ) : (
+            <div>No Host Found</div>
+          )}
+        </div>
+        <div>
           <h3>Joined players:</h3>
-          {players.map((player, index) => {
+          {playersArray.map((player, index) => {
             return player.isHost === false ? (
               <div key={`player${index}`} className="playerInLobby">
                 <div>
@@ -57,10 +73,23 @@ const HostLobby = () => {
               <div key={`player${index}`} />
             )
           })}
+          {/* {players.map((player, index) => {
+            return player.isHost === false ? (
+              <div key={`player${index}`} className="playerInLobby">
+                <div>
+                  <img className="responsive-img" src={player.avatar} />
+                </div>
+                <div>{player.name}</div>
+              </div>
+            ) : (
+              <div key={`player${index}`} />
+            )
+          })} */}
         </div>
+        <h5>Waiting for host to start game...</h5>
       </div>
     </div>
   )
 }
 
-export default HostLobby
+export default PlayerLobby

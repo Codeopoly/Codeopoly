@@ -23,7 +23,10 @@ const chooseCharacter = props => {
   }
 
   if (redirectNow) {
-    return <Redirect to="/create/lobby" />
+    if (props.reduxGame.host === null) {
+      return <Redirect to="/create/lobby" />
+    }
+    return <Redirect to="/join/lobby" />
   }
   return (
     <div>

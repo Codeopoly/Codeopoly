@@ -9,6 +9,7 @@ import {create} from 'react-test-renderer'
 
 // Action Types:
 const GOT_GAME = 'GOT_GAME'
+const START_GAME = 'START_GAME'
 
 // Action Creators:
 const gotGame = (theGame, gameCode) => {
@@ -16,6 +17,11 @@ const gotGame = (theGame, gameCode) => {
     type: GOT_GAME,
     theGame,
     gameCode
+  }
+}
+const startGame = () => {
+  return {
+    type: START_GAME
   }
 }
 
@@ -112,6 +118,7 @@ export const createGameThunk = () => {
         .firestore()
         .collection('games')
         .add({
+          isStarted: false,
           completed: false,
           deckFrontend: createArray(0, 20),
           deckBackend: createArray(21, 40),
@@ -139,6 +146,25 @@ export const createGameThunk = () => {
   }
 }
 
+export const startGameThunk = gameCode => {
+  return async (dispatch, getState, {getFirebase}) => {
+    try {
+      // Let's add the player reference to the players array
+      await getFirebase()
+        .firestore()
+        .collection('games')
+        .doc(gameCode)
+        .update({
+          // I am updating the specific game, arrayUnion
+          isStarted: true
+        })
+      dispatch(startGame())
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 // Reducer:
 export default function(state = {}, action) {
   console.log('the reducer is being accessed!')
@@ -149,6 +175,8 @@ export default function(state = {}, action) {
       // Since theGame document doesn't come with its id (go figure), add a property to hold its id:
       newState.gameCode = action.gameCode
       return newState
+    case START_GAME:
+      return {isStarted: true} // might need to return old state?
     default:
       return state
   }
