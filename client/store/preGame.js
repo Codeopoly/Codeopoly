@@ -9,6 +9,7 @@ import {create} from 'react-test-renderer'
 
 // Action Types:
 const GOT_GAME = 'GOT_GAME'
+const START_GAME = 'START_GAME'
 
 // Action Creators:
 const gotGame = (theGame, gameCode) => {
@@ -16,6 +17,11 @@ const gotGame = (theGame, gameCode) => {
     type: GOT_GAME,
     theGame,
     gameCode
+  }
+}
+const startGame = () => {
+  return {
+    type: START_GAME
   }
 }
 
@@ -45,9 +51,10 @@ export const createPlayerThunk = (
           hasBackend: 'none',
           hasUI: 'none',
           hasMiddleware: 'none',
-          hasAlgorithm: 'none'
+          hasAlgorithm: 'none',
+          isHost: isHost
         })
-      console.log('newPlayerDR:', newPlayerDR.path)
+      console.log('newPlayerId:', newPlayerDR.id)
 
       // Coolio, we made a new player, but we want to add the reference to the game.
       if (isHost) {
@@ -56,7 +63,7 @@ export const createPlayerThunk = (
           .collection('games')
           .doc(gameCode)
           .update({
-            host: newPlayerDR.path
+            host: newPlayerDR.id
           })
       }
       // Let's add the player reference to the players array
@@ -66,14 +73,12 @@ export const createPlayerThunk = (
         .doc(gameCode)
         .update({
           // I am updating the specific game, arrayUnion
-          playersArray: firebase.firestore.FieldValue.arrayUnion(
-            newPlayerDR.path
-          )
+          playersArray: firebase.firestore.FieldValue.arrayUnion(newPlayerDR.id)
         })
 
       // Here we do not dispatch an action creator;
       // I'm dispatching another thunk (trying to keep this thunk lightweight)
-      dispatch(getGameThunk(gameCode))
+      dispatch(getGameThunk(gameCode)) // This might not be needed anymore
     } catch (error) {
       console.log(error)
     }
@@ -113,6 +118,7 @@ export const createGameThunk = () => {
         .firestore()
         .collection('games')
         .add({
+          isStarted: false,
           completed: false,
           deckFrontend: createArray(0, 20),
           deckBackend: createArray(21, 40),
@@ -121,11 +127,38 @@ export const createGameThunk = () => {
           deckAlgorithm: createArray(81, 100),
           currentPlayer: null,
           host: null,
-          playersArray: [] // Host is in here too
+          playersArray: [], // Host is in here too
+          availableCharacters: {
+            doge: true,
+            cody: true,
+            cat: true,
+            successKid: true,
+            kermit: true,
+            marshall: true
+          }
         })
       // await newGameDR.get() is how you use a DocumentReference object to get the newly created document
       const newGame = await newGameDR.get()
       dispatch(gotGame(newGame.data(), newGameDR.id))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const startGameThunk = gameCode => {
+  return async (dispatch, getState, {getFirebase}) => {
+    try {
+      // Let's add the player reference to the players array
+      await getFirebase()
+        .firestore()
+        .collection('games')
+        .doc(gameCode)
+        .update({
+          // I am updating the specific game, arrayUnion
+          isStarted: true
+        })
+      dispatch(startGame())
     } catch (error) {
       console.log(error)
     }
@@ -142,6 +175,8 @@ export default function(state = {}, action) {
       // Since theGame document doesn't come with its id (go figure), add a property to hold its id:
       newState.gameCode = action.gameCode
       return newState
+    case START_GAME:
+      return {isStarted: true} // might need to return old state?
     default:
       return state
   }
