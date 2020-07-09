@@ -64,6 +64,7 @@
     "redux-firestore": "^0.13.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.26.10",
     "sequelize": "^5.3.1",
     "socket.io": "^2.2.0"
   },

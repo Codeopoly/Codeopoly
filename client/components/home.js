@@ -28,7 +28,7 @@ const HomePage = props => {
   }
 
   return (
-    <div>
+    <div id="welcome">
       <div id="title">
         <h1>[Code]opoly</h1>
       </div>
@@ -44,7 +44,9 @@ const HomePage = props => {
         </div>
       </div>
       <div id="buttonBox1">
-        <button onClick={handleJoin}>Join Game</button>
+        <button type="button" onClick={handleJoin}>
+          Join Game
+        </button>
         <input
           type="text"
           value={gameCode}
@@ -53,7 +55,9 @@ const HomePage = props => {
         />
       </div>
       <div id="buttonBox2">
-        <button onClick={handleCreate}>Create New Game</button>
+        <button type="button" onClick={handleCreate}>
+          Create New Game
+        </button>
       </div>
     </div>
   )

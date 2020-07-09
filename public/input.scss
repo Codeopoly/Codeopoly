@@ -1,0 +1,34 @@
+body {
+  font-family: sans-serif;
+  background-color: #264653;
+}
+
+a {
+  text-decoration: none;
+}
+
+label {
+  display: block;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
+
+form div {
+  margin: 1em;
+  display: inline-block;
+}
+
+button {
+  margin: 10px;
+}
+
+#welcome {
+  padding: 50px;
+  margin: auto;
+  text-align: center;
+  background-color: #fef2eb;
+  width: 50%;
+}
