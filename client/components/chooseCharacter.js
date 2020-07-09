@@ -8,12 +8,33 @@ const chooseCharacter = props => {
   const [startupName, setStartupName] = useState('')
   const [img, setImg] = useState('')
   const [redirectNow, setRedirectNow] = useState(false)
+  const [redirectHome, setRedirectHome] = useState(false)
 
   const handleSubmit = () => {
     if (props.reduxGame.host === null) {
       props.createPlayer(props.reduxGame.gameCode, startupName, img, true)
-    } else props.createPlayer(props.reduxGame.gameCode, startupName, img, false)
-    setRedirectNow(true)
+      setRedirectNow(true)
+    } else {
+      // create a player to join a game
+      //has the game already started
+      console.log('I AM NOT A HOST')
+      if (
+        props.reduxGame.isStarted === true ||
+        props.reduxGame.playersArray.length === 4
+      ) {
+        console.log(props.reduxGame.isStarted, 'REDUXGAME')
+        console.log(props.reduxGame.playersArray.length, 'ARRAY LENGTH')
+        console.log('THE IF BLOCK RAN')
+        alert(
+          'Game is full. We are sending you back home,so join another game. '
+        )
+        setRedirectHome(true)
+      }
+      console.log('I CREATED A PLAYER, REDIRECT ME!!!!')
+      //first check is there room in the game for me
+      props.createPlayer(props.reduxGame.gameCode, startupName, img, false)
+      setRedirectNow(true)
+    }
   }
 
   const handleImg = event => {
@@ -27,6 +48,9 @@ const chooseCharacter = props => {
       return <Redirect to="/create/lobby" />
     }
     return <Redirect to="/join/lobby" />
+  }
+  if (redirectHome) {
+    return <Redirect to="/" />
   }
   return (
     <div>
