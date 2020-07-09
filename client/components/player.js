@@ -7,7 +7,7 @@ const Player = props => {
     <div className="singlePlayer">
       <div>
         ({player.startupName}
-        {player.image}
+        <img src={player.img} />
         {player.seedMoney}
       </div>
       <div>

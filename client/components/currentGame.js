@@ -12,21 +12,12 @@ const CurrentGame = () => {
   )
   const players = useSelector(state => state.firestore.data.players)
   // const players = useSelector((state) => state.players)
-  const [allPlayers, setAllPlayer] = useState(false)
-
-  useEffect(
-    () => {
-      if (players) {
-        setAllPlayer(true)
-      }
-    },
-    [players]
-  )
-
+  const [ready, setReady] = useState(false)
   // let arrayOfPlayerPathsAndGame = []
   // console.log("GameView loaded!")
 
   console.log('playersArray: ', playersArray)
+  console.log('players from firestore', players)
 
   const arrayOfPlayerPathsAndGame = playersArray.map(playerId => {
     return {
@@ -39,77 +30,74 @@ const CurrentGame = () => {
     doc: gameCode
   })
 
+  useEffect(
+    () => {
+      if (players) {
+        if (playersArray.length === Object.values(players).length) {
+          console.log('THEY FINALLY MATCH')
+          setReady(true)
+        }
+      }
+    },
+    [playersArray, players]
+  )
+
   console.log('arrayOfPlayerPathsAndGame: ', arrayOfPlayerPathsAndGame)
-  console.log('PLAYERS!!!', players)
-  useFirestoreConnect(arrayOfPlayerPathsAndGame, players)
+  //console.log('PLAYERS!!!', players)
+  useFirestoreConnect(arrayOfPlayerPathsAndGame)
 
   // Our redux state now has:
   // state.firestore.data.games[gameCode] for the game document
   // AND
   // state.firestore.data.players[playerId] for each player document
-  if (playersArray.length === 1) {
-    return <h1>Waiting for Players...</h1>
-  } else if (playersArray && Object.keys(players).length === 2) {
-    return (
-      <div id="mainScreen">
-        <div id="topBar">
-          <GameViewTitle />
-        </div>
-        <div className="players">
-          <div className="leftside">
+  let centerPanel
+  if (ready) {
+    centerPanel = (
+      <div className="players">
+        <div className="leftside">
+          <div id="player1">
             <Player player={Object.values(players)[0]} />
           </div>
-          <div id="theGame">
-            <GameBoard />
-          </div>
-          <div className="rightside">
+          {Object.values(players).length > 2 ? (
+            <div id="player3">
+              <Player player={Object.values(players)[2]} />
+            </div>
+          ) : (
+            <div />
+          )}
+        </div>
+        <div id="theGame">
+          <GameBoard />
+        </div>
+        <div className="rightside">
+          <div id="player2">
             <Player player={Object.values(players)[1]} />
           </div>
+
+          {Object.values(players).length > 3 ? (
+            <div id="player4">
+              <Player player={Object.values(players)[3]} />
+            </div>
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     )
-  } else if (playersArray && Object.keys(players).length === 3) {
-    return (
-      <div id="mainScreen">
-        <div id="topBar">
-          <GameViewTitle />
-        </div>
-        <div className="players">
-          <div className="leftside">
-            <Player player={Object.values(players)[0]} />
-            <Player player={Object.values(players)[2]} />
-          </div>
-          <div id="theGame">
-            <GameBoard />
-          </div>
-          <div className="rightside">
-            <Player player={Object.values(players)[1]} />
-          </div>
-        </div>
+  }
+  console.log(centerPanel, 'CENTER PANEL')
+  if (!players) {
+    console.log(players, 'VALUE OF')
+    return null
+  }
+  return (
+    <div id="mainScreen">
+      <div id="topBar">
+        <GameViewTitle />
       </div>
-    )
-  } else if (playersArray && Object.keys(players).length === 4) {
-    return (
-      <div id="mainScreen">
-        <div id="topBar">
-          <GameViewTitle />
-        </div>
-        <div className="players">
-          <div className="leftside">
-            <Player player={Object.values(players)[0]} />
-            <Player player={Object.values(players)[2]} />
-          </div>
-          <div id="theGame">
-            <GameBoard />
-          </div>
-          <div className="rightside">
-            <Player player={Object.values(players)[1]} />
-            <Player player={Object.values(players)[3]} />
-          </div>
-        </div>
-      </div>
-    )
-  } else return <h1>This Game is Full</h1>
+      {centerPanel}
+    </div>
+  )
 }
 
 export default CurrentGame
