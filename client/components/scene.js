@@ -5,7 +5,7 @@ export default class SceneMain extends Phaser.Scene {
     super('SceneMain')
   }
   preload() {
-    this.load.image('center', 'assets/Center.png')
+    this.load.image('background', 'assets/tilemaps/_background.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/codeopoly_board.json')
   }
   create() {
@@ -18,16 +18,23 @@ export default class SceneMain extends Phaser.Scene {
     this.aGrid = new AlignGrid(gridConfig, this.game)
     this.aGrid.showNumbers()
 
-    this.center = this.add.image(
-      this.game.config.width / 2, // where the center of the image is placed on the x-axis
-      this.game.config.height / 2, // y-axis
-      'center'
+    // this.center = this.add.image(
+    //   this.game.config.width / 2, // where the center of the image is placed on the x-axis
+    //   this.game.config.height / 2, // y-axis
+    //   'center'
+    // )
+
+    // //scale the center
+    // this.center.displayWidth = this.game.config.width * 0.665
+    // this.center.scaleY = this.center.scaleX
+
+    const backgroundImage = this.add.image(
+      this.game.config.width / 2,
+      this.game.config.height / 2,
+      'background'
     )
-
-    //scale the center
-    this.center.displayWidth = this.game.config.width * 0.665
-    this.center.scaleY = this.center.scaleX
-
+    // .setOrigin(0, 0)
+    // backgroundImage.setScale(2, 0.8)
     const board = this.make.tilemap({key: 'board'})
 
     //place the face on the grid
