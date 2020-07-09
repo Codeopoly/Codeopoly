@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import React, {useEffect} from 'react'
 import config from '../../config/gameConfig'
 
-const Game = () => {
+const GameBoard = () => {
   let game
   useEffect(() => {
     console.log('useEffect ran!')
@@ -20,4 +20,4 @@ const Game = () => {
   return <div id="insideTheGame" />
 }
 
-export default Game
+export default GameBoard

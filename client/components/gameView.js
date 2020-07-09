@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {connect, useSelector, useDispatch} from 'react-redux'
-import {Game, PanelL, PanelR, GameViewTitle} from './index'
+import {GameBoard, GameViewTitle} from './index'
 import {Redirect} from 'react-router-dom'
 import {useFirestoreConnect} from 'react-redux-firebase'
 
@@ -10,6 +10,7 @@ const GameView = () => {
   const playersArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray
   )
+  const players = useSelector(state => state.firestore.data.players)
   // let arrayOfPlayerPathsAndGame = []
   // console.log("GameView loaded!")
 
@@ -27,7 +28,7 @@ const GameView = () => {
   })
 
   console.log('arrayOfPlayerPathsAndGame: ', arrayOfPlayerPathsAndGame)
-
+  console.log('PLAYERS!!!', currentPlayers)
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
   // Our redux state now has:
   // state.firestore.data.games[gameCode] for the game document
@@ -39,15 +40,20 @@ const GameView = () => {
       <div id="topBar">
         <GameViewTitle />
       </div>
-      <div id="gameView">
-        <div id="panelL">
-          <PanelL />
+      <div className="players">
+        <div className="leftside">
+          <Player player={players[0]} />
+          <Player player={players[2]} />
         </div>
-        <div id="theGame">
-          <Game />
+        <div>
+          <GameViewTitle />
+          <div id="theGame">
+            <GameBoard />
+          </div>
         </div>
-        <div id="panelR">
-          <PanelR />
+        <div className="rightside">
+          <Player player={players[1]} />
+          <Player player={players[3]} />
         </div>
       </div>
     </div>
