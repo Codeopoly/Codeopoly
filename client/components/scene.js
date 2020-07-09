@@ -6,7 +6,7 @@ export default class SceneMain extends Phaser.Scene {
   }
   preload() {
     this.load.image('background', 'assets/tilemaps/background.png')
-    this.load.tilemapTiledJSON('board', 'assets/tilemaps/codeopoly_board.json')
+    this.load.tilemapTiledJSON('board', 'assets/tilemaps/tile_board.json')
   }
   create() {
     var gridConfig = {
@@ -43,7 +43,7 @@ export default class SceneMain extends Phaser.Scene {
     console.log('board is added')
     const tileset = board.addTilesetImage('all tiles', 'background')
     console.log('tileset added')
-    const layer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
+    const layer = board.createStaticLayer('Tile Layer 1', tileset, 16, 16, 0, 0)
     console.log('layer added')
 
     //place the face on the grid
