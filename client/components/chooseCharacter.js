@@ -124,9 +124,21 @@ const chooseCharacter = props => {
       </div>
       <div id="submitBtnBox">
         {props.reduxGame.host === null ? ( // Conditionally render the submit button
-          <button onClick={handleSubmit}>CREATE GAME</button>
+          <button
+            type="button"
+            disabled={img === '' || startupName === ''}
+            onClick={handleSubmit}
+          >
+            CREATE GAME
+          </button>
         ) : (
-          <button onClick={handleSubmit}>JOIN GAME</button>
+          <button
+            type="button"
+            disabled={img === '' || startupName === ''}
+            onClick={handleSubmit}
+          >
+            JOIN GAME
+          </button>
         )}
       </div>
     </div>
