@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import {getGameThunk, createGameThunk} from '../store/preGame'
 import {Redirect} from 'react-router-dom'
+// import welcome from '../../public/assets/welcome.png'
 
 const HomePage = props => {
   // React hooks! This functional component now has local state.
@@ -28,8 +29,9 @@ const HomePage = props => {
   }
 
   return (
-    <div id="welcome">
+    <div className="welcome">
       <div id="title">
+        {/* <img src={welcome} /> */}
         <h1>[Code]opoly</h1>
       </div>
       <div id="textBox">
@@ -40,24 +42,26 @@ const HomePage = props => {
           startup, and reach GO to launch your company! Building your tech stack
           isn’t easy; you’ll have to demonstrate your knowledge by answering
           multiple choice questions, but beware of the miscellaneous hazards of
-          startup life! Oh, and don't catch any bugs!
+          startup life! Oh, and don't get stuck on any bugs!
         </div>
       </div>
-      <div id="buttonBox1">
-        <button type="button" onClick={handleJoin}>
-          Join Game
-        </button>
-        <input
-          type="text"
-          value={gameCode}
-          placeholder="game code"
-          onChange={handleChange}
-        />
-      </div>
-      <div id="buttonBox2">
-        <button type="button" onClick={handleCreate}>
-          Create New Game
-        </button>
+      <div id="buttonArea">
+        <div id="buttonBox1">
+          <button type="button" onClick={handleJoin}>
+            Join Game
+          </button>
+          <input
+            type="text"
+            value={gameCode}
+            placeholder="game code"
+            onChange={handleChange}
+          />
+        </div>
+        <div id="buttonBox2">
+          <button type="button" onClick={handleCreate}>
+            Create New Game
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -1,3 +1,33 @@
+.responsive-img-lobby,
+.responsive-img {
+  height: 5rem;
+  margin: 10px;
+}
+
+body {
+  font-family: monaco;
+  color: #0c0909;
+  background-color: #264653;
+}
+
+a {
+  text-decoration: none;
+}
+
+label {
+  display: block;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
+
+form div {
+  margin: 1em;
+  display: inline-block;
+}
+
 #gameView {
   display: flex;
   justify-content: center;
@@ -23,3 +53,42 @@
   text-align: center;
   width: 100%;
 }
+
+button {
+  margin: 10px;
+}
+
+.welcome {
+  padding: 50px;
+  margin: auto;
+  text-align: center;
+  background-color: #fef2eb;
+  width: 50%;
+}
+
+#buttonArea {
+  padding: 20px;
+}
+
+#characterBox {
+  /* display: flex; */
+  width: 70%;
+  margin: auto;
+  padding: 25px;
+}
+
+.responsive-img:hover {
+  transform: scale(1.2);
+  box-shadow: 1 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.selectedChar {
+  transform: scale(1.2);
+  box-shadow: 10 10px rgba(0, 0, 0, 0.5);
+}
+
+.playerName {
+  color: #2a9d8f;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,25 @@
+#gameView {
+  display: flex;
+  justify-content: center;
+}
+
+#theGame {
+  display: flex;
+}
+
+#panelL {
+  width: 300px;
+  display: flex;
+  background-color: burlywood;
+}
+
+#panelR {
+  width: 300px;
+  display: flex;
+  background-color: aquamarine;
+}
+
+#gameViewTitle {
+  text-align: center;
+  width: 100%;
+}

@@ -40,7 +40,7 @@ const PlayerLobby = () => {
   }
 
   return (
-    <div>
+    <div className="welcome">
       <div id="title">
         <h1>[Code]opoly</h1>
         <h4>Room Code: {gameCode}</h4>
@@ -51,9 +51,9 @@ const PlayerLobby = () => {
           {localHost !== undefined && localHost !== null ? (
             <div key="host" className="playerInLobby">
               <div>
-                <img className="responsive-img" src={localHost.avatar} />
+                <img className="responsive-img-lobby" src={localHost.avatar} />
               </div>
-              <div>{localHost.name}</div>
+              <div className="playerName">{localHost.name}</div>
             </div>
           ) : (
             <div>No Host Found</div>
@@ -65,9 +65,9 @@ const PlayerLobby = () => {
             return player.isHost === false ? (
               <div key={`player${index}`} className="playerInLobby">
                 <div>
-                  <img className="responsive-img" src={player.avatar} />
+                  <img className="responsive-img-lobby" src={player.avatar} />
                 </div>
-                <div>{player.name}</div>
+                <div className="playerName">{player.name}</div>
               </div>
             ) : (
               <div key={`player${index}`} />

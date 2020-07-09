@@ -36,22 +36,24 @@ const HostLobby = () => {
   }
 
   return (
-    <div>
+    <div className="welcome">
       <div id="title">
         <h1>[Code]opoly</h1>
         <h4>Room Code: {gameCode}</h4>
-        <button onClick={handleStart}>START GAME</button>
+        <button type="button" onClick={handleStart}>
+          START GAME
+        </button>
       </div>
       <div>
         <div>
           <h3>Joined players:</h3>
           {players.map((player, index) => {
             return player.isHost === false ? (
-              <div key={`player${index}`} className="playerInLobby">
+              <div key={`player${index}`}>
                 <div>
-                  <img className="responsive-img" src={player.avatar} />
+                  <img className="responsive-img-lobby" src={player.avatar} />
                 </div>
-                <div>{player.name}</div>
+                <div className="playerName">{player.name}</div>
               </div>
             ) : (
               <div key={`player${index}`} />
