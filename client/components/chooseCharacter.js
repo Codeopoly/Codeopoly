@@ -25,15 +25,17 @@ const chooseCharacter = props => {
         console.log(props.reduxGame.isStarted, 'REDUXGAME')
         console.log(props.reduxGame.playersArray.length, 'ARRAY LENGTH')
         console.log('THE IF BLOCK RAN')
-        alert(
-          'Game is full. We are sending you back home,so join another game. '
-        )
+        const message = props.reduxGame.isStarted
+          ? 'Game already started.Go join another game '
+          : 'Game is full. We are sending you back home, so join another game.'
+        alert(message)
         setRedirectHome(true)
+      } else {
+        console.log('I CREATED A PLAYER, REDIRECT ME!!!!')
+        //first check is there room in the game for me
+        props.createPlayer(props.reduxGame.gameCode, startupName, img, false)
+        setRedirectNow(true)
       }
-      console.log('I CREATED A PLAYER, REDIRECT ME!!!!')
-      //first check is there room in the game for me
-      props.createPlayer(props.reduxGame.gameCode, startupName, img, false)
-      setRedirectNow(true)
     }
   }
 
