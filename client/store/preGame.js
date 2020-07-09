@@ -10,6 +10,7 @@ import {create} from 'react-test-renderer'
 // Action Types:
 const GOT_GAME = 'GOT_GAME'
 const START_GAME = 'START_GAME'
+const INVALID_GAME = 'INVALID_GAME'
 
 // Action Creators:
 const gotGame = (theGame, gameCode) => {
@@ -25,6 +26,11 @@ const startGame = () => {
   }
 }
 
+const invalidGame = () => {
+  return {
+    type: INVALID_GAME
+  }
+}
 // Thunk Creators:
 // Used when a player presses JOIN GAME after selecting their character and startup name
 export const createPlayerThunk = (
@@ -98,6 +104,7 @@ export const getGameThunk = gameCode => {
         .get()
       if (!theGame.exists) {
         console.log('invalid game code!!!')
+        dispatch(invalidGame())
       } else {
         console.log('dispatching gotGame', theGame.data())
         dispatch(gotGame(theGame.data(), gameCode))
@@ -177,6 +184,8 @@ export default function(state = {}, action) {
       return newState
     case START_GAME:
       return {isStarted: true} // might need to return old state?
+    case INVALID_GAME:
+      return {gameCode: null}
     default:
       return state
   }

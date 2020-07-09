@@ -45,6 +45,10 @@ const chooseCharacter = props => {
     setImg(event.target.src)
   }
 
+  if (props.reduxGame.gameCode === null) {
+    alert('Invalid Game Code')
+    return <Redirect to="/" />
+  }
   if (redirectNow) {
     if (props.reduxGame.host === null) {
       return <Redirect to="/create/lobby" />

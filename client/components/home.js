@@ -44,7 +44,9 @@ const HomePage = props => {
         </div>
       </div>
       <div id="buttonBox1">
-        <button onClick={handleJoin}>Join Game</button>
+        <button type="button" disabled={gameCode === ''} onClick={handleJoin}>
+          Join Game
+        </button>
         <input
           type="text"
           value={gameCode}
