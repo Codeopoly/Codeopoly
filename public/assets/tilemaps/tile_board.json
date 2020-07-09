@@ -1,5 +1,10 @@
 {
   "compressionlevel": -1,
+  "editorsettings": {
+    "export": {
+      "target": "."
+    }
+  },
   "height": 12,
   "infinite": false,
   "layers": [
@@ -29,7 +34,7 @@
     {
       "columns": 12,
       "firstgid": 1,
-      "image": "all_tiles.png",
+      "image": "tiles.png",
       "imageheight": 768,
       "imagewidth": 768,
       "margin": 0,
