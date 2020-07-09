@@ -9,9 +9,9 @@ import {
   HomePage,
   ChooseCharacter,
   RollingDice,
-  GameView,
   HostLobby,
-  PlayerLobby
+  PlayerLobby,
+  CurrentGame
 } from './components'
 import {me} from './store'
 
@@ -31,7 +31,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={HomePage} />
         <Route exact path="/create" component={ChooseCharacter} />
-        <Route exact path="/game" component={GameView} />
+        <Route exact path="/game" component={CurrentGame} />
         <Route exact path="/dice" component={RollingDice} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
