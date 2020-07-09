@@ -83,4 +83,9 @@ export default class AlignGrid {
     obj.y = y2
     return obj
   }
+
+  addTile(tile) {
+    var selectTile = this.scene.add.image(0, 0, tile).setOrigin(0, 0)
+    //need to create a func similar to 'placeAt' to place tile at specified coordiates!!
+  }
 }
