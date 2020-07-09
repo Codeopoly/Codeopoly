@@ -5,7 +5,7 @@ export default class SceneMain extends Phaser.Scene {
     super('SceneMain')
   }
   preload() {
-    this.load.image('background', 'assets/tilemaps/_background.png')
+    this.load.image('background', 'assets/tilemaps/all_tiles.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/codeopoly_board.json')
   }
   create() {
@@ -41,7 +41,7 @@ export default class SceneMain extends Phaser.Scene {
     let board = this.make.tilemap({key: 'board'})
     // let boardData = board.addTilesetImage('board')
     console.log('board is added')
-    const tileset = board.addTilesetImage('background')
+    const tileset = board.addTilesetImage('background', 'background')
     console.log('tileset added')
     const layer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
     console.log('layer added')
