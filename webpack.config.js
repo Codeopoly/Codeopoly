@@ -24,6 +24,20 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader'
       }
+      // {
+      //   test: /\.(png|svg|jpe?g|gif)$/,
+      //   include: /images/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         name: '[name].[ext]',
+      //         outputPath: 'public/assets',
+      //         publicPath: 'public/'
+      //       }
+      //     }
+      //   ]
+      // }
     ]
   }
 }
