@@ -40,7 +40,11 @@ const HostLobby = () => {
       <div id="title">
         <h1>[Code]opoly</h1>
         <h4>Room Code: {gameCode}</h4>
-        <button type="button" onClick={handleStart}>
+        <button
+          type="button"
+          disabled={players.length < 2}
+          onClick={handleStart}
+        >
           START GAME
         </button>
       </div>

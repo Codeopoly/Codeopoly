@@ -37,17 +37,6 @@ form div {
   display: flex;
 }
 
-#panelL {
-  width: 300px;
-  display: flex;
-  background-color: burlywood;
-}
-
-#panelR {
-  width: 300px;
-  display: flex;
-  background-color: aquamarine;
-}
 
 #gameViewTitle {
   text-align: center;
@@ -92,3 +81,19 @@ button {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+.players {
+  display: flex;
+  justify-content: space-between;
+}
+.leftside {
+  background-color: red;
+}
+.rightside {
+  background-color: purple;
+}
+.singlePlayer {
+  height: 200px;
+  width: 200px;
+}
+
