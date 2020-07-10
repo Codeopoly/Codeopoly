@@ -4,6 +4,7 @@ export default class SceneMain extends Phaser.Scene {
   constructor() {
     super('SceneMain')
   }
+
   preload() {
     this.load.image('background', 'assets/tilemaps/background.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/tile_board.json')
@@ -52,9 +53,10 @@ export default class SceneMain extends Phaser.Scene {
     console.log('layer added')
 
     //  CHARACTER SPRITES
-    let doge = this.add.sprite(0, 0, 'doge')
-    doge.setOrigin(-10.5, -10)
-    doge.setScale(0.07)
+    this.doge = this.add.sprite(0, 0, 'doge')
+    this.doge.setOrigin(-10.5, -10)
+    this.doge.setScale(0.07)
+    this.keys = this.input.keyboard.createCursorKeys()
 
     //
     this.anims.create({
@@ -100,5 +102,21 @@ export default class SceneMain extends Phaser.Scene {
     //place the face on the grid
     //this.aGrid.placeAtIndex(65.5, this.center);
   }
-  update() {}
+  update() {
+    //SPRITE ANIMATION
+    let spriteMovement = {velocity: 8}
+
+    if (this.keys.left.isDown) {
+      this.doge.x -= spriteMovement.velocity
+    }
+    if (this.keys.right.isDown) {
+      this.doge.x += spriteMovement.velocity
+    }
+    if (this.keys.down.isDown) {
+      this.doge.y -= spriteMovement.velocity
+    }
+    if (this.keys.up.isDown) {
+      this.doge.y += spriteMovement.velocity
+    }
+  }
 }
