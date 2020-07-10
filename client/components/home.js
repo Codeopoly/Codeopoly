@@ -47,7 +47,7 @@ const HomePage = props => {
       </div>
       <div id="buttonArea">
         <div id="buttonBox1">
-          <button type="button" onClick={handleJoin}>
+          <button type="button" onClick={handleJoin} disabled={gameCode === ''}>
             Join Game
           </button>
           <input
