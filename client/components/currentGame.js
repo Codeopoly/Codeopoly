@@ -53,13 +53,13 @@ const CurrentGame = () => {
   let centerPanel
   if (ready) {
     centerPanel = (
-      <div className="players">
+      <div id="gameView">
         <div className="leftside">
-          <div id="player1">
+          <div id="player1" className="singlePlayerBox">
             <Player player={Object.values(players)[0]} />
           </div>
           {Object.values(players).length > 2 ? (
-            <div id="player3">
+            <div id="player3" className="singlePlayerBox">
               <Player player={Object.values(players)[2]} />
             </div>
           ) : (
@@ -70,12 +70,12 @@ const CurrentGame = () => {
           <GameBoard />
         </div>
         <div className="rightside">
-          <div id="player2">
+          <div id="player2" className="singlePlayerBox">
             <Player player={Object.values(players)[1]} />
           </div>
 
           {Object.values(players).length > 3 ? (
-            <div id="player4">
+            <div id="player4" className="singlePlayerBox">
               <Player player={Object.values(players)[3]} />
             </div>
           ) : (
