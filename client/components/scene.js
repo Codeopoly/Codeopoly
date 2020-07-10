@@ -11,6 +11,7 @@ export default class SceneMain extends Phaser.Scene {
       frameWidth: 64,
       frameHeight: 64
     })
+    this.load.image('doge', 'assets/Doge-Meme.png')
   }
   create() {
     var gridConfig = {
@@ -50,6 +51,12 @@ export default class SceneMain extends Phaser.Scene {
     const layer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
     console.log('layer added')
 
+    //  CHARACTER SPRITES
+    let doge = this.add.sprite(0, 0, 'doge')
+    doge.setOrigin(-10.5, -10)
+    doge.setScale(0.07)
+
+    //
     this.anims.create({
       key: 'firstDiceRoll',
       repeat: -1,
