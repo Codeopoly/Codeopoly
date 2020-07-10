@@ -71,29 +71,30 @@ button {
   color: #2a9d8f;
 }
 
-/*# sourceMappingURL=style.css.map */
-
-
 #gameView {
   display: flex;
   justify-content: center;
 }
+
 .leftside {
   display: flex;
   flex-direction: column;
   margin-right: 2rem;
 }
+
 #theGame {
   display: flex;
   border-style: solid;
   border-color: black;
   border-width: 5px;
 }
+
 .rightside {
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
 }
+
 .singlePlayerBox {
   display: flex;
   flex-direction: column;
@@ -107,6 +108,7 @@ button {
   max-width: 200px;
   margin-bottom: 5rem;
 }
+
 .singlePlayer {
   display: flex;
   flex-direction: column;
@@ -123,6 +125,7 @@ button {
   background-color: #fef2eb;
   margin-bottom: 0.5rem;
 }
+
 #scoreTech {
   display: flex;
   flex: 1 1 auto;
@@ -130,6 +133,7 @@ button {
   flex-wrap: wrap;
   flex-grow: 2;
 }
+
 #scoreIcon {
   display: flex;
   align-items: center;
@@ -137,20 +141,24 @@ button {
   justify-content: center;
   margin-bottom: 0.75rem;
 }
+
 #scoreBarsBox {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
+
 #scoreIcon img {
   max-width: 75%;
   max-height: 18vh;
 }
+
 .scoreTechPiece {
   display: flex;
   max-width: 90%;
   margin: 0.2rem;
 }
+
 .circle {
   height: 3rem;
   width: 3rem;
@@ -162,16 +170,21 @@ button {
 #algorithm {
   background-color: #264653;
 }
+
 #backend {
   background-color: #e9c46a;
 }
+
 #frontend {
   background-color: #f4a261;
 }
+
 #misc {
   background-color: #e76a4b;
 }
+
 #ui {
   background-color: #2a9d8f;
 }
 
+/*# sourceMappingURL=style.css.map */
