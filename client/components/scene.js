@@ -7,6 +7,10 @@ export default class SceneMain extends Phaser.Scene {
   preload() {
     this.load.image('background', 'assets/tilemaps/background.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/tile_board.json')
+    this.load.spritesheet('dice', 'assets/dice.png', {
+      frameWidth: 64,
+      frameHeight: 64
+    })
   }
   create() {
     var gridConfig = {
@@ -45,6 +49,46 @@ export default class SceneMain extends Phaser.Scene {
     console.log('tileset added')
     const layer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
     console.log('layer added')
+
+    this.anims.create({
+      key: 'firstDiceRoll',
+      repeat: -1,
+      frameRate: 15,
+      frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
+    })
+    this.anims.create({
+      key: 'secondDiceRoll',
+      repeat: -1,
+      frameRate: 15,
+      frames: this.anims.generateFrameNames('dice', {start: 2, end: -2})
+    })
+
+    const first = this.add.sprite(180, 200, 'dice').play('firstDiceRoll')
+    const second = this.add.sprite(280, 200, 'dice').play('secondDiceRoll')
+
+    var _anims = this.anims
+    this.tweens.add({
+      targets: first,
+      angle: 360.0,
+      duration: 50,
+      repeat: -1
+    })
+    this.tweens.add({
+      targets: second,
+      angle: 360.0,
+      duration: 50,
+      repeat: -1
+    })
+    var _tweens = this.tweens
+    document.addEventListener('mouseup', function() {
+      if (_anims.paused) {
+        _anims.resumeAll()
+        _tweens.resumeAll()
+      } else {
+        _anims.pauseAll()
+        _tweens.pauseAll()
+      }
+    })
 
     //place the face on the grid
     //this.aGrid.placeAtIndex(65.5, this.center);
