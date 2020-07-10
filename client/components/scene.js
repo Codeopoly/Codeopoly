@@ -6,6 +6,8 @@ export default class SceneMain extends Phaser.Scene {
   }
   preload() {
     this.load.image('background', 'assets/tilemaps/background.png')
+    this.load.image('drawCard', 'assets/tilemaps/draw_card.png')
+    this.load.image('interview', 'assets/tilemaps/interview.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/tile_board.json')
     this.load.spritesheet('dice', 'assets/dice.png', {
       frameWidth: 64,
@@ -21,8 +23,6 @@ export default class SceneMain extends Phaser.Scene {
 
     this.aGrid = new AlignGrid(gridConfig, this.game)
     this.aGrid.showNumbers()
-
-    const arr = []
 
     // this.center = this.add.image(
     //   this.game.config.width / 2, // where the center of the image is placed on the x-axis
@@ -47,9 +47,19 @@ export default class SceneMain extends Phaser.Scene {
     console.log('board is added')
     const tileset = board.addTilesetImage('all tiles', 'background')
     console.log('tileset added')
-    const layer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
-    console.log('layer added')
+    const firstLayer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
+    console.log('first layer added')
 
+    const interviewLayer = board.createStaticLayer('Interview', tileset, 0, 0)
+    console.log('interview layer added')
+
+    const interviewTiles = board.createFromObjects('Interview')
+    console.log('this is interview layer', interviewTiles)
+
+    const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
+    console.log('draw card layer added')
+
+    //dice action below!!
     this.anims.create({
       key: 'firstDiceRoll',
       repeat: -1,
