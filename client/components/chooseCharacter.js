@@ -146,9 +146,9 @@ const chooseCharacter = props => {
             type="button"
             disabled={img === '' || startupName === ''}
             onClick={handleSubmit}
-            JOIN
-            GAME
-          />
+          >
+            JOIN GAME
+          </button>
         )}
       </div>
     </div>
