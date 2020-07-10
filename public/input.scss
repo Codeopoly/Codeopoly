@@ -14,7 +14,7 @@ $text: #0c0909;
 body {
   font-family: monaco;
   color: $text;
-  background-color: $algorithm;
+  background-color: #38677a;
 }
 
 a {
@@ -35,30 +35,10 @@ form div {
   display: inline-block;
 }
 
-#gameView {
-  display: flex;
-  justify-content: center;
-}
-
-#theGame {
-  display: flex;
-}
-
-#panelL {
-  width: 300px;
-  display: flex;
-  background-color: burlywood;
-}
-
-#panelR {
-  width: 300px;
-  display: flex;
-  background-color: aquamarine;
-}
-
 #gameViewTitle {
   text-align: center;
   width: 100%;
+  color: white;
 }
 
 button {
@@ -103,4 +83,105 @@ button {
 
 .playerName {
   color: $ui;
+}
+
+#gameView {
+  display: flex;
+  justify-content: center;
+}
+.leftside {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+}
+#theGame {
+  display: flex;
+  border-style: solid;
+  border-color: black;
+  border-width: 5px;
+}
+.rightside {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+}
+.singlePlayerBox {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background-color: #a39bb0;
+  border-style: ridge;
+  border-width: 1rem;
+  border-color: #fef2eb;
+  width: 200px;
+  flex-basis: 250px;
+  max-width: 200px;
+  margin-bottom: 5rem;
+}
+.singlePlayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100vh;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.scoreBar {
+  display: flex;
+  justify-content: center;
+  width: 150px;
+  background-color: #fef2eb;
+  margin-bottom: 0.5rem;
+}
+#scoreTech {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-grow: 2;
+}
+#scoreIcon {
+  display: flex;
+  align-items: center;
+  flex-grow: 2;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+#scoreBarsBox {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#scoreIcon img {
+  max-width: 75%;
+  max-height: 18vh;
+}
+.scoreTechPiece {
+  display: flex;
+  max-width: 90%;
+  margin: 0.2rem;
+}
+.circle {
+  height: 3rem;
+  width: 3rem;
+  background-color: #2a9d8f;
+  border-radius: 50%;
+}
+
+/* For the catergories' circle colors */
+#algorithm {
+  background-color: #264653;
+}
+#backend {
+  background-color: #e9c46a;
+}
+#frontend {
+  background-color: #f4a261;
+}
+#misc {
+  background-color: #e76a4b;
+}
+#ui {
+  background-color: #2a9d8f;
 }
