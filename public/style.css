@@ -18,6 +18,11 @@ label {
   display: block;
 }
 
+nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
 nav button {
   display: inline-block;
   margin: 1em;
@@ -36,6 +41,19 @@ form div {
 
 button {
   margin: 10px;
+  background-color: #e9c46a;
+  border: #e76a4b 2px solid;
+  border-radius: 25px;
+  font-family: monaco;
+}
+
+input {
+  font-family: monaco;
+  margin: 10px;
+  width: 30%;
+  text-align: center;
+  border: #e76a4b 2px solid;
+  border-radius: 25px;
 }
 
 .welcome {
