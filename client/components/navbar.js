@@ -8,7 +8,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 
-const Navbar = ({handleClick, isLoggedIn, handleTest, handleTest2}) => (
+const Navbar = () => (
   <div>
     <nav>
       <Link to="/">
