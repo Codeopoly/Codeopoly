@@ -97,97 +97,89 @@ export default class SceneMain extends Phaser.Scene {
 
     // Code for Callstack deck:
     const deckSpot = this.game.config.width * 0.65
-    const card = this.add.sprite(deckSpot, deckSpot, 'card1', 0)
-    card.displayWidth = this.game.config.width / 4.2
-    card.scaleY = card.scaleX
-    card.setAngle(-45)
-    card.isFlipping = false
-    card.setInteractive()
-
+    const myScale = 0.4 / (768 / this.game.config.width) // since 0.4 is the perfect scale for a screen of 768 px width, calculate the scale for this game's width accordingly
     const gameOptions = {
-      // flipping speed in milliseconds
-      flipSpeed: 200,
-      // flipping zoom ratio. Simulates the card to be raised when flipping
-      flipZoom: 1.2
+      flipSpeed: 200, // flipping speed in milliseconds
+      flipZoom: 1.2 // flipping zoom ratio. Simulates the card to be raised when flipping
     }
 
-    card.on(
-      'pointerdown',
-      function() {
-        // if the card is not flipping:
-        console.log('I clicked the card!')
-        if (!card.isFlipping) {
-          // make it flip now!
-          card.isFlipping = true
-          console.log('card scale', card.scale)
-          console.log('card scaleX', card.scaleX)
-          console.log('card scaleY', card.scaleY)
-          myFlipTween.play()
-        }
-        if (card.canBeDismissed) {
-          card.destroy()
-        }
-      },
-      this
-    )
-
-    // first tween: we raise and flip the card
-    // const flipTween = this.tweens.add({targets: card.scale}).updateTo({
-    //   x:0,
-    //   y: gameOptions.flipZoom
-    // }, gameOptions.flipSpeed / 2)
-
-    const myFlipTween = this.tweens.add({
-      targets: card,
-      scaleX: 0,
-      scaleY: gameOptions.flipZoom,
-      duration: gameOptions.flipSpeed / 2,
-      paused: true,
-      onComplete: switchSprite,
-      onCompleteParams: [card]
-      // onStart: handleMyFlipTween,
-      // onStartParams: [card]
+    // Make a group of cards
+    // Might need to put in a for loop atfer making 20 different cards
+    let group = this.add.group({
+      key: 'card1', //refers to preload name of spritesheet; in this case, I am using the same image for all 20 cards
+      frame: 0,
+      repeat: 19, // for 20 cards total
+      setRotation: {value: -0.7},
+      setScale: {x: myScale},
+      setXY: {x: deckSpot, y: deckSpot, stepX: 2},
+      maxSize: 20, // max number of group members (i.e. max number of cards in deck)
+      name: 'callstackDeck',
+      type: 'callstackDeckType'
+      // removeCallback could be used to add the card to an array for reshuffling later
     })
 
-    function switchSprite(tween, targets, gameObject) {
-      console.log('switchSprite ran!')
-      console.log('arguments:', arguments)
-      console.log('targets[0].frame', targets[0].frame)
-      targets[0].setFrame(1 - targets[0].frame.name)
-      // targets[0].frame = 1 - targets[0].frame;
-      backFlipTween.play()
-    }
+    // Get all the group members (aka all the cards in the group)
+    let callstackCards = group.getChildren()
+    console.log('arr of children?:', callstackCards)
 
-    const backFlipTween = this.tweens.add({
-      targets: card,
-      scaleX: 1,
-      scaleY: 1,
-      rotation: 0,
-      duration: gameOptions.flipSpeed / 2,
-      paused: true,
-      onComplete: backFlipDone
+    // For each card, make it clickable and assign it functions/tweens to run when clicked.
+    callstackCards.forEach(card => {
+      card.setInteractive()
+      card.on(
+        'pointerdown',
+        function() {
+          // if the card is not flipping:
+          console.log('I clicked the card!')
+          if (!card.isFlipping) {
+            // make it flip now!
+            card.isFlipping = true
+            console.log('card scale', card.scale)
+            console.log('card scaleX', card.scaleX)
+            console.log('card scaleY', card.scaleY)
+            myFlipTween.play()
+          }
+          if (card.canBeDismissed) {
+            card.destroy()
+          }
+        },
+        this
+      )
+
+      const myFlipTween = this.tweens.add({
+        targets: card,
+        scaleX: 0,
+        scaleY: gameOptions.flipZoom,
+        duration: gameOptions.flipSpeed / 2,
+        paused: true,
+        onComplete: switchSprite,
+        onCompleteParams: [card]
+      })
+
+      function switchSprite(tween, targets, gameObject) {
+        console.log('switchSprite ran!')
+        console.log('arguments:', arguments)
+        console.log('targets[0].frame', targets[0].frame)
+        targets[0].setFrame(1 - targets[0].frame.name)
+        backFlipTween.play()
+      }
+
+      const backFlipTween = this.tweens.add({
+        targets: card,
+        scaleX: 1,
+        scaleY: 1,
+        rotation: 0,
+        duration: gameOptions.flipSpeed / 2,
+        paused: true,
+        onComplete: backFlipDone
+      })
+
+      function backFlipDone() {
+        console.log('backFlipDone ran!')
+        card.canBeDismissed = true
+      }
     })
 
-    function backFlipDone() {
-      console.log('backFlipDone ran!')
-      card.canBeDismissed = true
-    }
-
-    // function handleMyFlipTween (tween, targets, gameObject){
-    //   console.log("handler ran!")
-
-    // }
-
-    // // second tween: we complete the flip and lower the card
-    // const backFlipTween = this.add.tween(this.card.scale).to({
-    //   x: 1,
-    //   y: 1
-    // }, this.gameOptions.flipSpeed / 2, Phaser.Easing.Linear.None)
-
-    // // once back on the table, we can flip it again
-    // backFlipTween.onComplete.add(function(){
-    //   card.isFlipping = false
-    // }, this)
+    // End Callstack Deck code.
   }
   update() {}
 }
