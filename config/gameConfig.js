@@ -9,7 +9,13 @@ const config = {
   width: 768,
   height: 768,
   resizeInterval: 800,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: {y: 0},
+      debug: true
+    }
+  },
   scene: [SceneMain]
 }
-
 export default config

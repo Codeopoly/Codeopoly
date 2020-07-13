@@ -18,34 +18,8 @@ export default class SceneMain extends Phaser.Scene {
     this.load.image('doge', 'assets/Doge-Meme.png')
   }
   create() {
-    var gridConfig = {
-      scene: this,
-      cols: 12,
-      rows: 12
-    }
-
-    this.aGrid = new AlignGrid(gridConfig, this.game)
-    this.aGrid.showNumbers()
-
     this.keys = this.input.keyboard.createCursorKeys()
-    // this.center = this.add.image(
-    //   this.game.config.width / 2, // where the center of the image is placed on the x-axis
-    //   this.game.config.height / 2, // y-axis
-    //   'center'
-    // )
 
-    // //scale the center
-    // this.center.displayWidth = this.game.config.width * 0.665
-    // this.center.scaleY = this.center.scaleX
-
-    // const backgroundImage = this.add.image(
-    //   this.game.config.width / 2,
-    //   this.game.config.height / 2,
-    //   'background'
-    // )
-    // .setOrigin(0, 0)
-    // backgroundImage.setScale(2, 0.8)
-    // const board = this.make.tilemap({key: 'board'})
     let board = this.make.tilemap({key: 'board'})
     // let boardData = board.addTilesetImage('board')
     console.log('board is added')
@@ -53,6 +27,9 @@ export default class SceneMain extends Phaser.Scene {
     console.log('tileset added')
     const firstLayer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
     console.log('first layer added')
+
+    // this.physics.world.bounds.width = board.width
+    // this.physics.world.bounds.height = board.height
 
     const interviewLayer = board.createStaticLayer('Interview', tileset, 0, 0)
     console.log('interview layer added')
@@ -65,21 +42,28 @@ export default class SceneMain extends Phaser.Scene {
 
     //THIS CONSOLE LOGS!!
 
-    interviewObj.forEach(tile => {
+    this.overlapObjectsGroup = this.physics.add.group({})
+
+    interviewObj.forEach(object => {
       console.log('HI THIS IS WORKING I GUESS????')
+      let obj = this.overlapObjectsGroup.create(object.x, object.y, 'tile')
+      obj.setOrigin(0)
+      obj.body.width = object.width
+      obj.body.height = object.height
     })
 
-    this.activateFunc = (player, tile) => {
-      console.log('inside the func')
-      // try game logic goes here
-    }
+    // overlapObjectsGroup.refresh()
+
+    // this.physics.add.overlap(this.doge, this.overlapObjectsGroup)
 
     // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
     // console.log('draw card layer added')
 
-    this.doge = this.add.sprite(0, 0, 'doge')
+    this.doge = this.physics.add.sprite(0, 0, 'doge')
     this.doge.setOrigin(-10.5, -10)
     this.doge.setScale(0.07)
+
+    // this.doge.setCollideWorldBounds(true) // don't go out of the map
 
     //dice action below!!
     this.anims.create({
@@ -126,6 +110,7 @@ export default class SceneMain extends Phaser.Scene {
     //this.aGrid.placeAtIndex(65.5, this.center);
   }
   update() {
+    // this.overlapObjectsGroup(this.doge)
     //SPRITE ANIMATION
     let spriteMovement = {velocity: 8}
 
@@ -141,5 +126,17 @@ export default class SceneMain extends Phaser.Scene {
     if (this.keys.up.isDown) {
       this.doge.y -= spriteMovement.velocity
     }
+
+    this.physics.add.overlap(
+      this.doge,
+      this.overlapObjectsGroup,
+      this.activateFunc,
+      null,
+      this
+    )
+  }
+  activateFunc(player, tile) {
+    console.log('inside the func')
+    // try game logic goes here
   }
 }
