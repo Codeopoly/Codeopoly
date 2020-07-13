@@ -7,7 +7,10 @@ export default class SceneMain extends Phaser.Scene {
 
   preload() {
     this.load.image('background', 'assets/tilemaps/background.png')
+    this.load.image('drawCard', 'assets/tilemaps/draw_card.png')
+    this.load.image('interview', 'assets/tilemaps/interview.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/tile_board.json')
+    this.load.image('doge', 'assets/Doge-Meme.png')
     this.load.spritesheet('dice', 'assets/dice.png', {
       frameWidth: 64,
       frameHeight: 64
@@ -24,8 +27,7 @@ export default class SceneMain extends Phaser.Scene {
     this.aGrid = new AlignGrid(gridConfig, this.game)
     this.aGrid.showNumbers()
 
-    const arr = []
-
+    this.keys = this.input.keyboard.createCursorKeys()
     // this.center = this.add.image(
     //   this.game.config.width / 2, // where the center of the image is placed on the x-axis
     //   this.game.config.height / 2, // y-axis
@@ -49,16 +51,37 @@ export default class SceneMain extends Phaser.Scene {
     console.log('board is added')
     const tileset = board.addTilesetImage('all tiles', 'background')
     console.log('tileset added')
-    const layer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
-    console.log('layer added')
+    const firstLayer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
+    console.log('first layer added')
 
-    //  CHARACTER SPRITES
+    const interviewLayer = board.createStaticLayer('Interview', tileset, 0, 0)
+    console.log('interview layer added')
+
+    const interviewTiles = board.createFromObjects('Interview')
+    const interviewObj = board.getObjectLayer('Interview').objects
+    const drawCardObj = board.getObjectLayer('Draw a card').objects
+    //console.log below works!!
+    console.log('these are two object layers', interviewObj, drawCardObj)
+
+    //THIS CONSOLE LOGS!!
+
+    interviewObj.forEach(tile => {
+      console.log('HI THIS IS WORKING I GUESS????')
+    })
+
+    this.activateFunc = (player, tile) => {
+      console.log('inside the func')
+      // try game logic goes here
+    }
+
+    // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
+    // console.log('draw card layer added')
+
     this.doge = this.add.sprite(0, 0, 'doge')
     this.doge.setOrigin(-10.5, -10)
     this.doge.setScale(0.07)
-    this.keys = this.input.keyboard.createCursorKeys()
 
-    //
+    //dice action below!!
     this.anims.create({
       key: 'firstDiceRoll',
       repeat: -1,
@@ -113,10 +136,10 @@ export default class SceneMain extends Phaser.Scene {
       this.doge.x += spriteMovement.velocity
     }
     if (this.keys.down.isDown) {
-      this.doge.y -= spriteMovement.velocity
+      this.doge.y += spriteMovement.velocity
     }
     if (this.keys.up.isDown) {
-      this.doge.y += spriteMovement.velocity
+      this.doge.y -= spriteMovement.velocity
     }
   }
 }
