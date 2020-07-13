@@ -54,46 +54,80 @@ export default class SceneMain extends Phaser.Scene {
     const layer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
     console.log('layer added')
 
-    this.anims.create({
+    // Code for the dice:
+    const first = this.add.sprite(180, 200, 'dice')
+    const second = this.add.sprite(280, 200, 'dice')
+    const diceFrameMap = {
+      // Frame name (key) : number on die (value)
+      0: 6,
+      1: 1,
+      2: 2,
+      3: 5,
+      4: 3,
+      5: 4
+    }
+
+    // dice animations
+    const anim1 = this.anims.create({
       key: 'firstDiceRoll',
       repeat: -1,
-      frameRate: 15,
+      frameRate: 15 + Math.floor(Math.random() * 3), // randomness to avoid the same rolling patterns
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
-    this.anims.create({
+    const anim2 = this.anims.create({
       key: 'secondDiceRoll',
       repeat: -1,
-      frameRate: 15,
+      frameRate: 18 + Math.floor(Math.random() * 3),
       frames: this.anims.generateFrameNames('dice', {start: 2, end: -2})
     })
 
-    // Code for the dice:
-    // const first = this.add.sprite(180, 200, 'dice').play('firstDiceRoll')
-    // const second = this.add.sprite(280, 200, 'dice').play('secondDiceRoll')
+    // dice tween
+    const rollingDiceTween = this.tweens.add({
+      targets: [first, second],
+      angle: 360.0,
+      duration: 50,
+      repeat: 10,
+      paused: true,
+      onComplete: stopAnims
+    })
 
-    // var _anims = this.anims
-    // this.tweens.add({
-    //   targets: first,
-    //   angle: 360.0,
-    //   duration: 50,
-    //   repeat: -1
-    // })
-    // this.tweens.add({
-    //   targets: second,
-    //   angle: 360.0,
-    //   duration: 50,
-    //   repeat: -1
-    // })
-    // var _tweens = this.tweens
-    // document.addEventListener('mouseup', function() {
-    //   if (_anims.paused) {
-    //     _anims.resumeAll()
-    //     _tweens.resumeAll()
-    //   } else {
-    //     _anims.pauseAll()
-    //     _tweens.pauseAll()
-    //   }
-    // })
+    // function called when the tween stops
+    function stopAnims() {
+      // console.log("stopAnims ran!", first.frame, second.frame)
+      console.log(
+        'You rolled: ',
+        diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
+      )
+      anim1.pause()
+      anim2.pause()
+      first.isRolling = false
+    }
+
+    let diceGroup = this.add.group([first, second])
+    let diceArray = diceGroup.getChildren()
+    // To keep track of whether it's the first time we're rolling the dice:
+    let firstTime = true
+
+    diceArray.forEach(die => {
+      die.setInteractive()
+      // Give each die the ability to do things when clicked
+      die.on('pointerdown', function() {
+        console.log('I clicked first die!')
+
+        if (firstTime) {
+          // If it's the first time rolling, we need to play the animation.
+          firstTime = false
+          rollingDiceTween.play()
+          first.play('firstDiceRoll')
+          second.play('secondDiceRoll')
+        } else {
+          // All other times, we need to resume the animation.
+          rollingDiceTween.play()
+          anim1.resume()
+          anim2.resume()
+        }
+      })
+    })
 
     // Code for Callstack deck:
     const deckSpot = this.game.config.width * 0.65
