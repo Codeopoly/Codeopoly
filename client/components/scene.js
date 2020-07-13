@@ -54,10 +54,24 @@ export default class SceneMain extends Phaser.Scene {
     console.log('interview layer added')
 
     const interviewTiles = board.createFromObjects('Interview')
-    console.log('this is interview layer', interviewTiles)
+    const interviewObj = board.getObjectLayer('Interview').objects
+    const drawCardObj = board.getObjectLayer('Draw a card').objects
+    //console.log below works!!
+    console.log('these are two object layers', interviewObj, drawCardObj)
 
-    const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
-    console.log('draw card layer added')
+    //THIS CONSOLE LOGS!!
+
+    interviewObj.forEach(tile => {
+      console.log('HI THIS IS WORKING I GUESS????')
+    })
+
+    this.activateFunc = (player, tile) => {
+      console.log('inside the func')
+      // try game logic goes here
+    }
+
+    // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
+    // console.log('draw card layer added')
 
     //dice action below!!
     this.anims.create({
