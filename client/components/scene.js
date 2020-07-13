@@ -9,6 +9,7 @@ export default class SceneMain extends Phaser.Scene {
     this.load.image('drawCard', 'assets/tilemaps/draw_card.png')
     this.load.image('interview', 'assets/tilemaps/interview.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/tile_board.json')
+    this.load.image('doge', 'assets/Doge-Meme.png')
     this.load.spritesheet('dice', 'assets/dice.png', {
       frameWidth: 64,
       frameHeight: 64
@@ -24,6 +25,7 @@ export default class SceneMain extends Phaser.Scene {
     this.aGrid = new AlignGrid(gridConfig, this.game)
     this.aGrid.showNumbers()
 
+    this.keys = this.input.keyboard.createCursorKeys()
     // this.center = this.add.image(
     //   this.game.config.width / 2, // where the center of the image is placed on the x-axis
     //   this.game.config.height / 2, // y-axis
@@ -73,6 +75,10 @@ export default class SceneMain extends Phaser.Scene {
     // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
     // console.log('draw card layer added')
 
+    let doge = this.add.sprite(0, 0, 'doge')
+    doge.setOrigin(-10.5, -10)
+    doge.setScale(0.07)
+
     //dice action below!!
     this.anims.create({
       key: 'firstDiceRoll',
@@ -117,5 +123,20 @@ export default class SceneMain extends Phaser.Scene {
     //place the face on the grid
     //this.aGrid.placeAtIndex(65.5, this.center);
   }
-  update() {}
+  update() {
+    //SPRITE MOVEMENT AROUND THE BOARD
+    let spriteMovement = {velocity: 8}
+    if (this.keys.left.isDown) {
+      this.doge.x -= spriteMovement.velocity
+    }
+    if (this.keys.right.isDown) {
+      this.doge.x += spriteMovement.velocity
+    }
+    if (this.keys.down.isDown) {
+      this.doge.y -= spriteMovement.velocity
+    }
+    if (this.keys.up.isDown) {
+      this.doge.y += spriteMovement.velocity
+    }
+  }
 }
