@@ -137,6 +137,7 @@ export default class SceneMain extends Phaser.Scene {
   }
   activateFunc(player, tile) {
     console.log('inside the func')
+    tile.disableBody()
     // try game logic goes here
   }
 }
