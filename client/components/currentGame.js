@@ -1,16 +1,38 @@
 import React, {useState, useEffect} from 'react'
-import {connect, useSelector, useDispatch} from 'react-redux'
+import {connect, useSelector, useDispatch, useStore} from 'react-redux'
 import {GameBoard, GameViewTitle, Player} from './index'
 import {Redirect} from 'react-router-dom'
 import {useFirestoreConnect} from 'react-redux-firebase'
 
 const CurrentGame = () => {
-  const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
-  const gameCode = Object.keys(gamesCollectionObj)[0]
-  const playersArray = useSelector(
-    state => state.firestore.data.games[gameCode].playersArray
-  )
-  const players = useSelector(state => state.firestore.data.players)
+  // const testGamesCollectionObj = useSelector(state => state.firestore)
+  // console.log('test data...', testGamesCollectionObj)
+  let gameCode
+  let playersArray
+  // let players
+
+  const test = useSelector(state => state)
+  console.log('test!', test)
+
+  //Is there an existing game on state from lobby? If not, use test game
+  if (!test.firestore.data.games) {
+    const testGameCode = '0F4Tr14nuz1TeQpLFwHd'
+    useFirestoreConnect([{collection: 'games', doc: testGameCode}])
+    console.log('current state', useStore.getState())
+    playersArray = useSelector(
+      state => state.firestore.data.games[testGameCode].playersArray
+    )
+  } else {
+    const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
+    gameCode = Object.keys(gamesCollectionObj)[0]
+    playersArray = useSelector(
+      state => state.firestore.data.games[gameCode].playersArray
+    )
+    players = useSelector(state => state.firestore.data.players)
+  }
+
+  console.log('here i am on line 35...')
+
   // const players = useSelector((state) => state.players)
   const [ready, setReady] = useState(false)
   // let arrayOfPlayerPathsAndGame = []
