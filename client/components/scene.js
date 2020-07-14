@@ -71,53 +71,59 @@ export default class SceneMain extends Phaser.Scene {
     const goObj = board.getObjectLayer('Go').objects[0]
 
     this.singleTilesArr = [
-      coffeeBreakObj,
-      stealSomeTechObj,
-      queuesObj,
-      stacksObj,
-      linkedListsObj,
-      treesObj,
-      graphsObj,
-      gotaBugObj,
-      newInvestorObj,
-      sequelizeObj,
-      firebaseObj,
-      expressObj,
-      mongoDBObj,
+      goObj,
       loseMoneyObj,
-      middlewareObj,
-      authObj,
-      codeDesignObj,
-      materialUIObj,
-      cssObj,
-      htmlObj,
-      stuckOnBugObj,
-      semanticUIObj,
-      reactObj,
-      reactNativeObj,
-      emberObj,
-      vueObj,
+      mongoDBObj,
+      expressObj,
+      firebaseObj,
+      sequelizeObj,
+      newInvestorObj,
+      gotaBugObj,
+      graphsObj,
+      treesObj,
+      linkedListsObj,
+      stacksObj,
+      queuesObj,
+      stealSomeTechObj,
+      coffeeBreakObj,
       angularObj,
-      goObj
+      vueObj,
+      emberObj,
+      reactNativeObj,
+      reactObj,
+      semanticUIObj,
+      stuckOnBugObj,
+      htmlObj,
+      cssObj,
+      materialUIObj,
+      codeDesignObj,
+      authObj,
+      middlewareObj
     ]
+
+    console.log('checking draw card props', drawCardObj)
 
     //CREATING GROUPS FOR TILES BELOW
     this.interviewGroup = this.physics.add.group({})
     this.drawCardGroup = this.physics.add.group({})
 
+    this.interviewArr = []
     interviewObj.forEach(object => {
       console.log('INTERVIEW PLACEMENT WORKS')
       let obj = this.interviewGroup.create(object.x, object.y, 'tile')
       obj.setOrigin(0)
       obj.body.width = object.width
       obj.body.height = object.height
+      this.interviewArr.push(obj)
     })
+    this.drawCardArr = []
     drawCardObj.forEach(object => {
       console.log('DRAW CARD PLACEMENT WORKS')
       let obj = this.drawCardGroup.create(object.x, object.y, 'tile')
       obj.setOrigin(0)
       obj.body.width = object.width
       obj.body.height = object.height
+      this.drawCardArr.push(obj)
     })
 
     //SINGLE TILE PLACEMENT BELOW
@@ -128,8 +134,32 @@ export default class SceneMain extends Phaser.Scene {
       obj.body.width = object.width
       obj.body.height = object.height
       this.placementArr.push(obj)
-      console.log(object.name)
     })
+
+    // console.log(this.placementArr)
+
+    // PATH TILES IN ORDER FROM GO TO FINISH
+    this.tilePathArr = this.placementArr
+
+    //insert draw card right at 6th idx
+    this.tilePathArr.splice(6, 0, this.drawCardArr[1])
+    //insert interview right at 8th idx
+    this.tilePathArr.splice(8, 0, this.interviewArr[1])
+    //insert interview top at 13th idx
+    this.tilePathArr.splice(13, 0, this.interviewArr[0])
+    //insert draw card top at 16th idx
+    this.tilePathArr.splice(16, 0, this.drawCardArr[0])
+    //insert interview left at 20th idx
+    this.tilePathArr.splice(20, 0, this.interviewArr[2])
+    //insert draw card left at 24th idx
+    this.tilePathArr.splice(24, 0, this.drawCardArr[2])
+    //insert interview bottom at 31st idx
+    this.tilePathArr.splice(31, 0, this.interviewArr[3])
+    //insert draw card bottom at 32nd idx
+    this.tilePathArr.splice(32, 0, this.drawCardArr[3])
+    console.log(this.tilePathArr)
+
+    //DOGE PLACEMENT BELOW
 
     this.doge = this.physics.add.sprite(0, 0, 'doge')
     this.doge.setOrigin(-10.5, -10)
