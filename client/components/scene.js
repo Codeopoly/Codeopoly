@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import AlignGrid from '../../utility/alignGrid'
 
 export default class SceneMain extends Phaser.Scene {
@@ -36,42 +37,42 @@ export default class SceneMain extends Phaser.Scene {
     // this.physics.world.bounds.width = board.width
     // this.physics.world.bounds.height = board.height
 
-    const interviewLayer = board.createStaticLayer('Interview', tileset, 0, 0)
-    console.log('interview layer added')
+    // const interviewLayer = board.createStaticLayer('Interview', tileset, 0, 0)
+    // console.log('interview layer added')
 
     const interviewTiles = board.createFromObjects('Interview')
 
     //getting object layers from json file
     const interviewObj = board.getObjectLayer('Interview').objects
     const drawCardObj = board.getObjectLayer('Draw a card').objects
-    const coffeeBreakObj = board.getObjectLayer('Coffee Break').objects
-    const stealSomeTechObj = board.getObjectLayer('Steal some tech').objects
-    const queuesObj = board.getObjectLayer('Queues').objects
-    const stacksObj = board.getObjectLayer('Stacks').objects
-    const linkedListsObj = board.getObjectLayer('Linked lists').objects
-    const treesObj = board.getObjectLayer('Trees').objects
-    const graphsObj = board.getObjectLayer('Graphs').objects
-    const gotaBugObj = board.getObjectLayer('Got a bug').objects
-    const newInvestorObj = board.getObjectLayer('New Investor').objects
-    const sequelizeObj = board.getObjectLayer('Sequelize').objects
-    const firebaseObj = board.getObjectLayer('Firebase').objects
-    const expressObj = board.getObjectLayer('Express').objects
-    const mongoDBObj = board.getObjectLayer('MongoDB').objects
-    const loseMoneyObj = board.getObjectLayer('Lose money').objects
-    const middlewareObj = board.getObjectLayer('Middleware').objects
-    const authObj = board.getObjectLayer('Auth').objects
-    const codeDesignObj = board.getObjectLayer('Code design').objects
-    const materialUIObj = board.getObjectLayer('MaterialUI').objects
-    const cssObj = board.getObjectLayer('CSS').objects
-    const htmlObj = board.getObjectLayer('HTML').objects
-    const stuckOnBugObj = board.getObjectLayer('Stuck on bug').objects
-    const semanticUIObj = board.getObjectLayer('SemanticUI').objects
-    const reactObj = board.getObjectLayer('React').objects
-    const reactNativeObj = board.getObjectLayer('React native').objects
-    const emberObj = board.getObjectLayer('Ember').objects
-    const vueObj = board.getObjectLayer('Vue').objects
-    const angularObj = board.getObjectLayer('Angular').objects
-    const goObj = board.getObjectLayer('Go').objects
+    const coffeeBreakObj = board.getObjectLayer('Coffee Break').objects[0]
+    const stealSomeTechObj = board.getObjectLayer('Steal some tech').objects[0]
+    const queuesObj = board.getObjectLayer('Queues').objects[0]
+    const stacksObj = board.getObjectLayer('Stacks').objects[0]
+    const linkedListsObj = board.getObjectLayer('Linked lists').objects[0]
+    const treesObj = board.getObjectLayer('Trees').objects[0]
+    const graphsObj = board.getObjectLayer('Graphs').objects[0]
+    const gotaBugObj = board.getObjectLayer('Got a bug').objects[0]
+    const newInvestorObj = board.getObjectLayer('New Investor').objects[0]
+    const sequelizeObj = board.getObjectLayer('Sequelize').objects[0]
+    const firebaseObj = board.getObjectLayer('Firebase').objects[0]
+    const expressObj = board.getObjectLayer('Express').objects[0]
+    const mongoDBObj = board.getObjectLayer('MongoDB').objects[0]
+    const loseMoneyObj = board.getObjectLayer('Lose money').objects[0]
+    const middlewareObj = board.getObjectLayer('Middleware').objects[0]
+    const authObj = board.getObjectLayer('Auth').objects[0]
+    const codeDesignObj = board.getObjectLayer('Code design').objects[0]
+    const materialUIObj = board.getObjectLayer('MaterialUI').objects[0]
+    const cssObj = board.getObjectLayer('CSS').objects[0]
+    const htmlObj = board.getObjectLayer('HTML').objects[0]
+    const stuckOnBugObj = board.getObjectLayer('Stuck on bug').objects[0]
+    const semanticUIObj = board.getObjectLayer('SemanticUI').objects[0]
+    const reactObj = board.getObjectLayer('React').objects[0]
+    const reactNativeObj = board.getObjectLayer('React native').objects[0]
+    const emberObj = board.getObjectLayer('Ember').objects[0]
+    const vueObj = board.getObjectLayer('Vue').objects[0]
+    const angularObj = board.getObjectLayer('Angular').objects[0]
+    const goObj = board.getObjectLayer('Go').objects[0]
 
     //console.log below works!!
     console.log('these are two object layers', interviewObj, drawCardObj)
@@ -96,6 +97,14 @@ export default class SceneMain extends Phaser.Scene {
       obj.body.width = object.width
       obj.body.height = object.height
     })
+
+    //SINGLE TILE PLACEMENTS BELOW
+    console.log('this is coffee break', coffeeBreakObj)
+    this.coffeeBreakPlacement = this.physics.add
+      .sprite(coffeeBreakObj.x, coffeeBreakObj.y, coffeeBreakObj)
+      .setOrigin(0)
+    this.coffeeBreakPlacement.body.width = coffeeBreakObj.width
+    this.coffeeBreakPlacement.body.height = coffeeBreakObj.height
 
     // interviewGroup.refresh()
 
@@ -299,6 +308,13 @@ export default class SceneMain extends Phaser.Scene {
     this.physics.add.overlap(
       this.doge,
       this.drawCardGroup,
+      this.activateFunc,
+      null,
+      this
+    )
+    this.physics.add.overlap(
+      this.doge,
+      this.coffeeBreakPlacement,
       this.activateFunc,
       null,
       this
