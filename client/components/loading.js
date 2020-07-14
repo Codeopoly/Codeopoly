@@ -27,7 +27,7 @@ const Loading = () => {
     return <Redirect to="/game" />
   }
 
-  return <p>Loading game...</p>
+  return <p />
 }
 
 export default Loading

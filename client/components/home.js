@@ -71,7 +71,7 @@ const HomePage = props => {
         </div>
         <div id="buttonBox3">
           <button type="button" onClick={handleTest}>
-            Test
+            Rejoin
           </button>
         </div>
       </div>

@@ -6,6 +6,9 @@ import {useFirestoreConnect} from 'react-redux-firebase'
 
 const CurrentGame = () => {
   const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
+  if (gamesCollectionObj === undefined) {
+    return <Redirect to="/rejoin" />
+  }
   const gameCode = Object.keys(gamesCollectionObj)[0]
   const playerIdArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray

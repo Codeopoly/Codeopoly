@@ -36,6 +36,9 @@ const Rejoin = () => {
   return (
     <div className="welcome">
       <div>
+        <h2>Please reenter your game code to rejoin your game</h2>
+      </div>
+      <div>
         <input type="text" value={gameCode} onChange={handleChange} />
         <button type="button" onClick={handleClick}>
           Rejoin
