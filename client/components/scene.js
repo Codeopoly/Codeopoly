@@ -21,7 +21,6 @@ export default class SceneMain extends Phaser.Scene {
       frameWidth: 425,
       frameHeight: 275
     })
-
   }
   create() {
     this.keys = this.input.keyboard.createCursorKeys()
@@ -41,27 +40,57 @@ export default class SceneMain extends Phaser.Scene {
     console.log('interview layer added')
 
     const interviewTiles = board.createFromObjects('Interview')
+
+    //getting object layers from json file
     const interviewObj = board.getObjectLayer('Interview').objects
     const drawCardObj = board.getObjectLayer('Draw a card').objects
+    const coffeeBreakObj = board.getObjectLayer('Coffee Break').objects
+    const stealSomeTechObj = board.getObjectLayer('Steal some tech').objects
+    const queuesObj = board.getObjectLayer('Queues').objects
+    const stacksObj = board.getObjectLayer('Stacks').objects
+    const linkedListsObj = board.getObjectLayer('Linked lists').objects
+    const treesObj = board.getObjectLayer('Trees').objects
+    const graphsObj = board.getObjectLayer('Graphs').objects
+    const gotaBugObj = board.getObjectLayer('Got a bug').objects
+    const newInvestorObj = board.getObjectLayer('New Investor').objects
+    const sequelizeObj = board.getObjectLayer('Sequelize').objects
+    const firebaseObj = board.getObjectLayer('Firebase').objects
+    const expressObj = board.getObjectLayer('Express').objects
+    const mongoDBObj = board.getObjectLayer('MongoDB').objects
+    const loseMoneyObj = board.getObjectLayer('Lose money').objects
+    const middlewareObj = board.getObjectLayer('Middleware').objects
+    const authObj = board.getObjectLayer('Auth').objects
+    const codeDesignObj = board.getObjectLayer('Code design').objects
+    const materialUIObj = board.getObjectLayer('MaterialUI').objects
+    const cssObj = board.getObjectLayer('CSS').objects
+    const htmlObj = board.getObjectLayer('HTML').objects
+    const stuckOnBugObj = board.getObjectLayer('Stuck on bug').objects
+    const semanticUIObj = board.getObjectLayer('SemanticUI').objects
+    const reactObj = board.getObjectLayer('React').objects
+    const reactNativeObj = board.getObjectLayer('React native').objects
+    const emberObj = board.getObjectLayer('Ember').objects
+    const vueObj = board.getObjectLayer('Vue').objects
+    const angularObj = board.getObjectLayer('Angular').objects
+    const goObj = board.getObjectLayer('Go').objects
+
     //console.log below works!!
     console.log('these are two object layers', interviewObj, drawCardObj)
 
     //THIS CONSOLE LOGS!!
 
-    this.overlapObjectsGroup = this.physics.add.group({})
+    this.interviewGroup = this.physics.add.group({})
 
     interviewObj.forEach(object => {
       console.log('HI THIS IS WORKING I GUESS????')
-      let obj = this.overlapObjectsGroup.create(object.x, object.y, 'tile')
+      let obj = this.interviewGroup.create(object.x, object.y, 'tile')
       obj.setOrigin(0)
       obj.body.width = object.width
       obj.body.height = object.height
     })
 
-    // overlapObjectsGroup.refresh()
+    // interviewGroup.refresh()
 
-    // this.physics.add.overlap(this.doge, this.overlapObjectsGroup)
-
+    // this.physics.add.overlap(this.doge, this.interviewGroup)
 
     // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
     // console.log('draw card layer added')
@@ -71,7 +100,6 @@ export default class SceneMain extends Phaser.Scene {
     this.doge.setScale(0.07)
 
     // this.doge.setCollideWorldBounds(true) // don't go out of the map
-
 
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
@@ -88,7 +116,6 @@ export default class SceneMain extends Phaser.Scene {
 
     // dice animations
     const anim1 = this.anims.create({
-
       key: 'firstDiceRoll',
       repeat: -1,
       frameRate: 15 + Math.floor(Math.random() * 3), // randomness to avoid the same rolling patterns
@@ -236,7 +263,7 @@ export default class SceneMain extends Phaser.Scene {
     // End Callstack Deck code.
   }
   update() {
-    // this.overlapObjectsGroup(this.doge)
+    // this.interviewGroup(this.doge)
     //SPRITE ANIMATION
     let spriteMovement = {velocity: 8}
 
@@ -255,7 +282,7 @@ export default class SceneMain extends Phaser.Scene {
 
     this.physics.add.overlap(
       this.doge,
-      this.overlapObjectsGroup,
+      this.interviewGroup,
       this.activateFunc,
       null,
       this
