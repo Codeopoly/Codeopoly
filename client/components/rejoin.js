@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {connect, useSelector, useDispatch} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {useFirestoreConnect} from 'react-redux-firebase'
+import Loading from './loading'
 
 const Rejoin = () => {
   const [gameCode, setGameCode] = useState('0F4Tr14nuz1TeQpLFwHd')
@@ -18,8 +19,8 @@ const Rejoin = () => {
   }
 
   if (clicked) {
-    useFirestoreConnect([{collection: 'games', doc: gameCode}])
-    setRedirectNow(true)
+    // useFirestoreConnect([{collection: 'games', doc: gameCode}])
+    // setRedirectNow(true)
   }
 
   // useEffect () {
@@ -33,10 +34,16 @@ const Rejoin = () => {
 
   return (
     <div className="welcome">
-      <input type="text" value={gameCode} onChange={handleChange} />
-      <button type="button" onClick={handleClick}>
-        Rejoin
-      </button>
+      {clicked ? (
+        <Loading gameCode={gameCode} />
+      ) : (
+        <div>
+          <input type="text" value={gameCode} onChange={handleChange} />
+          <button type="button" onClick={handleClick}>
+            Rejoin
+          </button>
+        </div>
+      )}
     </div>
   )
 }
