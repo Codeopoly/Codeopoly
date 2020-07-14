@@ -45,7 +45,10 @@ const chooseCharacter = props => {
     setImg(event.target.src)
     const chars = document.getElementsByClassName('responsive-img')
     for (let i = 0; i < chars.length; i++) {
-      chars[i].classList.remove('selectedChar')
+      if (chars[i].id !== event.target.id) {
+        chars[i].classList.remove('selectedChar')
+        chars[i].classList.add('unselectedChar')
+      } else chars[i].classList.remove('unselectedChar')
     }
     event.target.classList.add('selectedChar')
   }

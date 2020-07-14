@@ -25,6 +25,11 @@ label {
   display: block;
 }
 
+nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
 nav button {
   display: inline-block;
   margin: 1em;
@@ -43,6 +48,19 @@ form div {
 
 button {
   margin: 10px;
+  background-color: $backend;
+  border: $misc 2px solid;
+  border-radius: 25px;
+  font-family: monaco;
+}
+
+input {
+  font-family: monaco;
+  margin: 10px;
+  width: 30%;
+  text-align: center;
+  border: $misc 2px solid;
+  border-radius: 25px;
 }
 
 .welcome {
@@ -67,14 +85,18 @@ button {
 .responsive-img {
   @extend %character-img;
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.3);
     box-shadow: 1 0 10px rgba(0, 0, 0, 0.5);
   }
 }
 
 .selectedChar {
-  transform: scale(1.2);
+  transform: scale(1.3);
   box-shadow: 10 10px rgba(0, 0, 0, 0.5);
+}
+
+.unselectedChar {
+  filter: grayscale(100%);
 }
 
 .responsive-img-lobby {

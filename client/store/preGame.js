@@ -183,7 +183,7 @@ export default function(state = {}, action) {
       newState.gameCode = action.gameCode
       return newState
     case START_GAME:
-      return {isStarted: true} // might need to return old state?
+      return state // might need to return old state?
     case INVALID_GAME:
       return {gameCode: null}
     default:
