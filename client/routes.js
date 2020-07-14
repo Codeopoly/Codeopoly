@@ -12,7 +12,8 @@ import {
   HostLobby,
   PlayerLobby,
   CurrentGame,
-  Instructions
+  Instructions,
+  Rejoin
 } from './components'
 import {me} from './store'
 
@@ -39,6 +40,7 @@ class Routes extends Component {
         <Route exact path="/create/lobby" component={HostLobby} />
         <Route exact path="/join/lobby" component={PlayerLobby} />
         <Route exact path="/instructions" component={Instructions} />
+        <Route exact path="/rejoin" component={Rejoin} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
