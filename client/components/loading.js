@@ -1,28 +1,33 @@
 import React, {useState, useEffect} from 'react'
 import {Redirect} from 'react-router-dom'
 import {useFirestoreConnect} from 'react-redux-firebase'
+import {useSelector} from 'react-redux'
 
-const loading = props => {
+const Loading = () => {
+  const preGame = useSelector(state => state.preGame)
   const [redirect, setRedirect] = useState(false)
 
-  if (redirect) {
-    console.log('redirect  is true!')
-    // return <Redirect to="/game" />
-  }
-
-  function redirectNow() {
-    setRedirect(true)
-  }
-
-  useFirestoreConnect([{collection: 'games', doc: props.gameCode}])
+  useFirestoreConnect([{collection: 'games', doc: preGame.gameCode}])
 
   useEffect(() => {
+    const abortController = new AbortController()
+    const signal = abortController.signal
+
     setTimeout(() => {
-      redirectNow()
-    }, 2000)
-  })
+      setRedirect(true)
+    }, 500)
+
+    return function cleanup() {
+      abortController.abort()
+    }
+  }, [])
+
+  if (redirect) {
+    console.log('redirect is true!')
+    return <Redirect to="/game" />
+  }
 
   return <p>Loading game...</p>
 }
 
-export default loading
+export default Loading

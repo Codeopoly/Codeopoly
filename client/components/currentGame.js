@@ -7,19 +7,11 @@ import {useFirestoreConnect} from 'react-redux-firebase'
 const CurrentGame = () => {
   const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
   const gameCode = Object.keys(gamesCollectionObj)[0]
-  const playersArray = useSelector(
+  const playerIdArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray
   )
-  const players = useSelector(state => state.firestore.data.players)
-  // const players = useSelector((state) => state.players)
   const [ready, setReady] = useState(false)
-  // let arrayOfPlayerPathsAndGame = []
-  // console.log("GameView loaded!")
-
-  console.log('playersArray: ', playersArray)
-  console.log('players from firestore', players)
-
-  const arrayOfPlayerPathsAndGame = playersArray.map(playerId => {
+  const arrayOfPlayerPathsAndGame = playerIdArray.map(playerId => {
     return {
       collection: 'players',
       doc: playerId
@@ -30,21 +22,23 @@ const CurrentGame = () => {
     doc: gameCode
   })
 
+  const players = useSelector(state => state.firestore.data.players)
+
+  useFirestoreConnect(arrayOfPlayerPathsAndGame)
+
   useEffect(
     () => {
       if (players) {
-        if (playersArray.length === Object.values(players).length) {
+        if (playerIdArray.length === Object.values(players).length) {
           console.log('THEY FINALLY MATCH')
           setReady(true)
+        } else {
+          console.log("They don't match yettttttttttttttttt")
         }
       }
     },
-    [playersArray, players]
+    [playerIdArray, players]
   )
-
-  console.log('arrayOfPlayerPathsAndGame: ', arrayOfPlayerPathsAndGame)
-  //console.log('PLAYERS!!!', players)
-  useFirestoreConnect(arrayOfPlayerPathsAndGame)
 
   // Our redux state now has:
   // state.firestore.data.games[gameCode] for the game document
