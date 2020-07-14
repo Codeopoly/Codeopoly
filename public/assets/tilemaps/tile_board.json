@@ -2,7 +2,8 @@
   "compressionlevel": -1,
   "editorsettings": {
     "export": {
-      "target": "."
+      "format": "json",
+      "target": "tile_board.json"
     }
   },
   "height": 12,
@@ -22,10 +23,152 @@
       "width": 12,
       "x": 0,
       "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 5,
+      "name": "Draw a card",
+      "objects": [
+        {
+          "height": 128,
+          "id": 6,
+          "name": "top",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 190,
+          "y": 0
+        },
+        {
+          "height": 64,
+          "id": 7,
+          "name": "right",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 128,
+          "x": 640,
+          "y": 255
+        },
+        {
+          "height": 64,
+          "id": 8,
+          "name": "left",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 128,
+          "x": 0,
+          "y": 447
+        },
+        {
+          "height": 128,
+          "id": 9,
+          "name": "bottom",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 385,
+          "y": 640
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 6,
+      "name": "Interview",
+      "objects": [
+        {
+          "height": 128,
+          "id": 10,
+          "name": "top",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 385,
+          "y": 0
+        },
+        {
+          "height": 64,
+          "id": 11,
+          "name": "right",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 128,
+          "x": 640,
+          "y": 128
+        },
+        {
+          "height": 64,
+          "id": 12,
+          "name": "left",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 128,
+          "x": 0,
+          "y": 190
+        },
+        {
+          "height": 128,
+          "id": 13,
+          "name": "bottom",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 320,
+          "y": 640
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "compression": "",
+      "data":
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAkAAAAJQAAACYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "encoding": "base64",
+      "height": 12,
+      "id": 3,
+      "name": "Interview",
+      "opacity": 1,
+      "type": "tilelayer",
+      "visible": false,
+      "width": 12,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "compression": "",
+      "data":
+        "AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVQAAAFYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "encoding": "base64",
+      "height": 12,
+      "id": 4,
+      "name": "Draw a card",
+      "opacity": 1,
+      "type": "tilelayer",
+      "visible": false,
+      "width": 12,
+      "x": 0,
+      "y": 0
     }
   ],
-  "nextlayerid": 2,
-  "nextobjectid": 1,
+  "nextlayerid": 7,
+  "nextobjectid": 14,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.4.1",
@@ -34,7 +177,7 @@
     {
       "columns": 12,
       "firstgid": 1,
-      "image": "tiles.png",
+      "image": "all_tiles.png",
       "imageheight": 768,
       "imagewidth": 768,
       "margin": 0,
