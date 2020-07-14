@@ -78,11 +78,20 @@ export default class SceneMain extends Phaser.Scene {
 
     //THIS CONSOLE LOGS!!
 
+    //CREATING GROUPS FOR TILES BELOW
     this.interviewGroup = this.physics.add.group({})
+    this.drawCardGroup = this.physics.add.group({})
 
     interviewObj.forEach(object => {
-      console.log('HI THIS IS WORKING I GUESS????')
+      console.log('INTERVIEW PLACEMENT WORKS')
       let obj = this.interviewGroup.create(object.x, object.y, 'tile')
+      obj.setOrigin(0)
+      obj.body.width = object.width
+      obj.body.height = object.height
+    })
+    drawCardObj.forEach(object => {
+      console.log('DRAW CARD PLACEMENT WORKS')
+      let obj = this.drawCardGroup.create(object.x, object.y, 'tile')
       obj.setOrigin(0)
       obj.body.width = object.width
       obj.body.height = object.height
@@ -283,6 +292,13 @@ export default class SceneMain extends Phaser.Scene {
     this.physics.add.overlap(
       this.doge,
       this.interviewGroup,
+      this.activateFunc,
+      null,
+      this
+    )
+    this.physics.add.overlap(
+      this.doge,
+      this.drawCardGroup,
       this.activateFunc,
       null,
       this
