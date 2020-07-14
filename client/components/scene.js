@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 import AlignGrid from '../../utility/alignGrid'
+import {auth} from 'firebase'
 
 export default class SceneMain extends Phaser.Scene {
   constructor() {
@@ -37,11 +38,6 @@ export default class SceneMain extends Phaser.Scene {
     // this.physics.world.bounds.width = board.width
     // this.physics.world.bounds.height = board.height
 
-    // const interviewLayer = board.createStaticLayer('Interview', tileset, 0, 0)
-    // console.log('interview layer added')
-
-    const interviewTiles = board.createFromObjects('Interview')
-
     //getting object layers from json file
     const interviewObj = board.getObjectLayer('Interview').objects
     const drawCardObj = board.getObjectLayer('Draw a card').objects
@@ -74,10 +70,36 @@ export default class SceneMain extends Phaser.Scene {
     const angularObj = board.getObjectLayer('Angular').objects[0]
     const goObj = board.getObjectLayer('Go').objects[0]
 
-    //console.log below works!!
-    console.log('these are two object layers', interviewObj, drawCardObj)
-
-    //THIS CONSOLE LOGS!!
+    this.singleTilesArr = [
+      coffeeBreakObj,
+      stealSomeTechObj,
+      queuesObj,
+      stacksObj,
+      linkedListsObj,
+      treesObj,
+      graphsObj,
+      gotaBugObj,
+      newInvestorObj,
+      sequelizeObj,
+      firebaseObj,
+      expressObj,
+      mongoDBObj,
+      loseMoneyObj,
+      middlewareObj,
+      authObj,
+      codeDesignObj,
+      materialUIObj,
+      cssObj,
+      htmlObj,
+      stuckOnBugObj,
+      semanticUIObj,
+      reactObj,
+      reactNativeObj,
+      emberObj,
+      vueObj,
+      angularObj,
+      goObj
+    ]
 
     //CREATING GROUPS FOR TILES BELOW
     this.interviewGroup = this.physics.add.group({})
@@ -98,20 +120,16 @@ export default class SceneMain extends Phaser.Scene {
       obj.body.height = object.height
     })
 
-    //SINGLE TILE PLACEMENTS BELOW
-    console.log('this is coffee break', coffeeBreakObj)
-    this.coffeeBreakPlacement = this.physics.add
-      .sprite(coffeeBreakObj.x, coffeeBreakObj.y, coffeeBreakObj)
-      .setOrigin(0)
-    this.coffeeBreakPlacement.body.width = coffeeBreakObj.width
-    this.coffeeBreakPlacement.body.height = coffeeBreakObj.height
-
-    // interviewGroup.refresh()
-
-    // this.physics.add.overlap(this.doge, this.interviewGroup)
-
-    // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
-    // console.log('draw card layer added')
+    //SINGLE TILE PLACEMENT BELOW
+    this.placementArr = []
+    this.singleTilesArr.forEach(object => {
+      let obj = this.physics.add.sprite(object.x, object.y, object.name)
+      obj.setOrigin(0)
+      obj.body.width = object.width
+      obj.body.height = object.height
+      this.placementArr.push(obj)
+      console.log(object.name)
+    })
 
     this.doge = this.physics.add.sprite(0, 0, 'doge')
     this.doge.setOrigin(-10.5, -10)
@@ -298,27 +316,15 @@ export default class SceneMain extends Phaser.Scene {
       this.doge.y -= spriteMovement.velocity
     }
 
-    this.physics.add.overlap(
-      this.doge,
-      this.interviewGroup,
-      this.activateFunc,
-      null,
-      this
-    )
-    this.physics.add.overlap(
-      this.doge,
-      this.drawCardGroup,
-      this.activateFunc,
-      null,
-      this
-    )
-    this.physics.add.overlap(
-      this.doge,
-      this.coffeeBreakPlacement,
-      this.activateFunc,
-      null,
-      this
-    )
+    this.placementArr.forEach(placement => {
+      this.physics.add.overlap(
+        this.doge,
+        placement,
+        this.activateFunc,
+        null,
+        this
+      )
+    })
   }
   activateFunc(player, tile) {
     console.log('inside the func')
