@@ -10,7 +10,6 @@ export default class SceneMain extends Phaser.Scene {
     this.load.image('drawCard', 'assets/tilemaps/draw_card.png')
     this.load.image('interview', 'assets/tilemaps/interview.png')
     this.load.tilemapTiledJSON('board', 'assets/tilemaps/tile_board.json')
-    this.load.image('doge', 'assets/Doge-Meme.png')
     this.load.spritesheet('dice', 'assets/dice.png', {
       frameWidth: 64,
       frameHeight: 64
