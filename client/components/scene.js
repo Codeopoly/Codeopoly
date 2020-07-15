@@ -1,4 +1,5 @@
 import AlignGrid from '../../utility/alignGrid'
+import EventDispatcher from '../../utility/eventDispatcher'
 
 export default class SceneMain extends Phaser.Scene {
   constructor() {
@@ -21,9 +22,10 @@ export default class SceneMain extends Phaser.Scene {
       frameWidth: 425,
       frameHeight: 275
     })
-
   }
   create() {
+    this.emitter = EventDispatcher.getInstance()
+
     this.keys = this.input.keyboard.createCursorKeys()
 
     let board = this.make.tilemap({key: 'board'})
@@ -62,7 +64,6 @@ export default class SceneMain extends Phaser.Scene {
 
     // this.physics.add.overlap(this.doge, this.overlapObjectsGroup)
 
-
     // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
     // console.log('draw card layer added')
 
@@ -71,7 +72,6 @@ export default class SceneMain extends Phaser.Scene {
     this.doge.setScale(0.07)
 
     // this.doge.setCollideWorldBounds(true) // don't go out of the map
-
 
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
@@ -88,7 +88,6 @@ export default class SceneMain extends Phaser.Scene {
 
     // dice animations
     const anim1 = this.anims.create({
-
       key: 'firstDiceRoll',
       repeat: -1,
       frameRate: 15 + Math.floor(Math.random() * 3), // randomness to avoid the same rolling patterns
@@ -234,7 +233,13 @@ export default class SceneMain extends Phaser.Scene {
     })
 
     // End Callstack Deck code.
+    this.setListeners()
   }
+
+  setListeners() {
+    this.emitter.on('abc', console.log('i heard start'))
+  }
+
   update() {
     // this.overlapObjectsGroup(this.doge)
     //SPRITE ANIMATION

@@ -21,12 +21,15 @@ const CurrentGame = () => {
       doc: playerId
     }
   })
+
   arrayOfPlayerPathsAndGame.push({
     collection: 'games',
     doc: gameCode
   })
 
   const players = useSelector(state => state.firestore.data.players)
+
+  // console.log('player docs array!', players)
 
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
 
@@ -65,7 +68,7 @@ const CurrentGame = () => {
           )}
         </div>
         <div id="theGame">
-          <GameBoard />
+          <GameBoard players={players} />
         </div>
         <div className="rightside">
           <div id="player2" className="singlePlayerBox">
