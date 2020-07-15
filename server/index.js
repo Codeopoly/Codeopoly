@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
 module.exports = app
+const {Firestore} = require('@google-cloud/firestore')
+const {FirestoreStore} = require('@google-cloud/connect-firestore')
 
 //Firestore seeding:
 
@@ -18,27 +20,47 @@ const admin = require('../node_modules/firebase-admin')
 const serviceAccount = require('./firestoreSAK.json') //service account key info
 const data = require('./data.json') //seed data JSON file
 const collectionKey = 'challenges' //name of the collection
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://codeopoly.firebaseio.com'
-})
-const firestore = admin.firestore()
-const settings = {timestampsInSnapshots: true}
-firestore.settings(settings)
-if (data && typeof data === 'object') {
-  Object.keys(data).forEach(docKey => {
-    firestore
-      .collection(collectionKey)
-      .doc(docKey)
-      .set(data[docKey])
-      .then(res => {
-        console.log('Document ' + docKey + ' successfully written!')
-      })
-      .catch(error => {
-        console.error('Error writing document: ', error)
-      })
-  })
-}
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: 'https://codeopoly.firebaseio.com'
+// })
+// const firestore = admin.firestore()
+// const settings = {timestampsInSnapshots: true}
+// firestore.settings(settings)
+// if (data && typeof data === 'object') {
+//   Object.keys(data).forEach(docKey => {
+//     firestore
+//       .collection(collectionKey)
+//       .doc(docKey)
+//       .set(data[docKey])
+//       .then(res => {
+//         console.log('Document ' + docKey + ' successfully written!')
+//       })
+//       .catch(error => {
+//         console.error('Error writing document: ', error)
+//       })
+//   })
+// }
+
+//Firestore sessions:
+
+// app.use(
+//   session({
+//     store: new FirestoreStore({
+//       dataset: new Firestore({
+//         kind: 'express-sessions',
+//       }),
+//     }),
+//     secret: '9FnSjO3s1oKr1xJaldezOUPomqmVsW34ilYDiDfw',
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
+
+// app.get('/', (req, res) => {
+//   console.log('firsetore session id -->', req.session.id)
+// })
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
@@ -80,16 +102,16 @@ const createApp = () => {
   app.use(compression())
 
   // session middleware with passport
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-      store: sessionStore,
-      resave: false,
-      saveUninitialized: false
-    })
-  )
-  app.use(passport.initialize())
-  app.use(passport.session())
+  // app.use(
+  //   session({
+  //     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+  //     store: sessionStore,
+  //     resave: false,
+  //     saveUninitialized: false
+  //   })
+  // )
+  // app.use(passport.initialize())
+  // app.use(passport.session())
 
   // auth and api routes
   app.use('/auth', require('./auth'))
