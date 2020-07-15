@@ -10,7 +10,7 @@ const Challenge = () => {
   function handleChange(event) {
     setSelection(event.target.value) // Not sure if Semantic is ok with this...
   }
-  function handSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault()
     console.log(
       "Now we should compare the local state's selection to the redux state's challenge answer"
@@ -25,42 +25,36 @@ const Challenge = () => {
       <div className="answerChoices">
         <form onSubmit={handleSubmit}>
           <div className="form-radio">
-            <label>
-              <input
-                type="radio"
-                name="answerChoices"
-                value="a"
-                className="form-radio-input"
-                onChange={handleChange}
-              />
-              Steak
-            </label>
+            <input
+              type="radio"
+              name="answerChoices"
+              value="b"
+              className="form-radio-input"
+              onChange={handleChange}
+            />
+            <label>Steak</label>
           </div>
 
           <div className="form-radio">
-            <label>
-              <input
-                type="radio"
-                name="answerChoices"
-                value="b"
-                className="form-radio-input"
-                onChange={handleChange}
-              />
-              Cookies
-            </label>
+            <input
+              type="radio"
+              name="answerChoices"
+              value="b"
+              className="form-radio-input"
+              onChange={handleChange}
+            />
+            <label>Cookies</label>
           </div>
 
           <div className="form-radio">
-            <label>
-              <input
-                type="radio"
-                name="answerChoices"
-                value="c"
-                className="form-radio-input"
-                onChange={handleChange}
-              />
-              Love
-            </label>
+            <input
+              type="radio"
+              name="answerChoices"
+              value="b"
+              className="form-radio-input"
+              onChange={handleChange}
+            />
+            <label>Love</label>
           </div>
 
           <div className="form-submit">

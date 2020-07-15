@@ -209,4 +209,31 @@ input {
   background-color: #2a9d8f;
 }
 
+.modalBox {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.answerChoices {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-radio {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.form-radio-input {
+  flex-grow: 1;
+  max-width: 5%;
+}
+
+.form-radio label {
+  flex-grow: 5;
+  text-align: left;
+}
+
 /*# sourceMappingURL=style.css.map */
