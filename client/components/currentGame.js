@@ -3,6 +3,7 @@ import {connect, useSelector, useDispatch} from 'react-redux'
 import {GameBoard, GameViewTitle, Player} from './index'
 import {Redirect} from 'react-router-dom'
 import {useFirestoreConnect} from 'react-redux-firebase'
+import {EventEmitter} from 'events'
 
 const CurrentGame = () => {
   const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
