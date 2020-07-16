@@ -35,9 +35,13 @@ nav button {
   margin: 1em;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
 form div {
   margin: 1em;
-  display: inline-block;
+  display: flex;
 }
 
 #gameViewTitle {
@@ -228,6 +232,7 @@ canvas {
   display: flex;
   flex-direction: column;
   align-content: center;
+  width: 30rem;
   position: absolute;
   top: 40%;
   left: 33%;
@@ -239,25 +244,37 @@ canvas {
   border-color: #fef2eb;
   box-shadow: 1px 1px 400px 80px black;
 }
-.answerChoices {
+#underQuestionBox {
   display: flex;
   flex-direction: column;
 }
-
+.answerChoices {
+  display: flex;
+  flex-direction: column;
+  padding: 0rem;
+  margin: 0.1rem;
+}
+.answerButton {
+  width: 100%;
+  background-color: $background;
+  border: 3px solid black;
+  padding: 7px;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 1 0 10px rgba(0, 0, 0, 0.5);
+  }
+}
+.question {
+  text-align: center;
+}
 .form-radio {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.form-radio-input {
-  flex-grow: 1;
-  max-width: 5%;
-}
-
-.form-radio label {
-  flex-grow: 5;
-  text-align: left;
+.form-submit {
+  display: flex;
 }
 
 .gameStarted {
