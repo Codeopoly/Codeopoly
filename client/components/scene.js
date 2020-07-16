@@ -46,8 +46,8 @@ export default class SceneMain extends Phaser.Scene {
     const firstLayer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
     console.log('first layer added')
 
-    // this.physics.world.bounds.width = board.width
-    // this.physics.world.bounds.height = board.height
+    console.log(firstLayer.width, 'LAYER WIDTH')
+    console.log(firstLayer.height, 'LAYER HEIGHT')
 
     //getting object layers from json file
     const interviewObj = board.getObjectLayer('Interview').objects
@@ -80,8 +80,9 @@ export default class SceneMain extends Phaser.Scene {
     const vueObj = board.getObjectLayer('Vue').objects[0]
     const angularObj = board.getObjectLayer('Angular').objects[0]
     const goObj = board.getObjectLayer('Go').objects[0]
-
-    this.singleTilesArr = [
+    console.log(coffeeBreakObj, 'COFFEEOBJECT')
+    console.log(coffeeBreakObj.name, 'TESTING THE NAME')
+    let singleTilesArr = [
       goObj,
       loseMoneyObj,
       mongoDBObj,
@@ -112,26 +113,73 @@ export default class SceneMain extends Phaser.Scene {
       middlewareObj
     ]
 
-    console.log('checking draw card props', drawCardObj)
+    let finalOrderArr = [
+      goObj,
+      middlewareObj,
+      authObj,
+      codeDesignObj,
+      drawCardObj[3],
+      interviewObj[3],
+      materialUIObj,
+      cssObj,
+      htmlObj,
+      stuckOnBugObj,
+      semanticUIObj,
+      reactObj,
+      drawCardObj[2],
+      reactNativeObj,
+      emberObj,
+      vueObj,
+      interviewObj[2],
+      angularObj,
+      coffeeBreakObj,
+      stealSomeTechObj,
+      drawCardObj[0],
+      queuesObj,
+      stacksObj,
+      interviewObj[0],
+      linkedListsObj,
+      treesObj,
+      graphsObj,
+      gotaBugObj,
+      interviewObj[1],
+      newInvestorObj,
+      drawCardObj[1],
+      sequelizeObj,
+      firebaseObj,
+      expressObj,
+      mongoDBObj,
+      loseMoneyObj
+    ]
 
     //CREATING GROUPS FOR TILES BELOW
     this.interviewGroup = this.physics.add.group({})
     this.drawCardGroup = this.physics.add.group({})
 
+    let interviewIdxCount = 0
     this.interviewArr = []
     interviewObj.forEach(object => {
       console.log('INTERVIEW PLACEMENT WORKS')
-      let obj = this.interviewGroup.create(object.x, object.y, 'tile')
+      let obj = this.interviewGroup.create(object.x, object.y, object.name)
       obj.setOrigin(0)
+      obj.index = interviewIdxCount
+      obj.name = object.name
+      obj.body.x = object.x
+      obj.body.y = object.y
       obj.body.width = object.width
       obj.body.height = object.height
+      interviewIdxCount++
       this.interviewArr.push(obj)
     })
+
     this.drawCardArr = []
     drawCardObj.forEach(object => {
       console.log('DRAW CARD PLACEMENT WORKS')
-      let obj = this.drawCardGroup.create(object.x, object.y, 'tile')
+      let obj = this.drawCardGroup.create(object.x, object.y, object.name)
       obj.setOrigin(0)
+      obj.name = object.name
+      obj.body.x = object.x
+      obj.body.y = object.y
       obj.body.width = object.width
       obj.body.height = object.height
       this.drawCardArr.push(obj)
@@ -139,37 +187,46 @@ export default class SceneMain extends Phaser.Scene {
 
     //SINGLE TILE PLACEMENT BELOW
     this.placementArr = []
-    this.singleTilesArr.forEach(object => {
+
+    let indexCount = 0
+    singleTilesArr.forEach(object => {
       let obj = this.physics.add.sprite(object.x, object.y, object.name)
       obj.setOrigin(0)
+      obj.index = indexCount
+      obj.name = object.name
+      obj.body.x = object.x
+      obj.body.y = object.y
       obj.body.width = object.width
       obj.body.height = object.height
       this.placementArr.push(obj)
+      indexCount++
     })
 
+    console.log(this.placementArr, 'PLCMENT ARRAY')
+
     // PATH TILES IN ORDER FROM GO TO FINISH
-    this.tilePathArr = this.placementArr
+    let tilePathArr = this.placementArr
 
     //insert draw card right at 6th idx
-    this.tilePathArr.splice(6, 0, this.drawCardArr[1])
+    tilePathArr.splice(6, 0, this.drawCardArr[1])
     //insert interview right at 8th idx
-    this.tilePathArr.splice(8, 0, this.interviewArr[1])
+    tilePathArr.splice(8, 0, this.interviewArr[1])
     //insert interview top at 13th idx
-    this.tilePathArr.splice(13, 0, this.interviewArr[0])
+    tilePathArr.splice(13, 0, this.interviewArr[0])
     //insert draw card top at 16th idx
-    this.tilePathArr.splice(16, 0, this.drawCardArr[0])
+    tilePathArr.splice(16, 0, this.drawCardArr[0])
     //insert interview left at 20th idx
-    this.tilePathArr.splice(20, 0, this.interviewArr[2])
+    tilePathArr.splice(20, 0, this.interviewArr[2])
     //insert draw card left at 24th idx
-    this.tilePathArr.splice(24, 0, this.drawCardArr[2])
+    tilePathArr.splice(24, 0, this.drawCardArr[2])
     //insert interview bottom at 31st idx
-    this.tilePathArr.splice(31, 0, this.interviewArr[3])
+    tilePathArr.splice(31, 0, this.interviewArr[3])
     //insert draw card bottom at 32nd idx
-    this.tilePathArr.splice(32, 0, this.drawCardArr[3])
-    console.log(this.tilePathArr)
+    tilePathArr.splice(32, 0, this.drawCardArr[3])
+    console.log(tilePathArr)
 
-    // Rendering sprites picked for game
-    // it's only like this because the template literal WON'T WORK!!!!! don't be mad
+    //Rendering sprites picked for game
+    //it's only like this because the template literal WON'T WORK!!!!! don't be mad
     let player1
     let player2
     let player3
@@ -189,6 +246,84 @@ export default class SceneMain extends Phaser.Scene {
       }
     })
 
+    //DOGE PLACEMENT BELOW
+
+    let doge = this.physics.add.sprite(640, 640, 'doge')
+    doge.setOrigin(0)
+    doge.setScale(0.3)
+    // doge.setCollideWorldBounds(true) // don't go out of the map
+
+    let indexOfCurrentSpace = 0
+    let newSpace
+    let additionalSpaces
+    //let currentSpace
+    let holderX = goObj
+    let holderY = 200
+    let keepGoing = false
+
+    function helper() {
+      // this.physics.moveToObject(this.doge, nex, y, time)
+      // console.log('NAMEEEXX', holderX)
+      // console.log('holdername', holderX.name)
+      console.log('inside helper')
+      console.log(additionalSpaces, 'HELPER FUNCTION additional spaces')
+      doge.x = holderX.x
+      doge.y = holderX.y
+      if (keepGoing) {
+        additionalSpaces = 0
+        keepGoing = false
+      }
+      if (additionalSpaces > 0) {
+        console.log('additional spaces inside function', additionalSpaces)
+        keepGoing = true
+        movement(additionalSpaces)
+      }
+    }
+
+    if (indexOfCurrentSpace) {
+      console.log('THE INDEX OF CURR')
+      this.physics.moveToObject(doge, holderX, 0, 100)
+      console.log('additional spaces', additionalSpaces)
+    }
+
+    console.log(doge)
+
+    function movement(spacesToMove) {
+      //console.log(finalOrderArr, '<----')
+      newSpace = spacesToMove + indexOfCurrentSpace
+      if (newSpace > 35) {
+        console.log('OVER 35 NEW SPACE', newSpace)
+        additionalSpaces = Math.abs(35 - newSpace)
+        console.log(' OVER 35 ADDITIONAL SPACES', additionalSpaces)
+        newSpace = 0
+        // console.log(finalOrderArr[0])
+      }
+      // if (finalOrderArr) currentSpace = indexOfCurrentSpace
+      // console.log(doge)
+      // console.log('THIS IN THE MOVEMENT FUNCTION', this)
+      // console.log(indexOfCurrentSpace, 'INDEX OF CURRENT SPACE')
+      // console.log(spacesToMove, 'SPACES TO MOVE')
+      // console.log('MOVE TO THIS INDEX', tilePathArr[newSpace].index)
+      // console.log('THE NAME OF THE TILE', tilePathArr[newSpace].name)
+      // console.log(tilePathArr[newSpace], 'PLACEMENT')
+      // holderX = finalOrderArr[newSpace].x
+      // holderY = finalOrderArr[newSpace].y
+      //console.log('newxandy', tilePathArr[newSpace].x, tilePathArr[newSpace].y)
+      indexOfCurrentSpace = newSpace
+      //console.log('FINAL ORDER ARRAY', finalOrderArr)
+      //console.log(placementArr)
+
+      finalOrderArr.filter(tile => {
+        if (finalOrderArr[newSpace].name === tile.name) {
+          //console.log(tile, 'THE TILE'),
+          // console.log(finalOrderArr[newSpace]),
+          console.log('in filter function!')
+          holderX = tile
+          console.log('HOLDERX', holderX)
+          helper()
+        }
+      })
+    }
 
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
@@ -230,10 +365,13 @@ export default class SceneMain extends Phaser.Scene {
     // function called when the tween stops
     function stopAnims() {
       // console.log("stopAnims ran!", first.frame, second.frame)
+      const spacesToMove =
+        diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
       console.log(
         'You rolled: ',
         diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
       )
+      movement(spacesToMove)
       anim1.pause()
       anim2.pause()
       first.isRolling = false
@@ -295,6 +433,38 @@ export default class SceneMain extends Phaser.Scene {
     // For each card, make it clickable and assign it functions/tweens to run when clicked.
     callstackCards.forEach(card => {
       card.setInteractive()
+      const myFlipTween = this.tweens.add({
+        targets: card,
+        scaleX: 0,
+        scaleY: gameOptions.flipZoom,
+        duration: gameOptions.flipSpeed / 2,
+        paused: true,
+        onComplete: switchSprite,
+        onCompleteParams: [card]
+      })
+
+      const backFlipTween = this.tweens.add({
+        targets: card,
+        scaleX: 1,
+        scaleY: 1,
+        rotation: 0,
+        duration: gameOptions.flipSpeed / 2,
+        paused: true,
+        onComplete: backFlipDone
+      })
+
+      function switchSprite(tween, targets, gameObject) {
+        console.log('switchSprite ran!')
+        console.log('arguments:', arguments)
+        console.log('targets[0].frame', targets[0].frame)
+        targets[0].setFrame(1 - targets[0].frame.name)
+        backFlipTween.play()
+      }
+
+      function backFlipDone() {
+        console.log('backFlipDone ran!')
+        card.canBeDismissed = true
+      }
       card.on(
         'pointerdown',
         function() {
@@ -316,62 +486,27 @@ export default class SceneMain extends Phaser.Scene {
         },
         this
       )
-
-      const myFlipTween = this.tweens.add({
-        targets: card,
-        scaleX: 0,
-        scaleY: gameOptions.flipZoom,
-        duration: gameOptions.flipSpeed / 2,
-        paused: true,
-        onComplete: switchSprite,
-        onCompleteParams: [card]
-      })
-
-      function switchSprite(tween, targets, gameObject) {
-        console.log('switchSprite ran!')
-        console.log('arguments:', arguments)
-        console.log('targets[0].frame', targets[0].frame)
-        targets[0].setFrame(1 - targets[0].frame.name)
-        backFlipTween.play()
-      }
-
-      const backFlipTween = this.tweens.add({
-        targets: card,
-        scaleX: 1,
-        scaleY: 1,
-        rotation: 0,
-        duration: gameOptions.flipSpeed / 2,
-        paused: true,
-        onComplete: backFlipDone
-      })
-
-      function backFlipDone() {
-        console.log('backFlipDone ran!')
-        card.canBeDismissed = true
-      }
     })
-
+    //console.log('TARGET', this.target)
     // End Callstack Deck code.
   }
 
   update() {
     // this.interviewGroup(this.doge)
     //SPRITE ANIMATION
-    let spriteMovement = {velocity: 8}
-
-    this.placementArr.forEach(placement => {
-      this.physics.add.overlap(
-        this.doge,
-        placement,
-        this.activateFunc,
-        null,
-        this
-        )
-      })
-   
-    activateFunc(player, tile) {
+    // let spriteMovement = {velocity: 8}
+    // this.placementArr.forEach((placement) => {
+    //   this.physics.add.overlap(
+    //     this.doge,
+    //     placement,
+    //     activateFunc,
+    //     null,
+    //     this
+    //   )
+    // })
+    function activateFunc(player, tile) {
       console.log('inside the func')
       tile.disableBody()
-    } 
+    }
   }
 }
