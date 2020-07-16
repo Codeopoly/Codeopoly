@@ -15,6 +15,7 @@ let counter = 0
 const CurrentGame = () => {
   // const [counter, setCounter] = useState(0)
   const [showModal, setShowModal] = useState(false)
+  // const [showTurn, setShowTurn] = useState(false)
 
   console.log('heres the counter', counter)
 
@@ -73,6 +74,12 @@ const CurrentGame = () => {
     newGame.emit('start', imageNameArray)
 
     document.getElementById('placeChars').classList.add('gameStarted')
+    const title = document.getElementById('gameViewTitle')
+    // title.classList.add('gameStarted')
+    title.classList.remove('gameStarted')
+
+    // showTurn = true
+    // console.log('heres showTurn', showTurn)
   }
 
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
@@ -138,12 +145,14 @@ const CurrentGame = () => {
   return (
     <div id="mainScreen">
       <div id="topBar">
-        <GameViewTitle />
-        <ChallengeModal show={showModal} />
+        <div id="gameViewTitle" className="gameStarted">
+          <GameViewTitle />
+        </div>
         <button id="placeChars" type="button" onClick={triggerEmit}>
           Place players to begin game!
         </button>
       </div>
+      <ChallengeModal show={showModal} />
       {centerPanel}
     </div>
   )

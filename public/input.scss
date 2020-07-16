@@ -238,3 +238,9 @@ input {
 .gameStarted {
   display: none;
 }
+
+#topBar {
+  display: flex;
+  justify-content: center;
+  min-height: 4vmax;
+}

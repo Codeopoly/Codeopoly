@@ -240,4 +240,10 @@ input {
   display: none;
 }
 
+#topBar {
+  display: flex;
+  justify-content: center;
+  min-height: 4vmax;
+}
+
 /*# sourceMappingURL=style.css.map */
