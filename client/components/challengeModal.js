@@ -2,7 +2,7 @@ import React from 'react'
 import Challenge from './challenge'
 
 const ChallengeModal = props => {
-  if (props.showModal) {
+  if (props.show) {
     return (
       <div>
         <Challenge />

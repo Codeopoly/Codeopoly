@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import {newGame} from '../client/components/currentGame'
+import {newGame} from '../client/components/playerPanels'
 
 const socket = io(window.location.origin)
 
