@@ -236,4 +236,8 @@ input {
   text-align: left;
 }
 
+.gameStarted {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */

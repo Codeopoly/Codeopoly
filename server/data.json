@@ -1,0 +1,1023 @@
+{
+  "1": {
+    "category": "frontend",
+    "answer": "constructor -> render -> componentDidMount",
+    "question": "What is the correct order of the React functions?",
+    "money": "easy",
+    "wrongA": "render -> constructor -> componentDidMount",
+    "wrongB": "constructor -> componentDidMount -> render"
+  },
+  "2": {
+    "category": "frontend",
+    "answer": "Yes, by using React Hooks.",
+    "question": "Can a functional component manage state?",
+    "money": "easy",
+    "wrongA": "Yes, by passing it down through props.",
+    "wrongB": "No, only class components can manage state."
+  },
+  "3": {
+    "category": "frontend",
+    "answer": "A Javascript library for building user interfaces.",
+    "question": "What is React?",
+    "money": "easy",
+    "wrongA": "A Javascript framework for building user interfaces.",
+    "wrongB": "Both A and B"
+  },
+  "4": {
+    "category": "frontend",
+    "answer": "Jordan Walke",
+    "question": "Who is the original author of React?",
+    "money": "easy",
+    "wrongA": "Andrew Clark",
+    "wrongB": "Dan Abramov"
+  },
+  "5": {
+    "category": "frontend",
+    "answer": "Works without being connected to the internet.",
+    "question": "What is one advantage of using a Native App?",
+    "money": "medium",
+    "wrongA": "All users are on the same version of the app.",
+    "wrongB": "No need to install new software."
+  },
+  "6": {
+    "category": "frontend",
+    "answer": "ListView",
+    "question": "Which one of these is not a component of React Native",
+    "money": "easy",
+    "wrongA": "Text",
+    "wrongB": "ScrollView"
+  },
+  "7": {
+    "category": "frontend",
+    "answer": "ComponentWillRemove",
+    "question": "Which of these is not a ReactNative Lifecycle method?",
+    "money": "easy",
+    "wrongA": "ComponentDidCatch",
+    "wrongB": "ComponentWillUnMount"
+  },
+  "8": {
+    "category": "frontend",
+    "answer":
+      "Applications that are built in specific programming language for that specific platform.",
+    "question": "What does native mean?",
+    "money": "easy",
+    "wrongA": "Applications extensions made using React.",
+    "wrongB": "Both A and B"
+  },
+  "9": {
+    "category": "frontend",
+    "answer": "Model-View-View-Model",
+    "question":
+      "Ember.js follows the MVVM architectural pattern. What does MVVM stand for?",
+    "money": "hard",
+    "wrongA": "Modern-View-Value-Model",
+    "wrongB": "Modal-View-View-Model"
+  },
+  "10": {
+    "category": "frontend",
+    "answer": "No, Emberjs was released first.",
+    "question": "Ember.js and React were initially released in the same year?",
+    "money": "easy",
+    "wrongA": "Yes",
+    "wrongB": "No, React was released first."
+  },
+  "11": {
+    "category": "frontend",
+    "answer": "A javascript framework for building web applications.",
+    "question": "What is Ember.js ?",
+    "money": "easy",
+    "wrongA": "A javascript library for building web applications.",
+    "wrongB": "A HTML extension"
+  },
+  "12": {
+    "category": "frontend",
+    "answer": "Partial",
+    "question": "Which component is not used in Ember.js?",
+    "money": "",
+    "wrongA": "List",
+    "wrongB": "Image"
+  },
+  "13": {
+    "category": "frontend",
+    "answer": "A progressive framework for building user interfaces?",
+    "question": "What is Vue.js",
+    "money": "easy",
+    "wrongA": "A javascript library for building web applications.",
+    "wrongB": "A HTML extension"
+  },
+  "14": {
+    "category": "frontend",
+    "answer": "It uses JSX",
+    "question": "Which of these statements is not true about Vue.js?",
+    "money": "medium",
+    "wrongA":
+      "It has a built in version of componentShouldUpdate for automatic component re-rendering.",
+    "wrongB": "It uses props"
+  },
+  "15": {
+    "category": "frontend",
+    "answer": "Use a virtual DOM.",
+    "question": "React and Vue.js both...",
+    "money": "",
+    "wrongA": "Use a component based architecture",
+    "wrongB": "Both A and B"
+  },
+  "16": {
+    "category": "frontend",
+    "answer": "rendered",
+    "question": "Which of these is not a Vue.js Lifecycle method?",
+    "money": "medium",
+    "wrongA": "destroyed",
+    "wrongB": "mounted"
+  },
+  "17": {
+    "category": "frontend",
+    "answer": "A javascript framework for building web applications.",
+    "question": "What is Angular?",
+    "money": "easy",
+    "wrongA": "A javascript library for building web applications.",
+    "wrongB": "Both A and B"
+  },
+  "18": {
+    "category": "frontend",
+    "answer": "Google",
+    "question": "What community does Angular belong to?",
+    "money": "easy",
+    "wrongA": "Twitter",
+    "wrongB": "Facebook"
+  },
+  "19": {
+    "category": "frontend",
+    "answer": "It uses the real DOM",
+    "question": "Which of these statements is true about Angular ?",
+    "money": "medium",
+    "wrongA": "It only uses Javascript",
+    "wrongB": "Neither A or B"
+  },
+  "20": {
+    "category": "frontend",
+    "answer": "That stament is false React was downloaded more than Vue.",
+    "question":
+      "According to NPM trends, which Vue had a greater percentage of downloads when compared to React.",
+    "money": "easy",
+    "wrongA": "That statement is true.",
+    "wrongB": "That statement is false they had the same amount of downloads."
+  },
+  "21": {
+    "category": "backend",
+    "answer": "parent.update()",
+    "question": "Which of these is not a magic method?",
+    "money": "medium",
+    "wrongA": "parent.create()",
+    "wrongB": "parent.set()"
+  },
+  "22": {
+    "category": "backend",
+    "answer": 0,
+    "question":
+      "How many errors are in this piece of code?\n     const User = sequelize.define({\n          firstName: \"name\", {\n            type: Sequelize.STRING,\n            allowNull: false\n      })",
+    "money": "medium",
+    "wrongA": 2,
+    "wrongB": 1
+  },
+  "23": {
+    "category": "backend",
+    "answer": "Neither",
+    "question":
+      "Where is the foreign key ? Cat.belongsToMany(Dog,{through:Cat_Dog})",
+    "money": "",
+    "wrongA": "On the dog model",
+    "wrongB": "On the cat model"
+  },
+  "24": {
+    "category": "backend",
+    "answer": "Handles HTTP requests",
+    "question": "What purpose does Express.js serve?",
+    "money": "easy",
+    "wrongA": "Allows the user to communicate directly with the database",
+    "wrongB": "Improves database query time complexity"
+  },
+  "25": {
+    "category": "backend",
+    "answer": "Object relational mapping",
+    "question": "What does ORM stand for?",
+    "money": "easy",
+    "wrongA": "Optimized Relational Model",
+    "wrongB": "Object Realtime Model"
+  },
+  "26": {
+    "category": "backend",
+    "answer": "model",
+    "question":
+      "What do we call an object that maps to the data relation (table) and potentially bridges tables, the blueprint for what each row of data is going to contain (name: string)",
+    "money": "medium",
+    "wrongA": "script",
+    "wrongB": "table"
+  },
+  "27": {
+    "category": "backend",
+    "answer":
+      "req is an object containing information about the HTTP request that raised the event. It comes from the client.",
+    "question":
+      "In a route handler, what is the req argument and where does it come from?",
+    "money": "medium",
+    "wrongA":
+      "req is an object containing information about the AJAX request that raised the event. It comes from the client.",
+    "wrongB":
+      "req is an object containing information about the API request that raised the event. It comes from the client."
+  },
+  "28": {
+    "category": "backend",
+    "answer": "Postman",
+    "question": "_____ is an API dev tool that sends requests to servers.",
+    "money": "easy",
+    "wrongA": "Heroku",
+    "wrongB": "Firebase"
+  },
+  "29": {
+    "category": "backend",
+    "answer": "Difficult integration of third-party services and middleware.",
+    "question": "Which of these is false about Express js?",
+    "money": "medium",
+    "wrongA":
+      "As your codebase size increases, refactoring becomes very challenging.",
+    "wrongB":
+      "A lot of manual labor is required, since you need to create all endpoints."
+  },
+  "30": {
+    "category": "backend",
+    "answer": "String, Number, Date, Buffer, Boolean, ObjectId, Array",
+    "question": "What are different type of data types in mongodb?",
+    "money": "medium",
+    "wrongA": "String, Number, Date, JSON, Boolean, Char, Array",
+    "wrongB": "String, Number, Date, JSON, Boolean, Enumerated, Array"
+  },
+  "31": {
+    "category": "backend",
+    "answer": "Firebase",
+    "question": "Which of these databases do not support XML?",
+    "money": "medium",
+    "wrongA": "MySQL",
+    "wrongB": "PostgreSQL"
+  },
+  "32": {
+    "category": "backend",
+    "answer": "field : {$exists : true }",
+    "question":
+      "MongoDB: How do you return a query only if it has a specific field?",
+    "money": "easy",
+    "wrongA": "field : {status: true}",
+    "wrongB": "field : {exist: true}"
+  },
+  "33": {
+    "category": "backend",
+    "answer": "db.posts.find( { author: /john/ } )",
+    "question":
+      "What is the equivalent command in MongoDB for the following SQL query? SELECT * FROM posts WHERE author like \"%john%",
+    "money": "easy",
+    "wrongA": "db.posts.find( { author: /^john^/ } )",
+    "wrongB": "db.posts.find( { $like: {author: /john/} } )"
+  },
+  "34": {
+    "category": "backend",
+    "answer": "$slice",
+    "question":
+      "MongoDB: Which of the following operator can be used to control the number of items of an array that a query returns?",
+    "money": "easy",
+    "wrongA": "$",
+    "wrongB": "#elemMatch"
+  },
+  "35": {
+    "category": "backend",
+    "answer": "onSnapshot()",
+    "question":
+      "Which of the following methods listens to changes in a Firestore database?",
+    "money": "medium",
+    "wrongA": "get()",
+    "wrongB": "getFirestore()"
+  },
+  "36": {
+    "category": "backend",
+    "answer": "Collections and documents",
+    "question": "How does Firebase Firestore organize data?",
+    "money": "easy",
+    "wrongA": "Models with associations",
+    "wrongB": "Trees and subtrees"
+  },
+  "37": {
+    "category": "backend",
+    "answer": "_id",
+    "question": "MongoDB: which field is always the first field in a document?",
+    "money": "easy",
+    "wrongA": "id",
+    "wrongB": "documentId"
+  },
+  "38": {
+    "category": "backend",
+    "answer": "BigNumber",
+    "question": "Which of the following is not a Sequelize data type?",
+    "money": "easy",
+    "wrongA": "Float",
+    "wrongB": "Double"
+  },
+  "39": {
+    "category": "backend",
+    "answer": "All of the above",
+    "question": "What does Firebase not have?",
+    "money": "easy",
+    "wrongA": "schema",
+    "wrongB": "relations"
+  },
+  "40": {
+    "category": "backend",
+    "answer": "Python",
+    "question": "Which language does Firebase not support?",
+    "money": "easy",
+    "wrongA": "Javacript",
+    "wrongB": "C++"
+  },
+  "41": {
+    "category": "UI",
+    "answer": "Hypertext Markup Language",
+    "question": "What does HTML stand for?",
+    "money": "easy",
+    "wrongA": "Heading Tag Meta Language",
+    "wrongB": "Hypertext Markdown Log"
+  },
+  "42": {
+    "category": "UI",
+    "answer": "<a href=\"url\" target=\"_blank\" rel=\"noopener\">",
+    "question":
+      "Which of the following is the correct way to open a link in a new tab?",
+    "money": "easy",
+    "wrongA": "<a href=\"url\" tab=\"new\" rel=\"nonopener\">",
+    "wrongB": "<a href=\"url\" open=true rel=\"tab\">"
+  },
+  "43": {
+    "category": "UI",
+    "answer": "<ol>",
+    "question": "What's the correct tag for a numbered list?",
+    "money": "easy",
+    "wrongA": "<nl>",
+    "wrongB": "<ul>"
+  },
+  "44": {
+    "category": "UI",
+    "answer": "Both",
+    "question": "Why is it important to give images an \"alt\" attribute?",
+    "money": "easy",
+    "wrongA": "Alt text provides context for the visually impaired",
+    "wrongB": "Alt text improves SEO"
+  },
+  "45": {
+    "category": "UI",
+    "answer": "World Wide Web Consortium",
+    "question": "Who publishes HTML specifications?",
+    "money": "easy",
+    "wrongA": "Hypertext Advisory Board",
+    "wrongB": "Anonymous"
+  },
+  "46": {
+    "category": "UI",
+    "answer": "Sassy Cascading Style Sheets",
+    "question": "What does SCSS stand for?",
+    "money": "Med/hard",
+    "wrongA": "Stylistic Cascading Sheet Structure",
+    "wrongB": "Structural Cascading Style Sheets"
+  },
+  "47": {
+    "category": "UI",
+    "answer": "Hides the element as if it wasn't there",
+    "question": "In CSS what does setting the display property to 'none' do?",
+    "money": "easy",
+    "wrongA": "Sets the content of the element to empty space",
+    "wrongB": "Throws an error; it's not a valid option"
+  },
+  "48": {
+    "category": "UI",
+    "answer": "Row",
+    "question": "What is the default flex-direction if none is specified?",
+    "money": "easy",
+    "wrongA": "Column",
+    "wrongB": "Block"
+  },
+  "49": {
+    "category": "UI",
+    "answer": "border-radius",
+    "question": "Which of these are considered 'costly' CSS properties?",
+    "money": "medium",
+    "wrongA": "border-style",
+    "wrongB": "border-color"
+  },
+  "50": {
+    "category": "UI",
+    "answer": "padding",
+    "question":
+      "What property would you use to create space between the element’s border and inner content?",
+    "money": "easy",
+    "wrongA": "margin",
+    "wrongB": "border"
+  },
+  "51": {
+    "category": "UI",
+    "answer": "Color palette generator",
+    "question": "Which does Semantic UI NOT provide?",
+    "money": "medium",
+    "wrongA": "Starter page templates",
+    "wrongB": "Elements including buttons, icons, rails, and reveals"
+  },
+  "52": {
+    "category": "UI",
+    "answer":
+      "A free, open-source framework to help create beautiful, responsive layouts",
+    "question": "What is Semantic UI?",
+    "money": "medium",
+    "wrongA":
+      "A subscription-based framework providing common customized web page layouts",
+    "wrongB":
+      "A forum where developers rate others' code on scales i.e. beauty, responsiveness, compatibility"
+  },
+  "53": {
+    "category": "UI",
+    "answer": "Create an account to view code examples",
+    "question": "Which of the following is NOT needed when using Semantic UI?",
+    "money": "medium",
+    "wrongA": "Link the Semantic stylesheet in your HTML file",
+    "wrongB":
+      "Check if you need anything to intergrate with your front-end stack choice"
+  },
+  "54": {
+    "category": "UI",
+    "answer": "Component-specific LESS based styling",
+    "question": "What are themes in Semantic UI?",
+    "money": "hard",
+    "wrongA":
+      "CSS styles that can be applied easily by indicating your theme in package.json",
+    "wrongB":
+      "Groups of components recommended to be used together when building your website"
+  },
+  "55": {
+    "category": "UI",
+    "answer":
+      "First UI defaults are applied, then the Packaged Theme, and finally the Site Theme",
+    "question": "How do themes get applied in Semantic UI?",
+    "money": "hard",
+    "wrongA":
+      "By indicating the theme you want to use as a class name for each component tag",
+    "wrongB": "By Indicating your website's theme in your package.json"
+  },
+  "56": {
+    "category": "UI",
+    "answer":
+      "A React-specific UI framework that implements Google's Material Design system",
+    "question": "What is Material-UI?",
+    "money": "easy",
+    "wrongA": "A non-specific UI framework to help create beautiful web pages",
+    "wrongB": "The parent company of Visual Studio Code"
+  },
+  "57": {
+    "category": "UI",
+    "answer": "JSS",
+    "question": "Which CSS compiler does Material-UI use?",
+    "money": "medium",
+    "wrongA": "SCSS",
+    "wrongB": "LESS"
+  },
+  "58": {
+    "category": "UI",
+    "answer":
+      "to display informative text when users hover over, focus on, or tap an element.",
+    "question": "Material UI: What is the purpose of a Tooptip tag?",
+    "money": "medium",
+    "wrongA": "to display bebugging messages for developers in the console.",
+    "wrongB": "to help group together tags for easier styling."
+  },
+  "59": {
+    "category": "UI",
+    "answer": "onClickAway",
+    "question":
+      "Material UI: What is the event listener attribute that listens for clicks of a div element?",
+    "money": "easy",
+    "wrongA": "onClick",
+    "wrongB": "handleClick"
+  },
+  "60": {
+    "category": "UI",
+    "answer": "className",
+    "question":
+      "Identify the correct JSX attribute to associate a CSS class with a JSX div element.",
+    "money": "easy",
+    "wrongA": "class",
+    "wrongB": "classname"
+  },
+  "61": {
+    "category": "misc",
+    "answer": "Create, Read, Update, Delete",
+    "question": "What does CRUD stand for?",
+    "money": "easy",
+    "wrongA": "Create, Reiterate, UI, Design",
+    "wrongB": "Cannot, Read, Ugly, Databases"
+  },
+  "62": {
+    "category": "misc",
+    "answer": "HTTP methods & Persistent storage",
+    "question": "CRUD is related to…",
+    "money": "medium",
+    "wrongA": "Hypertext Transfer Protocol methods",
+    "wrongB": "Persistent storage"
+  },
+  "63": {
+    "category": "misc",
+    "answer": "Helps us build APIs with standard functionality",
+    "question": "How does CRUD improve your coding process?",
+    "money": "hard",
+    "wrongA": "Helps us design efficient databases",
+    "wrongB": "Reminds us to design our user interface in a methodical way"
+  },
+  "64": {
+    "category": "misc",
+    "answer": "Don't Repeat Yourself",
+    "question": "What does DRY stand for?",
+    "money": "easy",
+    "wrongA": "Doubt Reasonable Yelling",
+    "wrongB": "Don't Render Yesterday"
+  },
+  "65": {
+    "category": "misc",
+    "answer": "Reminds us to use abstractions",
+    "question": "How does DRY improve your coding process?",
+    "money": "medium",
+    "wrongA": "Helps us name our variables descriptively",
+    "wrongB": "Reminds us to leave comments describing our code"
+  },
+  "66": {
+    "category": "misc",
+    "answer": "Linzer decision principle",
+    "question": "Which of the following is NOT a SOLID concept?",
+    "money": "hard",
+    "wrongA": "Single responsibility principle",
+    "wrongB": "Interface Segregation principle"
+  },
+  "67": {
+    "category": "misc",
+    "answer": "Object oriented design",
+    "question": "SOLID is related to...",
+    "money": "medium",
+    "wrongA": "Persistent storage",
+    "wrongB": "Dynamic programming"
+  },
+  "68": {
+    "category": "misc",
+    "answer": "REpresentational State Transfer",
+    "question": "What does REST stand for?",
+    "money": "easy",
+    "wrongA": "Run Everything Seven Times",
+    "wrongB": "REnder Stuff that has been Tested"
+  },
+  "69": {
+    "category": "misc",
+    "answer": "Reminds us to use HTTP methods as intended",
+    "question": "How does REST guide your coding process?",
+    "money": "medium",
+    "wrongA": "Reminds us to take breaks often",
+    "wrongB": "Recommends we modularize our client side code"
+  },
+  "70": {
+    "category": "misc",
+    "answer": "Authentication",
+    "question": "What comes first: Authentication or Authorization?",
+    "money": "easy/medium",
+    "wrongA": "Neither, they happen at the same time",
+    "wrongB": "Authorization"
+  },
+  "71": {
+    "category": "misc",
+    "answer": "Determining if you can access a specific resource",
+    "question": "What is Authorization?",
+    "money": "easy",
+    "wrongA": "Determining you are who you say you are",
+    "wrongB": "Determining if I can trust what you send me"
+  },
+  "72": {
+    "category": "misc",
+    "answer": "Secure Sockets Layer",
+    "question": "What does SSL stand for?",
+    "money": "easy",
+    "wrongA": "Security Standard Language",
+    "wrongB": "System to System Line"
+  },
+  "73": {
+    "category": "misc",
+    "answer":
+      "A data file you purchase from an organization to secure inter-machine communication",
+    "question": "What are SSL certificates?",
+    "money": "medium",
+    "wrongA":
+      "Secrets you obtain by registering your website with Chrome so Google protects your network traffic",
+    "wrongB":
+      "Autogenerated IDs that servers create so your website is tied to your server"
+  },
+  "74": {
+    "category": "misc",
+    "answer": "Encryption through public key cryptography",
+    "question": "What makes HTTPS different from HTTP?",
+    "money": "easy",
+    "wrongA": "Faster download speeds - S is for Speed",
+    "wrongB": "Security enabled through authentication"
+  },
+  "75": {
+    "category": "misc",
+    "answer": "Hashing",
+    "question": "Which security measure ensures data has not been altered?",
+    "money": "medium",
+    "wrongA": "Encryption",
+    "wrongB": "Salting"
+  },
+  "76": {
+    "category": "misc",
+    "answer": "Using a mix of public and private keys",
+    "question": "How does encryption work?",
+    "money": "medium",
+    "wrongA": "Using hashing and salt to encode the data",
+    "wrongB": "Recording and reporting IP addresses of rerouting attempts"
+  },
+  "77": {
+    "category": "misc",
+    "answer":
+      "Users agree to save their third-party username and password with your website",
+    "question": "What is NOT true about OAuth?",
+    "money": "easy",
+    "wrongA": "Developers need to register their website with the third-party",
+    "wrongB":
+      "Three entities agree on something when only two can communicate at one time"
+  },
+  "78": {
+    "category": "misc",
+    "answer": "Logging HTTP requests and responses",
+    "question": "What is morgan for?",
+    "money": "easy",
+    "wrongA": "Logging previous, current, and next state snapshots",
+    "wrongB": "Logging successful/unsuccessful authentication attempts"
+  },
+  "79": {
+    "category": "misc",
+    "answer": "Specifies the format for the output",
+    "question": "Morgan takes a parameter i.e. 'dev'; what is that doing?",
+    "money": "medium",
+    "wrongA": "Points to a line in your package.json to find dependencies",
+    "wrongB": "Tells your bundler that developer mode is on"
+  },
+  "80": {
+    "category": "misc",
+    "answer": "Gives HTTP requests a body property",
+    "question": "What is body-parser for?",
+    "money": "easy",
+    "wrongA": "Converts a database response to JSON",
+    "wrongB": "Decrypts a user's HTTPS GET request"
+  },
+  "81": {
+    "category": "algorithm",
+    "answer": "O(n^2)",
+    "question": "What is the time complexity of a nested for loop?",
+    "money": "easy",
+    "wrongA": "O(log n^2)",
+    "wrongB": "O(log n)"
+  },
+  "82": {
+    "category": "algorithm",
+    "answer": "Hash collision",
+    "question":
+      "What is it called when a hash function gives multiple files the same hash value?",
+    "money": "easy",
+    "wrongA": "Hash crash",
+    "wrongB": "Hashing error"
+  },
+  "83": {
+    "category": "algorithm",
+    "answer": "Post order",
+    "question":
+      "Which depth first traversal processes nodes in the following order? [Left, Right, Root]",
+    "money": "easy",
+    "wrongA": "Pre order",
+    "wrongB": "In order"
+  },
+  "84": {
+    "category": "algorithm",
+    "answer": "FIFO",
+    "question": "What type of data flow structure do queues follow?",
+    "money": "easy",
+    "wrongA": "LIFO",
+    "wrongB": "FILO"
+  },
+  "85": {
+    "category": "algorithm",
+    "answer": "O(n)",
+    "question": "What's the time complexity of searching a singly linked list?",
+    "money": "easy",
+    "wrongA": "O(log n)",
+    "wrongB": "O(1)"
+  },
+  "86": {
+    "category": "algorithm",
+    "answer": "Merge sort",
+    "question":
+      "Which sorting algorithm recursively divides the input by half?",
+    "money": "easy",
+    "wrongA": "Bubble sort",
+    "wrongB": "Selection sort"
+  },
+  "87": {
+    "category": "algorithm",
+    "answer": "O(nodes + links)",
+    "question":
+      "How is the time complexity of a breadth first search algorithm calculated?",
+    "money": "medium",
+    "wrongA": "O(nodes * links)",
+    "wrongB": "O(nodes ^ links)"
+  },
+  "88": {
+    "category": "algorithm",
+    "answer": "Tree",
+    "question": "What type of data structure is the DOM?",
+    "money": "easy",
+    "wrongA": "Graph",
+    "wrongB": "Hash map"
+  },
+  "89": {
+    "category": "algorithm",
+    "answer": "Less memory usage",
+    "question":
+      "What would be the benefit of iteratively refactoring a recursive function?",
+    "money": "medium",
+    "wrongA": "Better time complexity",
+    "wrongB": "Much less lines of code"
+  },
+  "90": {
+    "category": "algorithm",
+    "answer": "Queue",
+    "question":
+      "What type of data structure is used in a breadth first search?",
+    "money": "medium",
+    "wrongA": "Contiguous array",
+    "wrongB": "Stack"
+  },
+  "91": {
+    "category": "algorithm",
+    "answer":
+      "It doesn't make any changes that are visible to other functions, avoiding side effects",
+    "question": "What's special about an out-of-place algorithm?",
+    "money": "hard",
+    "wrongA": "It returns a closure",
+    "wrongB": "It returns a function that runs in its place"
+  },
+  "92": {
+    "category": "algorithm",
+    "answer": "Arrays have fixed sizes while linked lists are dynamic in size",
+    "question": "How do arrays differ from linked lists?",
+    "money": "easy",
+    "wrongA": "Linked lists have better cache locality than arrays",
+    "wrongB":
+      "Inserting and deleting elements in arrays is less expensive than in linked lists"
+  },
+  "93": {
+    "category": "algorithm",
+    "answer": 0,
+    "question": "What is the minimum number of nodes a binary tree can have?",
+    "money": "medium",
+    "wrongA": 2,
+    "wrongB": 3
+  },
+  "94": {
+    "category": "algorithm",
+    "answer": "No adjacent nodes can have the same color",
+    "question":
+      "What is an important rule when using legal coloring for graphs?",
+    "money": "hard",
+    "wrongA": "The color of each edge represents that edge's weighted value",
+    "wrongB":
+      "Colors used must be determined by the team members' favorite colors"
+  },
+  "95": {
+    "category": "algorithm",
+    "answer": "Directed & acyclic",
+    "question":
+      "What type of graph would be the best use case for a topological sorting algorithm?",
+    "money": "hard",
+    "wrongA": "Unweighted & undirected",
+    "wrongB": "Unweighted & cyclic"
+  },
+  "96": {
+    "category": "algorithm",
+    "answer": "O(n log n)",
+    "question": "What is heap sort's time complexity?",
+    "money": "hard",
+    "wrongA": "O(log n)",
+    "wrongB": "O(n)"
+  },
+  "97": {
+    "category": "algorithm",
+    "answer": "Abstract Data Type",
+    "question": "What does ADT stand for?",
+    "money": "easy",
+    "wrongA": "Automated Data Technology",
+    "wrongB": "Actual Data Technique"
+  },
+  "98": {
+    "category": "algorithm",
+    "answer": "Input size",
+    "question":
+      "The runtime of an algorithm is calculated relative to what variable?",
+    "money": "easy",
+    "wrongA": "Memory space",
+    "wrongB": "Speed of the functions that have already run"
+  },
+  "99": {
+    "category": "algorithm",
+    "answer": "Sometimes",
+    "question":
+      "Should big O constants be considered when analysing space/time complexity?",
+    "money": "easy",
+    "wrongA": "Yes",
+    "wrongB": "No"
+  },
+  "100": {
+    "category": "algorithm",
+    "answer": "Multiple files with the same hash value",
+    "question":
+      "Which of the following problems is \"chaining\" a solution to?",
+    "money": "medium",
+    "wrongA": "Looped infinite linked list",
+    "wrongB": "Maximum number of nodes on graph reached"
+  },
+  "101": {
+    "category": "interview",
+    "answer": "Array",
+    "question": "Which of the following is not a JavaScript data type?",
+    "money": "easy",
+    "wrongA": "Undefined",
+    "wrongB": "Boolean"
+  },
+  "102": {
+    "category": "interview",
+    "answer": "Implicit binding rule",
+    "question":
+      "Which binding rule is in effect when \"this\" is referenced by a method?",
+    "money": "medium",
+    "wrongA": "Explicit binding rule",
+    "wrongB": "Default binding rule"
+  },
+  "103": {
+    "category": "interview",
+    "answer": 2015,
+    "question": "When was ECMAScript6 released?",
+    "money": "easy",
+    "wrongA": 2016,
+    "wrongB": 2018
+  },
+  "104": {
+    "category": "interview",
+    "answer":
+      "The push method is used to add or append one or more elements to the end of an Array. Using this method, we can append multiple elements by passing multiple arguments",
+    "question": "What is the use of Push method in JavaScript?",
+    "money": "easy",
+    "wrongA":
+      "The push method is used to remove one or more elements to the end of an Array. Using this method, we can append multiple elements by passing multiple arguments",
+    "wrongB":
+      "The push method is used to insert only one element to the end of an Array. Using this method, we can append multiple elements by passing multiple arguments"
+  },
+  "105": {
+    "category": "interview",
+    "answer":
+      "Break statement is used to come out of the current loop while the continue statement continues the current loop with a new recurrence.",
+    "question": "What is the role of break and continue statements?",
+    "money": "",
+    "wrongA":
+      "Break statement is when a statement continues the current loop with a new recurrence while the continue statement is used to come out of the current loop.",
+    "wrongB": "None of these answers are correct."
+  },
+  "106": {
+    "category": "interview",
+    "answer": "Object",
+    "question": "What is the data type of \"null\" in JavaScript?",
+    "money": "",
+    "wrongA": "Undefined",
+    "wrongB": "Boolean"
+  },
+  "107": {
+    "category": "interview",
+    "answer": "break",
+    "question": "What keyword can be used to exit a loop?",
+    "money": "easy",
+    "wrongA": "continue",
+    "wrongB": "exit"
+  },
+  "108": {
+    "category": "interview",
+    "answer": "Object.prototype",
+    "question":
+      "What sits at the top of the JavaScript prototype chain (its prototype is null)?",
+    "money": "medium",
+    "wrongA": "Object",
+    "wrongB": "Function.prototype"
+  },
+  "109": {
+    "category": "interview",
+    "answer": "All of the above",
+    "question": "What is an undefined value in JavaScript?",
+    "money": "easy",
+    "wrongA": "Variable used in the code doesn't exist",
+    "wrongB": "Variable is not assigned to any value"
+  },
+  "110": {
+    "category": "interview",
+    "answer": null,
+    "question": "Which of these is not  a primative data type?",
+    "money": "easy",
+    "wrongA": "undefined",
+    "wrongB": "string"
+  },
+  "111": {
+    "category": "interview",
+    "answer": "array.slice()",
+    "question":
+      "Which one of these methods does not mutate the original array?",
+    "money": "easy",
+    "wrongA": "array.splice()",
+    "wrongB": "array.shift()"
+  },
+  "112": {
+    "category": "interview",
+    "answer": "flowcharts",
+    "question": "Pseudocode can replace:",
+    "money": "medium",
+    "wrongA": "structure charts",
+    "wrongB": "decision tables"
+  },
+  "113": {
+    "category": "interview",
+    "answer": "Both data and behaviour",
+    "question": "An object encapsulates:",
+    "money": "medium",
+    "wrongA": "Data",
+    "wrongB": "Behaviour"
+  },
+  "114": {
+    "category": "interview",
+    "answer": "inheritance",
+    "question":
+      "The feature of the object oriented paradigm which helps code reuse is:",
+    "money": "medium",
+    "wrongA": "object",
+    "wrongB": "class"
+  },
+  "115": {
+    "category": "interview",
+    "answer": " ",
+    "question":
+      "Which of the following converts to \"false\" when coerced to a boolean?",
+    "money": "easy",
+    "wrongA": [],
+    "wrongB": {}
+  },
+  "116": {
+    "category": "interview",
+    "answer": "Abstract data types do not allow inheritance",
+    "question": "Which of the following statements is true?",
+    "money": "medium",
+    "wrongA": "Classes cannot inherit from the same base class",
+    "wrongB": "Objects have state and behaviour"
+  },
+  "117": {
+    "category": "interview",
+    "answer": "Skips to the next iteration of the loop",
+    "question": "What does the \"continue\" keyword do in a loop?",
+    "money": "medium",
+    "wrongA": "There is no such keyword",
+    "wrongB": "Resumes the loop after an asynchronous process finishes"
+  },
+  "118": {
+    "category": "interview",
+    "answer": "finally",
+    "question":
+      "What keyword can be used to execute code after resolving a try-catch block?",
+    "money": "medium",
+    "wrongA": "then",
+    "wrongB": "afterwards"
+  },
+  "119": {
+    "category": "interview",
+    "answer": 57,
+    "question": "What would be the result of 3+2+\"7\"?",
+    "money": "easy",
+    "wrongA": 12.00004,
+    "wrongB": 327
+  },
+  "120": {
+    "category": "interview",
+    "answer": "parseInt()",
+    "question": "How can you convert a string of any base to integer?",
+    "money": "easy",
+    "wrongA": "toNumber()",
+    "wrongB": "toInteger()"
+  }
+}
