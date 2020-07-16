@@ -1,6 +1,6 @@
 import AlignGrid from '../../utility/alignGrid'
 import EventDispatcher from '../../utility/eventDispatcher'
-import {newGame} from './currentGame'
+import {newGame} from './playerPanels'
 import {EventEmitter} from 'events'
 
 export const phaserE = new EventEmitter()

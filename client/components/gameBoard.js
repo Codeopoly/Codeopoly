@@ -5,29 +5,7 @@ import config from '../../config/gameConfig'
 
 // export const newGame = new EventEmitter()
 
-const GameBoard = props => {
-  console.log('props in gameBoard', props)
-
-  // let characters = {
-  //   'https://www.pngmart.com/files/11/Doge-Meme-PNG-Photos.png':
-  //     'Doge-Meme.png',
-  //   'https://img2.pngio.com/pug-head-transparent-png-clipart-free-download-ywd-pug-head-png-1260_900.png':
-  //     'cody.png',
-  //   'https://ya-webdesign.com/images250_/cat-face-png-2.png': 'grumpy-cat.png',
-  //   'https://i.ya-webdesign.com/images/baby-success-meme-png-2.png': 'kid.png',
-  //   'https://i.ya-webdesign.com/images/kermit-the-frog-png-8.png': 'kermit.png',
-  //   'https://vignette.wikia.nocookie.net/animalcrossing/images/8/80/Marshal_HHD.png/revision/latest?cb=20161013032212':
-  //     'marshall.png'
-  // }
-
-  // // export const newGame = new EventEmitter()
-
-  // let playerDocs = Object.values(props.players)
-
-  // const imageNameArray = playerDocs.map(player => {
-  //   return characters[player.image]
-  // })
-
+const GameBoard = () => {
   let game
   useEffect(() => {
     console.log('useEffect ran!')
@@ -41,12 +19,6 @@ const GameBoard = props => {
       game.destroy(true)
     }
   })
-
-  // useEffect(() => {
-  //   if (game) {
-  //     newGame.emit('start', imageNameArray)
-  //   }
-  // }, [])
 
   return <div id="insideTheGame" />
 }
