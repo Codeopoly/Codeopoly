@@ -5,6 +5,7 @@ import {getFirebase} from 'react-redux-firebase'
 
 // Action types:
 const GOT_CHALLENGE = 'GOT_CHALLENGE'
+const ANSWERED_CHALLENGE = 'ANSWERED_CHALLENGE'
 
 // Action creators:
 const gotChallenge = (challengeData, chosenCardId) => {
@@ -12,6 +13,11 @@ const gotChallenge = (challengeData, chosenCardId) => {
     type: GOT_CHALLENGE,
     challengeData,
     chosenCardId
+  }
+}
+const answeredChallenge = () => {
+  return {
+    type: ANSWERED_CHALLENGE
   }
 }
 
@@ -36,6 +42,77 @@ export const getChallengeThunk = chosenCardId => {
     }
   }
 }
+export const answeredChallengeThunk = (
+  amIRight,
+  prize,
+  currentPlayer,
+  gameCode,
+  playerIdsArray
+) => {
+  return async (dispatch, getState, {getFirebase}) => {
+    let canIHazCookie = true
+    // if I am right, give me somethingggg
+    // prize can be either a positive or negative number or category string
+    if (amIRight) {
+      // if it is a tech stack:
+      if (typeof prize === 'string') {
+        // i.e. "Frontend"
+        canIHazCookie = false
+        await getFirebase()
+          .firestore()
+          .collection('players')
+          .doc(currentPlayer)
+          .update({
+            // I am updating the specific game, arrayUnion
+            [`has${prize}`]: true
+          })
+      }
+    }
+
+    // We want to give/take money ONLY if the player did not win a tech stack
+    if (typeof prize === 'number' && canIHazCookie) {
+      // you didn't get a tech stack, but still get a repercussion (either win or lose money)
+      if (typeof prize === 'number') {
+        // i.e. -300 or 1000
+        canIHazCookie = false
+        await getFirebase()
+          .firestore()
+          .collection('players')
+          .doc(currentPlayer)
+          .update({
+            // I am updating the specific game, arrayUnion
+            seedMoney: firebase.firestore.FieldValue + prize
+          })
+      }
+    }
+
+    // Regardless of if I'm wrong or right, the game needs to update
+    dispatch(turnEndedThunk(currentPlayer, gameCode, playerIdsArray))
+  }
+}
+export const turnEndedThunk = (currentPlayer, gameCode, playerIdsArray) => {
+  return async (dispatch, getState, {getFirebase}) => {
+    try {
+      let nextPlayerIndex =
+        playerIdsArray.indexOf(currentPlayer) === playerIdsArray.length() // if it's the last player in the array
+          ? 0
+          : // if it's not the last player in the array
+            playerIdsArray.indexOf(currentPlayer) + 1
+
+      // Then update Firestore's game:
+      await getFirebase()
+        .firestore()
+        .collection('games')
+        .doc(gameCode)
+        .update({
+          currentPlayer: playerIdsArray[nextPlayerIndex]
+        })
+      dispatch(answeredChallenge)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 // Reducer:
 export default function(state = {}, action) {
@@ -44,6 +121,8 @@ export default function(state = {}, action) {
       const stateChallenge = action.challengeData
       stateChallenge.cardId = action.chosenCardId
       return stateChallenge
+    case ANSWERED_CHALLENGE:
+      return {}
     default:
       return state
   }
