@@ -95,26 +95,43 @@ input {
 
 #gameView {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#panelsBox {
+  display: flex;
+  justify-content: space-between;
+  width: 95vw;
 }
 
 .leftside {
   display: flex;
   flex-direction: column;
   margin-right: 2rem;
+  margin-left: 2rem;
 }
 
-#theGame {
-  display: flex;
+canvas {
   border-style: solid;
   border-color: black;
   border-width: 5px;
+  position: absolute;
+  top: 11rem;
+  left: 23%;
+}
+
+#insideTheGame {
+  position: absolute;
+  top: 100px;
+  left: 100px;
 }
 
 .rightside {
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .singlePlayerBox {
@@ -207,6 +224,53 @@ input {
 
 #ui {
   background-color: #2a9d8f;
+}
+
+.modalBox {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  position: absolute;
+  top: 40%;
+  left: 33%;
+  z-index: 1;
+  padding: 2rem;
+  background-color: #a39bb0;
+  border-style: ridge;
+  border-width: 1rem;
+  border-color: #fef2eb;
+  box-shadow: 1px 1px 400px 80px black;
+}
+
+.answerChoices {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-radio {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.form-radio-input {
+  flex-grow: 1;
+  max-width: 5%;
+}
+
+.form-radio label {
+  flex-grow: 5;
+  text-align: left;
+}
+
+.gameStarted {
+  display: none;
+}
+
+#topBar {
+  display: flex;
+  justify-content: center;
+  min-height: 4vmax;
 }
 
 /*# sourceMappingURL=style.css.map */

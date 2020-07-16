@@ -1,6 +1,9 @@
 import Phaser from 'phaser'
 import React, {useEffect} from 'react'
 import config from '../../config/gameConfig'
+// import {EventEmitter} from 'events'
+
+// export const newGame = new EventEmitter()
 
 const GameBoard = () => {
   let game

@@ -13,11 +13,13 @@ import 'firebase/auth'
 import user from './user'
 import preGame from './preGame'
 import players from './players'
+import challenge from './challenge'
 
 const reducer = combineReducers({
   user,
   preGame,
   players,
+  challenge,
   firebase: firebaseReducer,
   firestore: firestoreReducer // why is this blue??
 })

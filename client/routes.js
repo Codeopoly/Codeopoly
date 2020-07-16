@@ -14,7 +14,8 @@ import {
   CurrentGame,
   Instructions,
   Rejoin,
-  Loading
+  Loading,
+  Challenge
 } from './components'
 import {me} from './store'
 
@@ -43,6 +44,8 @@ class Routes extends Component {
         <Route exact path="/instructions" component={Instructions} />
         <Route exact path="/rejoin" component={Rejoin} />
         <Route exact path="/loading" component={Loading} />
+        {/* For testing only: */}
+        <Route exact path="/challenge" component={Challenge} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
