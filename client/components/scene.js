@@ -104,7 +104,44 @@ export default class SceneMain extends Phaser.Scene {
       authObj,
       middlewareObj
     ]
-
+    let finalOrderArr = [
+      goObj,
+      middlewareObj,
+      authObj,
+      codeDesignObj,
+      drawCardObj[3],
+      interviewObj[3],
+      materialUIObj,
+      cssObj,
+      htmlObj,
+      stuckOnBugObj,
+      semanticUIObj,
+      reactObj,
+      drawCardObj[2],
+      reactNativeObj,
+      emberObj,
+      vueObj,
+      interviewObj[2],
+      angularObj,
+      coffeeBreakObj,
+      stealSomeTechObj,
+      drawCardObj[0],
+      queuesObj,
+      stacksObj,
+      interviewObj[0],
+      linkedListsObj,
+      treesObj,
+      graphsObj,
+      gotaBugObj,
+      interviewObj[1],
+      newInvestorObj,
+      drawCardObj[1],
+      sequelizeObj,
+      firebaseObj,
+      expressObj,
+      mongoDBObj,
+      loseMoneyObj
+    ]
     console.log('checking draw card props', drawCardObj)
     console.log(singleTilesArr)
     //CREATING GROUPS FOR TILES BELOW
@@ -187,41 +224,68 @@ export default class SceneMain extends Phaser.Scene {
 
     let indexOfCurrentSpace = 0
     let newSpace
-    let currentSpace
+    let additionalSpaces
+    //let currentSpace
     let holderX = goObj
     let holderY = 200
 
     function helper() {
       // this.physics.moveToObject(this.doge, nex, y, time)
-      console.log('NAMEEEXX', holderX)
-      console.log('holdername', holderX.name)
-      console.log(doge)
+      // console.log('NAMEEEXX', holderX)
+      // console.log('holdername', holderX.name)
+      console.log('inside helper')
+      console.log(additionalSpaces, 'HELPER FUNCTION additional spaces')
       doge.x = holderX.x
       doge.y = holderX.y
+      if (additionalSpaces) {
+        console.log('additional spaces inside function', additionalSpaces)
+        movement(additionalSpaces)
+        additionalSpaces = 0
+      }
     }
+
     if (indexOfCurrentSpace) {
+      console.log('THE INDEX OF CURR')
       this.physics.moveToObject(doge, holderX, 0, 100)
+      console.log('additional spaces', additionalSpaces)
     }
 
     console.log(doge)
 
     function movement(spacesToMove) {
+      //console.log(finalOrderArr, '<----')
       newSpace = spacesToMove + indexOfCurrentSpace
-      currentSpace = indexOfCurrentSpace
-      console.log(doge)
-      console.log('THIS IN THE MOVEMENT FUNCTION', this)
-      console.log(indexOfCurrentSpace, 'INDEX OF CURRENT SPACE')
-      console.log(spacesToMove, 'SPACES TO MOVE')
-      console.log('MOVE TO THIS INDEX', tilePathArr[newSpace].index)
-      console.log('THE NAME OF THE TILE', tilePathArr[newSpace].name)
-      console.log(tilePathArr[newSpace], 'PLACEMENT')
-      holderX = tilePathArr[newSpace].x
-      holderY = tilePathArr[newSpace].y
-      console.log('newxandy', tilePathArr[newSpace].x, tilePathArr[newSpace].y)
+      if (newSpace > 35) {
+        console.log('OVER 35 NEW SPACE', newSpace)
+        additionalSpaces = Math.abs(35 - newSpace)
+        console.log(' OVER 35 ADDITIONAL SPACES', additionalSpaces)
+        newSpace = 0
+        // console.log(finalOrderArr[0])
+      }
+      // if (finalOrderArr) currentSpace = indexOfCurrentSpace
+      // console.log(doge)
+      // console.log('THIS IN THE MOVEMENT FUNCTION', this)
+      // console.log(indexOfCurrentSpace, 'INDEX OF CURRENT SPACE')
+      // console.log(spacesToMove, 'SPACES TO MOVE')
+      // console.log('MOVE TO THIS INDEX', tilePathArr[newSpace].index)
+      // console.log('THE NAME OF THE TILE', tilePathArr[newSpace].name)
+      // console.log(tilePathArr[newSpace], 'PLACEMENT')
+      // holderX = finalOrderArr[newSpace].x
+      // holderY = finalOrderArr[newSpace].y
+      //console.log('newxandy', tilePathArr[newSpace].x, tilePathArr[newSpace].y)
       indexOfCurrentSpace = newSpace
-      singleTilesArr.filter(tile => {
-        if (tilePathArr[newSpace].name === tile.name) holderX = tile
-        helper()
+      //console.log('FINAL ORDER ARRAY', finalOrderArr)
+      //console.log(placementArr)
+
+      finalOrderArr.filter(tile => {
+        if (finalOrderArr[newSpace].name === tile.name) {
+          //console.log(tile, 'THE TILE'),
+          // console.log(finalOrderArr[newSpace]),
+          console.log('in filter function!')
+          holderX = tile
+          console.log('HOLDERX', holderX)
+          helper()
+        }
       })
     }
 
@@ -276,9 +340,7 @@ export default class SceneMain extends Phaser.Scene {
       anim2.pause()
       first.isRolling = false
     }
-    function dogeZoom() {
-      return console.log('Im zooming!!!!')
-    }
+
     let diceGroup = this.add.group([first, second])
     let diceArray = diceGroup.getChildren()
     // To keep track of whether it's the first time we're rolling the dice:
