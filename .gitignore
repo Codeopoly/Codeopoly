@@ -7,3 +7,4 @@ npm-debug.log
 yarn-error.log
 .firebase
 client/components/notes.js
+firestoreSAK.json
