@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import AlignGrid from '../../utility/alignGrid'
 import EventDispatcher from '../../utility/eventDispatcher'
 import {newGame} from './playerPanels'
@@ -48,35 +49,127 @@ export default class SceneMain extends Phaser.Scene {
     // this.physics.world.bounds.width = board.width
     // this.physics.world.bounds.height = board.height
 
-    const interviewLayer = board.createStaticLayer('Interview', tileset, 0, 0)
-    console.log('interview layer added')
-
-    const interviewTiles = board.createFromObjects('Interview')
+    //getting object layers from json file
     const interviewObj = board.getObjectLayer('Interview').objects
     const drawCardObj = board.getObjectLayer('Draw a card').objects
-    //console.log below works!!
-    console.log('these are two object layers', interviewObj, drawCardObj)
+    const coffeeBreakObj = board.getObjectLayer('Coffee Break').objects[0]
+    const stealSomeTechObj = board.getObjectLayer('Steal some tech').objects[0]
+    const queuesObj = board.getObjectLayer('Queues').objects[0]
+    const stacksObj = board.getObjectLayer('Stacks').objects[0]
+    const linkedListsObj = board.getObjectLayer('Linked lists').objects[0]
+    const treesObj = board.getObjectLayer('Trees').objects[0]
+    const graphsObj = board.getObjectLayer('Graphs').objects[0]
+    const gotaBugObj = board.getObjectLayer('Got a bug').objects[0]
+    const newInvestorObj = board.getObjectLayer('New Investor').objects[0]
+    const sequelizeObj = board.getObjectLayer('Sequelize').objects[0]
+    const firebaseObj = board.getObjectLayer('Firebase').objects[0]
+    const expressObj = board.getObjectLayer('Express').objects[0]
+    const mongoDBObj = board.getObjectLayer('MongoDB').objects[0]
+    const loseMoneyObj = board.getObjectLayer('Lose money').objects[0]
+    const middlewareObj = board.getObjectLayer('Middleware').objects[0]
+    const authObj = board.getObjectLayer('Auth').objects[0]
+    const codeDesignObj = board.getObjectLayer('Code design').objects[0]
+    const materialUIObj = board.getObjectLayer('MaterialUI').objects[0]
+    const cssObj = board.getObjectLayer('CSS').objects[0]
+    const htmlObj = board.getObjectLayer('HTML').objects[0]
+    const stuckOnBugObj = board.getObjectLayer('Stuck on bug').objects[0]
+    const semanticUIObj = board.getObjectLayer('SemanticUI').objects[0]
+    const reactObj = board.getObjectLayer('React').objects[0]
+    const reactNativeObj = board.getObjectLayer('React native').objects[0]
+    const emberObj = board.getObjectLayer('Ember').objects[0]
+    const vueObj = board.getObjectLayer('Vue').objects[0]
+    const angularObj = board.getObjectLayer('Angular').objects[0]
+    const goObj = board.getObjectLayer('Go').objects[0]
 
-    //THIS CONSOLE LOGS!!
+    this.singleTilesArr = [
+      goObj,
+      loseMoneyObj,
+      mongoDBObj,
+      expressObj,
+      firebaseObj,
+      sequelizeObj,
+      newInvestorObj,
+      gotaBugObj,
+      graphsObj,
+      treesObj,
+      linkedListsObj,
+      stacksObj,
+      queuesObj,
+      stealSomeTechObj,
+      coffeeBreakObj,
+      angularObj,
+      vueObj,
+      emberObj,
+      reactNativeObj,
+      reactObj,
+      semanticUIObj,
+      stuckOnBugObj,
+      htmlObj,
+      cssObj,
+      materialUIObj,
+      codeDesignObj,
+      authObj,
+      middlewareObj
+    ]
 
-    this.overlapObjectsGroup = this.physics.add.group({})
+    console.log('checking draw card props', drawCardObj)
 
+    //CREATING GROUPS FOR TILES BELOW
+    this.interviewGroup = this.physics.add.group({})
+    this.drawCardGroup = this.physics.add.group({})
+
+    this.interviewArr = []
     interviewObj.forEach(object => {
-      console.log('HI THIS IS WORKING I GUESS????')
-      let obj = this.overlapObjectsGroup.create(object.x, object.y, 'tile')
+      console.log('INTERVIEW PLACEMENT WORKS')
+      let obj = this.interviewGroup.create(object.x, object.y, 'tile')
       obj.setOrigin(0)
       obj.body.width = object.width
       obj.body.height = object.height
+      this.interviewArr.push(obj)
+    })
+    this.drawCardArr = []
+    drawCardObj.forEach(object => {
+      console.log('DRAW CARD PLACEMENT WORKS')
+      let obj = this.drawCardGroup.create(object.x, object.y, 'tile')
+      obj.setOrigin(0)
+      obj.body.width = object.width
+      obj.body.height = object.height
+      this.drawCardArr.push(obj)
     })
 
-    // overlapObjectsGroup.refresh()
+    //SINGLE TILE PLACEMENT BELOW
+    this.placementArr = []
+    this.singleTilesArr.forEach(object => {
+      let obj = this.physics.add.sprite(object.x, object.y, object.name)
+      obj.setOrigin(0)
+      obj.body.width = object.width
+      obj.body.height = object.height
+      this.placementArr.push(obj)
+    })
 
-    // this.physics.add.overlap(this.doge, this.overlapObjectsGroup)
+    // PATH TILES IN ORDER FROM GO TO FINISH
+    this.tilePathArr = this.placementArr
 
-    // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
-    // console.log('draw card layer added')
+    //insert draw card right at 6th idx
+    this.tilePathArr.splice(6, 0, this.drawCardArr[1])
+    //insert interview right at 8th idx
+    this.tilePathArr.splice(8, 0, this.interviewArr[1])
+    //insert interview top at 13th idx
+    this.tilePathArr.splice(13, 0, this.interviewArr[0])
+    //insert draw card top at 16th idx
+    this.tilePathArr.splice(16, 0, this.drawCardArr[0])
+    //insert interview left at 20th idx
+    this.tilePathArr.splice(20, 0, this.interviewArr[2])
+    //insert draw card left at 24th idx
+    this.tilePathArr.splice(24, 0, this.drawCardArr[2])
+    //insert interview bottom at 31st idx
+    this.tilePathArr.splice(31, 0, this.interviewArr[3])
+    //insert draw card bottom at 32nd idx
+    this.tilePathArr.splice(32, 0, this.drawCardArr[3])
+    console.log(this.tilePathArr)
 
-    //it's only like this because the template literal WON'T WORK!!!!! don't be mad
+    // Rendering sprites picked for game
+    // it's only like this because the template literal WON'T WORK!!!!! don't be mad
     let player1
     let player2
     let player3
@@ -96,14 +189,6 @@ export default class SceneMain extends Phaser.Scene {
       }
     })
 
-    // players.forEach(player => {
-    //   player.setScale(0.07)
-    // })
-    // this.doge.setOrigin(-10.5, -10)
-    // this.doge.setScale(0.07)
-    // this.doge = this.physics.add.sprite(0, 0, 'doge')
-
-    // this.doge.setCollideWorldBounds(true) // don't go out of the map
 
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
@@ -267,43 +352,26 @@ export default class SceneMain extends Phaser.Scene {
     })
 
     // End Callstack Deck code.
-    // this.setListeners()
   }
 
-  // setListeners() {
-  //   newGame.on('start', (imageNameArray) => {
-  //     console.log('listener in scene.js heard newGame!')
-  //     console.log('here it is AGAIN...', imageNameArray)
-  //   })
-  // }
-
   update() {
-    // this.overlapObjectsGroup(this.doge)
-    //   //SPRITE ANIMATION
-    //   let spriteMovement = {velocity: 8}
-    //   if (this.keys.left.isDown) {
-    //     this.doge.x -= spriteMovement.velocity
-    //   }
-    //   if (this.keys.right.isDown) {
-    //     this.doge.x += spriteMovement.velocity
-    //   }
-    //   if (this.keys.down.isDown) {
-    //     this.doge.y += spriteMovement.velocity
-    //   }
-    //   if (this.keys.up.isDown) {
-    //     this.doge.y -= spriteMovement.velocity
-    //   }
-    //   this.physics.add.overlap(
-    //     this.doge,
-    //     this.overlapObjectsGroup,
-    //     this.activateFunc,
-    //     null,
-    //     this
-    //   )
-    // }
-    // activateFunc(player, tile) {
-    //   console.log('inside the func')
-    //   tile.disableBody()
-    // try game logic goes here
+    // this.interviewGroup(this.doge)
+    //SPRITE ANIMATION
+    let spriteMovement = {velocity: 8}
+
+    this.placementArr.forEach(placement => {
+      this.physics.add.overlap(
+        this.doge,
+        placement,
+        this.activateFunc,
+        null,
+        this
+        )
+      })
+   
+    activateFunc(player, tile) {
+      console.log('inside the func')
+      tile.disableBody()
+    } 
   }
 }
