@@ -35,8 +35,11 @@ export default class SceneMain extends Phaser.Scene {
     const firstLayer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
     console.log('first layer added')
 
-    // this.physics.world.bounds.width = board.width
-    // this.physics.world.bounds.height = board.height
+    console.log(firstLayer.width, 'LAYER WIDTH')
+    console.log(firstLayer.height, 'LAYER HEIGHT')
+    // this.physics.world.bounds.width = 128
+    // this.physics.world.bounds.height = 768
+    //this.physics.world.setBoundsCollision(true, true, true, true)
 
     //getting object layers from json file
     const interviewObj = board.getObjectLayer('Interview').objects
@@ -69,8 +72,9 @@ export default class SceneMain extends Phaser.Scene {
     const vueObj = board.getObjectLayer('Vue').objects[0]
     const angularObj = board.getObjectLayer('Angular').objects[0]
     const goObj = board.getObjectLayer('Go').objects[0]
-
-    this.singleTilesArr = [
+    console.log(coffeeBreakObj, 'COFFEEOBJECT')
+    console.log(coffeeBreakObj.name, 'TESTING THE NAME')
+    let singleTilesArr = [
       goObj,
       loseMoneyObj,
       mongoDBObj,
@@ -102,25 +106,34 @@ export default class SceneMain extends Phaser.Scene {
     ]
 
     console.log('checking draw card props', drawCardObj)
-
+    console.log(singleTilesArr)
     //CREATING GROUPS FOR TILES BELOW
     this.interviewGroup = this.physics.add.group({})
     this.drawCardGroup = this.physics.add.group({})
 
+    let interviewIdxCount = 0
     this.interviewArr = []
     interviewObj.forEach(object => {
       console.log('INTERVIEW PLACEMENT WORKS')
-      let obj = this.interviewGroup.create(object.x, object.y, 'tile')
+      let obj = this.interviewGroup.create(object.x, object.y, object.name)
       obj.setOrigin(0)
+      obj.index = interviewIdxCount
+      obj.name = object.name
+      obj.body.x = object.x
+      obj.body.y = object.y
       obj.body.width = object.width
       obj.body.height = object.height
+      interviewIdxCount++
       this.interviewArr.push(obj)
     })
     this.drawCardArr = []
     drawCardObj.forEach(object => {
       console.log('DRAW CARD PLACEMENT WORKS')
-      let obj = this.drawCardGroup.create(object.x, object.y, 'tile')
+      let obj = this.drawCardGroup.create(object.x, object.y, object.name)
       obj.setOrigin(0)
+      obj.name = object.name
+      obj.body.x = object.x
+      obj.body.y = object.y
       obj.body.width = object.width
       obj.body.height = object.height
       this.drawCardArr.push(obj)
@@ -128,44 +141,89 @@ export default class SceneMain extends Phaser.Scene {
 
     //SINGLE TILE PLACEMENT BELOW
     this.placementArr = []
-    this.singleTilesArr.forEach(object => {
+    let indexCount = 0
+    singleTilesArr.forEach(object => {
       let obj = this.physics.add.sprite(object.x, object.y, object.name)
       obj.setOrigin(0)
+      obj.index = indexCount
+      obj.name = object.name
+      obj.body.x = object.x
+      obj.body.y = object.y
       obj.body.width = object.width
       obj.body.height = object.height
       this.placementArr.push(obj)
+      indexCount++
     })
 
-    // console.log(this.placementArr)
+    console.log(this.placementArr, 'PLCMENT ARRAY')
 
     // PATH TILES IN ORDER FROM GO TO FINISH
-    this.tilePathArr = this.placementArr
+    let tilePathArr = this.placementArr
 
     //insert draw card right at 6th idx
-    this.tilePathArr.splice(6, 0, this.drawCardArr[1])
+    tilePathArr.splice(6, 0, this.drawCardArr[1])
     //insert interview right at 8th idx
-    this.tilePathArr.splice(8, 0, this.interviewArr[1])
+    tilePathArr.splice(8, 0, this.interviewArr[1])
     //insert interview top at 13th idx
-    this.tilePathArr.splice(13, 0, this.interviewArr[0])
+    tilePathArr.splice(13, 0, this.interviewArr[0])
     //insert draw card top at 16th idx
-    this.tilePathArr.splice(16, 0, this.drawCardArr[0])
+    tilePathArr.splice(16, 0, this.drawCardArr[0])
     //insert interview left at 20th idx
-    this.tilePathArr.splice(20, 0, this.interviewArr[2])
+    tilePathArr.splice(20, 0, this.interviewArr[2])
     //insert draw card left at 24th idx
-    this.tilePathArr.splice(24, 0, this.drawCardArr[2])
+    tilePathArr.splice(24, 0, this.drawCardArr[2])
     //insert interview bottom at 31st idx
-    this.tilePathArr.splice(31, 0, this.interviewArr[3])
+    tilePathArr.splice(31, 0, this.interviewArr[3])
     //insert draw card bottom at 32nd idx
-    this.tilePathArr.splice(32, 0, this.drawCardArr[3])
-    console.log(this.tilePathArr)
+    tilePathArr.splice(32, 0, this.drawCardArr[3])
+    console.log(tilePathArr)
 
     //DOGE PLACEMENT BELOW
 
-    this.doge = this.physics.add.sprite(0, 0, 'doge')
-    this.doge.setOrigin(-10.5, -10)
-    this.doge.setScale(0.07)
+    let doge = this.physics.add.sprite(400, 500, 'doge')
+    doge.setOrigin(0)
+    doge.setScale(0.07)
+    doge.setCollideWorldBounds(true) // don't go out of the map
 
-    // this.doge.setCollideWorldBounds(true) // don't go out of the map
+    let indexOfCurrentSpace = 0
+    let newSpace
+    let currentSpace
+    let holderX = goObj
+    let holderY = 200
+
+    function helper() {
+      // this.physics.moveToObject(this.doge, nex, y, time)
+      console.log('NAMEEEXX', holderX)
+      console.log('holdername', holderX.name)
+      console.log(doge)
+      doge.x = holderX.x
+      doge.y = holderX.y
+    }
+    if (indexOfCurrentSpace) {
+      this.physics.moveToObject(doge, holderX, 0, 100)
+    }
+
+    console.log(doge)
+
+    function movement(spacesToMove) {
+      newSpace = spacesToMove + indexOfCurrentSpace
+      currentSpace = indexOfCurrentSpace
+      console.log(doge)
+      console.log('THIS IN THE MOVEMENT FUNCTION', this)
+      console.log(indexOfCurrentSpace, 'INDEX OF CURRENT SPACE')
+      console.log(spacesToMove, 'SPACES TO MOVE')
+      console.log('MOVE TO THIS INDEX', tilePathArr[newSpace].index)
+      console.log('THE NAME OF THE TILE', tilePathArr[newSpace].name)
+      console.log(tilePathArr[newSpace], 'PLACEMENT')
+      holderX = tilePathArr[newSpace].x
+      holderY = tilePathArr[newSpace].y
+      console.log('newxandy', tilePathArr[newSpace].x, tilePathArr[newSpace].y)
+      indexOfCurrentSpace = newSpace
+      singleTilesArr.filter(tile => {
+        if (tilePathArr[newSpace].name === tile.name) holderX = tile
+        helper()
+      })
+    }
 
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
@@ -207,15 +265,20 @@ export default class SceneMain extends Phaser.Scene {
     // function called when the tween stops
     function stopAnims() {
       // console.log("stopAnims ran!", first.frame, second.frame)
+      const spacesToMove =
+        diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
       console.log(
         'You rolled: ',
         diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
       )
+      movement(spacesToMove)
       anim1.pause()
       anim2.pause()
       first.isRolling = false
     }
-
+    function dogeZoom() {
+      return console.log('Im zooming!!!!')
+    }
     let diceGroup = this.add.group([first, second])
     let diceArray = diceGroup.getChildren()
     // To keep track of whether it's the first time we're rolling the dice:
@@ -325,14 +388,17 @@ export default class SceneMain extends Phaser.Scene {
         card.canBeDismissed = true
       }
     })
-
+    //console.log('TARGET', this.target)
     // End Callstack Deck code.
   }
   update() {
-    // this.interviewGroup(this.doge)
     //SPRITE ANIMATION
+
     let spriteMovement = {velocity: 8}
 
+    if (this.AnotherTry) {
+      this.physics.moveToObject(this.doge, newTile, 4000)
+    }
     if (this.keys.left.isDown) {
       this.doge.x -= spriteMovement.velocity
     }
@@ -345,20 +411,5 @@ export default class SceneMain extends Phaser.Scene {
     if (this.keys.up.isDown) {
       this.doge.y -= spriteMovement.velocity
     }
-
-    this.placementArr.forEach(placement => {
-      this.physics.add.overlap(
-        this.doge,
-        placement,
-        this.activateFunc,
-        null,
-        this
-      )
-    })
-  }
-  activateFunc(player, tile) {
-    console.log('inside the func')
-    tile.disableBody()
-    // try game logic goes here
   }
 }
