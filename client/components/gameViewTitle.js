@@ -5,6 +5,8 @@ const GameViewTitle = () => {
   const [reload, setReload] = useState(false)
   const players = useSelector(state => state.firestore.data.players)
 
+  console.log('gameviewtile is rendering')
+
   useEffect(
     () => {
       setReload(!reload)

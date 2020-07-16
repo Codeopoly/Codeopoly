@@ -1,4 +1,9 @@
 import AlignGrid from '../../utility/alignGrid'
+import EventDispatcher from '../../utility/eventDispatcher'
+import {newGame} from './currentGame'
+import {EventEmitter} from 'events'
+
+export const phaserE = new EventEmitter()
 
 export default class SceneMain extends Phaser.Scene {
   constructor() {
@@ -15,15 +20,21 @@ export default class SceneMain extends Phaser.Scene {
       frameHeight: 64
     })
 
-    this.load.image('doge', 'assets/Doge-Meme.png')
+    this.load.image('doge', 'assets/doge.png')
+    this.load.image('cody', 'assets/cody.png')
+    this.load.image('cat', 'assets/cat.png')
+    this.load.image('kid', 'assets/kid.png')
+    this.load.image('kermit', 'assets/kermit.png')
+    this.load.image('marshall', 'assets/marshall.png')
 
     this.load.spritesheet('card1', 'assets/callstack/1.png', {
       frameWidth: 425,
       frameHeight: 275
     })
-
   }
   create() {
+    this.emitter = EventDispatcher.getInstance()
+
     this.keys = this.input.keyboard.createCursorKeys()
 
     let board = this.make.tilemap({key: 'board'})
@@ -62,16 +73,37 @@ export default class SceneMain extends Phaser.Scene {
 
     // this.physics.add.overlap(this.doge, this.overlapObjectsGroup)
 
-
     // const drawCardLayer = board.createStaticLayer('Draw a card', tileset, 0, 0)
     // console.log('draw card layer added')
 
-    this.doge = this.physics.add.sprite(0, 0, 'doge')
-    this.doge.setOrigin(-10.5, -10)
-    this.doge.setScale(0.07)
+    //it's only like this because the template literal WON'T WORK!!!!! don't be mad
+    let player1
+    let player2
+    let player3
+    let player4
+
+    let players = [player1, player2, player3, player4]
+
+    newGame.on('start', imageNameArray => {
+      console.log('here it is AGAIN...', imageNameArray)
+      for (let i = 0; i < imageNameArray.length; i++) {
+        players[i] = this.physics.add.sprite(
+          i % 2 ? 680 : 730,
+          i > 1 ? 730 : 680,
+          imageNameArray[i]
+        )
+        players[i].setScale(0.3)
+      }
+    })
+
+    // players.forEach(player => {
+    //   player.setScale(0.07)
+    // })
+    // this.doge.setOrigin(-10.5, -10)
+    // this.doge.setScale(0.07)
+    // this.doge = this.physics.add.sprite(0, 0, 'doge')
 
     // this.doge.setCollideWorldBounds(true) // don't go out of the map
-
 
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
@@ -88,7 +120,6 @@ export default class SceneMain extends Phaser.Scene {
 
     // dice animations
     const anim1 = this.anims.create({
-
       key: 'firstDiceRoll',
       repeat: -1,
       frameRate: 15 + Math.floor(Math.random() * 3), // randomness to avoid the same rolling patterns
@@ -194,6 +225,8 @@ export default class SceneMain extends Phaser.Scene {
           }
           if (card.canBeDismissed) {
             card.destroy()
+            console.log('how many times??')
+            phaserE.emit('playerLanded')
           }
         },
         this
@@ -234,36 +267,43 @@ export default class SceneMain extends Phaser.Scene {
     })
 
     // End Callstack Deck code.
+    // this.setListeners()
   }
+
+  // setListeners() {
+  //   newGame.on('start', (imageNameArray) => {
+  //     console.log('listener in scene.js heard newGame!')
+  //     console.log('here it is AGAIN...', imageNameArray)
+  //   })
+  // }
+
   update() {
     // this.overlapObjectsGroup(this.doge)
-    //SPRITE ANIMATION
-    let spriteMovement = {velocity: 8}
-
-    if (this.keys.left.isDown) {
-      this.doge.x -= spriteMovement.velocity
-    }
-    if (this.keys.right.isDown) {
-      this.doge.x += spriteMovement.velocity
-    }
-    if (this.keys.down.isDown) {
-      this.doge.y += spriteMovement.velocity
-    }
-    if (this.keys.up.isDown) {
-      this.doge.y -= spriteMovement.velocity
-    }
-
-    this.physics.add.overlap(
-      this.doge,
-      this.overlapObjectsGroup,
-      this.activateFunc,
-      null,
-      this
-    )
-  }
-  activateFunc(player, tile) {
-    console.log('inside the func')
-    tile.disableBody()
+    //   //SPRITE ANIMATION
+    //   let spriteMovement = {velocity: 8}
+    //   if (this.keys.left.isDown) {
+    //     this.doge.x -= spriteMovement.velocity
+    //   }
+    //   if (this.keys.right.isDown) {
+    //     this.doge.x += spriteMovement.velocity
+    //   }
+    //   if (this.keys.down.isDown) {
+    //     this.doge.y += spriteMovement.velocity
+    //   }
+    //   if (this.keys.up.isDown) {
+    //     this.doge.y -= spriteMovement.velocity
+    //   }
+    //   this.physics.add.overlap(
+    //     this.doge,
+    //     this.overlapObjectsGroup,
+    //     this.activateFunc,
+    //     null,
+    //     this
+    //   )
+    // }
+    // activateFunc(player, tile) {
+    //   console.log('inside the func')
+    //   tile.disableBody()
     // try game logic goes here
   }
 }
