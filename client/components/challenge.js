@@ -137,6 +137,7 @@ const Challenge = () => {
       result = 'right'
       modalE.emit('playerAnswered', result, prize)
       setTimeout(modalGoAway, 5000)
+
     } else {
       // If you clicked the wrong answer... (1, 5)
       console.log('category atm......', category)

@@ -379,6 +379,8 @@ export default class SceneMain extends Phaser.Scene {
       if (newLoc > 35) {
         newLoc = newLoc - 35
         // Emit signal passed GO
+        console.log('i passed go!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        phaserE.emit('playerPassedGo')
       }
       console.log('player locations:', playerLocations)
       console.log('propertyName:', propertyName)
