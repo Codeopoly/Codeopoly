@@ -6,15 +6,19 @@ import {useFirestoreConnect} from 'react-redux-firebase'
 import {EventEmitter} from 'events'
 import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
+import WinModal from './winModal'
 
 export const newGame = new EventEmitter()
 
 let counter = 0
+
 // let showModal = false
 
 const PlayerPanels = () => {
+  let winnerName
   // const [counter, setCounter] = useState(0)
-  const [showModal, setShowModal] = useState(false)
+  const [showChallengeModal, setShowChallengeModal] = useState(false)
+  const [showWinModal, setShowWinModal] = useState(false)
   // const [showTurn, setShowTurn] = useState(false)
 
   console.log('heres the counter', counter)
@@ -48,7 +52,10 @@ const PlayerPanels = () => {
     phaserE.on('playerLanded', () => {
       console.log('phaserE received in playerPanels!')
       // setCounter(1)
-      setShowModal(true)
+      //setShowChallengeModal(true)
+      winnerName =
+        players[gamesCollectionObj[gameCode].currentPlayer].startupName
+      setShowWinModal(true)
       counter = 1
       // showModal = true
     })
@@ -123,7 +130,8 @@ const PlayerPanels = () => {
             )}
           </div>
           <div id="theGameBox">
-            <ChallengeModal show={showModal} />
+            <ChallengeModal show={showChallengeModal} />
+            <WinModal show={showWinModal} name={winnerName} />
           </div>
           <div className="rightside">
             <div id="player2" className="singlePlayerBox">
