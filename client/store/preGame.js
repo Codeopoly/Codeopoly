@@ -40,7 +40,6 @@ export const createPlayerThunk = (
   isHost
 ) => {
   return async (dispatch, getState, {getFirebase}) => {
-    console.log('createPlayerThunk is running')
     try {
       // First make a player:
       console.log('if this ran, a player was made!')
@@ -61,7 +60,6 @@ export const createPlayerThunk = (
           isHost: isHost,
           randomness: Math.random()
         })
-      console.log('newPlayerId:', newPlayerDR.id)
 
       // Coolio, we made a new player, but we want to add the reference to the game.
       if (isHost) {

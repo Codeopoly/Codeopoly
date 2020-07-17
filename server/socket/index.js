@@ -15,6 +15,8 @@ module.exports = io => {
     })
 
     socket.on('iAnswered', (result, prize) => {
+      console.log('-------------4--------------')
+      console.log('Server socket knows the player answered', result, prize)
       socket.broadcast.emit('someoneAnswered', result, prize)
     })
 

@@ -90,6 +90,7 @@ export const answeredChallengeThunk = (
 }
 
 export const turnEndedThunk = (currentPlayer, gameCode, playerIdsArray) => {
+  console.log('turnEndedThunk ran!!!')
   return async (dispatch, getState, {getFirebase}) => {
     try {
       let nextPlayerIndex =
