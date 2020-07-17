@@ -6,9 +6,5 @@ secrets.js
 npm-debug.log
 yarn-error.log
 .firebase
-<<<<<<< HEAD
 client/components/notes.js
 firestoreSAK.json
-=======
-firestoreSAK.json
->>>>>>> 6fdd7445f875e76f93720d623292a68638f1d609
