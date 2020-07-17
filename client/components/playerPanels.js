@@ -9,6 +9,7 @@ import {phaserE} from './scene'
 import {modalE} from './challenge'
 import {getChallengeThunk} from '../store/challenge'
 import WinModal from './winModal'
+import {DH_CHECK_P_NOT_SAFE_PRIME} from 'constants'
 
 export const newGame = new EventEmitter()
 
@@ -101,24 +102,28 @@ const PlayerPanels = () => {
     setShowChallengeModal(false)
   })
 
-  const passedGo = () => {
-    if (players !== undefined && gamesCollectionObj) {
-      console.log('what is undefined........')
-      console.log('is it players?', players)
-      console.log('is it gamesCollectionObj?', gamesCollectionObj)
-      console.log('is it gameCode?', gameCode)
-      let winner = gamesCollectionObj[gameCode].currentPlayer
-      console.log('is it winner?', winner)
-      setWinnerName(players[winner].startupName)
-      setShowWinModal(true)
-    }
-  }
-
   phaserE.on('playerPassedGo', () => {
-    console.log(
-      '---------player passes go in react ONCE?--------------------------'
-    )
-    passedGo()
+    if (players !== undefined && gamesCollectionObj !== undefined) {
+      let winner = gamesCollectionObj[gameCode].currentPlayer
+      let meetsWinConditions = false
+      let decks = [
+        'hasFrontend',
+        'hasBackend',
+        'hasUI',
+        'hasAlgorithm',
+        'hasMisc'
+      ]
+      if (winner.seedMoney > 10000) {
+        for (let i = 0; i < decks.length; i++) {
+          if (winner[decks[i]] === 'none') break
+        }
+        meetsWinConditions = true
+      }
+      if (meetsWinConditions) {
+        setWinnerName(players[winner].startupName)
+        setShowWinModal(true)
+      }
+    }
   })
 
   const triggerEmit = () => {
