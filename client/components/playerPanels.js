@@ -49,9 +49,8 @@ const PlayerPanels = () => {
   })
 
   const players = useSelector(state => state.firestore.data.players)
-
   console.log('players on  line 51!', players)
-
+  
   phaserE.setMaxListeners(1)
 
   if (counter < 1) {
@@ -116,8 +115,10 @@ const PlayerPanels = () => {
       if (winner.seedMoney > 10000) {
         for (let i = 0; i < decks.length; i++) {
           if (winner[decks[i]] === 'none') break
-        }
-        meetsWinConditions = true
+          if (i === decks.length -1) {
+            meetsWinConditions = true
+          }
+        } 
       }
       if (meetsWinConditions) {
         setWinnerName(players[winner].startupName)
@@ -161,6 +162,11 @@ const PlayerPanels = () => {
     // showTurn = true
     // console.log('heres showTurn', showTurn)
   }
+
+  // When a playerAnswers, we want to make sure firestore is updating for everyone.
+  // modalE.once('socketSaysSomeoneAnswered', () => {
+
+  // })
 
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
 

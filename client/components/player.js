@@ -13,17 +13,19 @@ const Player = props => {
   console.log('props is  the  whole player doc check it out', props)
 
   const player = props.player
-  const techs = ['Algorithm', 'Backend', 'Frontend', 'Misc', 'UI']
+  const techs = ['Algorithm', 'Backend', 'Frontend', 'Misc', 'UI'] // Tech that player needs to earn
 
   useEffect(
     () => {
+      console.log(
+        '<--this useEffect to render player score panel ran this many times'
+      )
       for (let i = 0; i < techs.length; i++) {
         // console.log(`has${techs[i]}: player[has${techs[i]}]`)
-        console.log('<--this ran this many times')
         if (player[`has${techs[i]}`] === true) {
           console.log('this is the tech that we HAVE:', techs[i])
           document.getElementById(techs[i]).classList.remove('noTech')
-          techs.splice(i, 1)
+          techs.splice(i, 1) // If player has tech, remove from techsToEarn array
         }
       }
     },

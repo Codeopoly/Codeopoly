@@ -17,7 +17,6 @@ const HomePage = props => {
   }
 
   const handleJoin = () => {
-    console.log('handleJoin ran')
     console.log('this is the game code being sent:', gameCode)
     props.joinGame(gameCode)
     setRedirectNow(true)
@@ -29,7 +28,6 @@ const HomePage = props => {
   }
   const handleChange = event => {
     setGameCode(event.target.value)
-    // console.log('game code on state:', gameCode)
   }
   const handleTest = () => {
     setTestRedirect(true)
