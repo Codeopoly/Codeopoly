@@ -24,7 +24,9 @@ const Player = props => {
         // console.log(`has${techs[i]}: player[has${techs[i]}]`)
         if (player[`has${techs[i]}`] === true) {
           console.log('this is the tech that we HAVE:', techs[i])
-          document.getElementById(techs[i]).classList.remove('noTech')
+          document
+            .getElementById(`${player.startupName}${techs[i]}`)
+            .classList.remove('noTech')
           techs.splice(i, 1) // If player has tech, remove from techsToEarn array
         }
       }
@@ -47,19 +49,34 @@ const Player = props => {
         </div>
       </div>
       <div id="scoreTech">
-        <div className="scoreTechPiece circle noTech" id="Algorithm">
+        <div
+          className="scoreTechPiece circle noTech algorithm"
+          id={`${player.startupName}Algorithm`}
+        >
           {/* {renderTechImage(player.hasAlgorithm)} */}
         </div>
-        <div className="scoreTechPiece circle noTech" id="Backend">
+        <div
+          className="scoreTechPiece circle noTech backend"
+          id={`${player.startupName}Backend`}
+        >
           {/* {renderTechImage(player.hasBackend)} */}
         </div>
-        <div className="scoreTechPiece circle noTech" id="Frontend">
+        <div
+          className="scoreTechPiece circle noTech frontend"
+          id={`${player.startupName}Frontend`}
+        >
           {/* {renderTechImage(player.hasFrontend)} */}
         </div>
-        <div className="scoreTechPiece circle noTech" id="Misc">
+        <div
+          className="scoreTechPiece circle noTech misc"
+          id={`${player.startupName}Misc`}
+        >
           {/* {renderTechImage(player.hasMiddleware)} */}
         </div>
-        <div className="scoreTechPiece circle noTech" id="UI">
+        <div
+          className="scoreTechPiece circle noTech UI"
+          id={`${player.startupName}UI`}
+        >
           {/* {renderTechImage(player.hasUI)} */}
         </div>
       </div>

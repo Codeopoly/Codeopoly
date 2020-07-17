@@ -56,8 +56,7 @@ export default class SceneMain extends Phaser.Scene {
       player2Loc: 0
     }
 
-    newGame.on('start', (imageNameArray, hostStatusArray, randomParam) => {
-      sceneRandomness = randomParam
+    newGame.on('start', (imageNameArray, hostStatusArray) => {
       for (let i = 0; i < imageNameArray.length; i++) {
         players[i] = this.physics.add.sprite(
           i % 2 ? 680 : 730,

@@ -211,48 +211,48 @@ canvas {
 }
 
 /* For the catergories' circle colors */
-#Algorithm {
+.algorithm {
   background-color: $algorithm;
   border: 0.2rem solid $algorithm;
 }
 
-#Algorithm.noTech {
+.algorithm.noTech {
   background-color: gray;
 }
 
-#Backend {
+.backend {
   background-color: $backend;
   border: 0.2rem solid $backend;
 }
 
-#Backend.noTech {
+.backend.noTech {
   background-color: gray;
 }
 
-#Frontend {
+.frontend {
   background-color: $frontend;
   border: 0.2rem solid $frontend;
 }
 
-#Frontend.noTech {
+.frontend.noTech {
   background-color: gray;
 }
 
-#Misc {
+.misc {
   background-color: $misc;
   border: 0.2rem solid $misc;
 }
 
-#Misc.noTech {
+.misc.noTech {
   background-color: gray;
 }
 
-#UI {
+.UI {
   background-color: $ui;
   border: 0.2rem solid $ui;
 }
 
-#UI.noTech {
+.UI.noTech {
   background-color: gray;
 }
 

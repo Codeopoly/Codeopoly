@@ -6,9 +6,9 @@ import {modalE} from './components/challenge'
 const socket = io(window.location.origin)
 
 // For checking the signal was sent from React
-newGame.on('start', (imageNameArray, hostStatusArray, randomness) => {
+newGame.on('start', (imageNameArray, hostStatusArray) => {
   console.log('newGame sent start!')
-  console.log('here it is...', imageNameArray, hostStatusArray, randomness)
+  console.log('here it is...', imageNameArray, hostStatusArray)
 })
 
 // Hook into the event being emitted from our Phaser game:
