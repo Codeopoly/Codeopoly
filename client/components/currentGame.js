@@ -13,9 +13,9 @@ const CurrentGame = () => {
   return (
     <div id="mainScreen">
       <div id="topBar">
-        <div id="gameViewTitle" className="gameStarted">
+        {/* <div id="gameViewTitle" className="gameStarted">
           <GameViewTitle />
-        </div>
+        </div> */}
       </div>
       <div id="gameView">
         <div>

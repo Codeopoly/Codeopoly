@@ -1,31 +1,50 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 
-const GameViewTitle = () => {
-  const [reload, setReload] = useState(false)
-  const players = useSelector(state => state.firestore.data.players)
-  const gameDoc = useSelector(state => state.firestore.data.games)
-  const gameCode = Object.keys(gameDoc)[0]
-  const currentPlayerId = gameDoc[gameCode].currentPlayer
+const GameViewTitle = props => {
+  // const [reload, setReload] = useState(false)
+  // const players = useSelector(state => state.firestore.data.players)
+  // const gameCollectionObject = useSelector(state => state.firestore.data.games)
+  // const gameCode = Object.keys(gameCollectionObject)[0]
+  // const gameDoc = gameCollectionObject[gameCode]
 
-  console.log('what is currentPlayerId?', currentPlayerId)
-  console.log('gameviewtile is rendering')
+  // let currentPlayerId;
+  // // const currentPlayerId = gameDoc[gameCode].currentPlayer
+  // let currentPlayerName;
 
-  useEffect(
-    () => {
-      setReload(!reload)
-    },
-    [players, gameDoc]
-  )
+  // console.log('what is currentPlayerId?', currentPlayerId)
+  // console.log('gameviewtile is rendering')
 
-  function getCurrentPlayer() {
-    return Object.values(players)[0]
-  }
+  // useEffect(
+  //   () => {
+  //     console.log("useEffect ran in GameViewTitle!")
+  //     if (players) {
+  //       currentPlayerId = gameDoc.currentPlayer
+  //       if (players.length === gameDoc.playersArray.length) {
+  //         // if all players have loaded into the firestore "state store"
+  //         console.log("time to run getCurrentPlayer???")
+  //         getCurrentPlayer()
+  //       }
+  //     }
+  //     setReload(!reload)
+  //   },
+  //   [players, gameDoc]
+  // )
+
+  // const getCurrentPlayer = () => {
+  //   if (players && currentPlayerId){
+  //     console.log("players in getCurrentPlayers:", players)
+  //     console.log("currentPlayerId in getCurrentPlayer:", currentPlayerId)
+  //     currentPlayerName = players[currentPlayerId].startupName
+  //     console.log("currentPlayerName", currentPlayerName)
+  //     return currentPlayerName
+  //   }
+  // }
 
   return (
     <div id="gameViewTitle">
-      {players ? (
-        <h2>It's {getCurrentPlayer().startupName}'s turn!</h2>
+      {props.currentPlayerName !== undefined ? (
+        <h2>It's {props.currentPlayerName}'s turn!</h2>
       ) : (
         <div>
           <h2>Getting data...</h2>

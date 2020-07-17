@@ -5,7 +5,6 @@ import {newGame} from './playerPanels'
 import {EventEmitter} from 'events'
 
 export const phaserE = new EventEmitter()
-let sceneRandomness
 
 export default class SceneMain extends Phaser.Scene {
   constructor() {
@@ -445,7 +444,7 @@ export default class SceneMain extends Phaser.Scene {
     const anim1 = this.anims.create({
       key: 'firstDiceRoll',
       repeat: -1,
-      frameRate: 15 + Math.floor(Math.random() * 3), // randomness to avoid the same rolling patterns
+      frameRate: 15 + Math.floor(Math.random() * 3),
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
     const anim2 = this.anims.create({
