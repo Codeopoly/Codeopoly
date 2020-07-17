@@ -12,6 +12,34 @@ const app = express()
 const socketio = require('socket.io')
 module.exports = app
 
+//Firestore seeding:
+
+//const admin = require('../node_modules/firebase-admin')
+// const serviceAccount = require('./firestoreSAK.json') //service account key info
+// const data = require('./data.json') //seed data JSON file
+// const collectionKey = 'challenges' //name of the collection
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: 'https://codeopoly.firebaseio.com'
+// })
+// const firestore = admin.firestore()
+// const settings = {timestampsInSnapshots: true}
+// firestore.settings(settings)
+// if (data && typeof data === 'object') {
+//   Object.keys(data).forEach(docKey => {
+//     firestore
+//       .collection(collectionKey)
+//       .doc(docKey)
+//       .set(data[docKey])
+//       .then(res => {
+//         console.log('Document ' + docKey + ' successfully written!')
+//       })
+//       .catch(error => {
+//         console.error('Error writing document: ', error)
+//       })
+//   })
+// }
+
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
 if (process.env.NODE_ENV === 'test') {
