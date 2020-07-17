@@ -25,7 +25,7 @@ const Player = props => {
         techs.splice(i, 1)
       }
     }
-  }, player)
+  }, player) //this updates on player change which is not happening  yet so reload page to see updated circle color
 
   console.log('player component props', props)
   return (
