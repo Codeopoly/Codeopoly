@@ -95,6 +95,7 @@ const PlayerPanels = () => {
         }
 
         let neededDeckArr = gamesCollectionObj[gameCode][deckName] // should be an array of cards still avaiable to draw for that category
+        console.log('this is what neededDeckArr looks like NOW', neededDeckArr)
         let cardId = neededDeckArr[0]
         dispatch(getChallengeThunk(cardId))
         setShowChallengeModal(true)
