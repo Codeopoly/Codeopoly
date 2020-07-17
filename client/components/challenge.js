@@ -10,6 +10,7 @@ const Challenge = () => {
   const gameCode = Object.keys(gameObject)[0]
   const currentPlayer = gameObject[gameCode].currentPlayer
   const playersObject = useSelector(state => state.firestore.data.players)
+  const dispatch = useDispatch()
   const playerIdsArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray
   )
@@ -72,60 +73,73 @@ const Challenge = () => {
       challenge.category.slice(0, 1).toUpperCase() + challenge.category.slice(1)
     console.log('is category now capitalized?', category)
 
+    //if correct answer was chosen (2,3,4):
     if (event.target.value === 'answer') {
       // What prize should we give?
       let prize
-      if (!playersObject[currentPlayer][`has${category}`]) {
+      //if player  doesn't yet  have that tech category in their stack (2):
+      if (playersObject[currentPlayer][`has${category}`] === 'none') {
         // if the currentPlayer's .hasCategory === false
         // give the category
         prize = category
       } else {
-        // if the currentPlayer's .hasCategory ==== true || === undefined (i.e. Interview)
+        // if the currentPlayer's .hasCategory ==== true || === undefined (i.e. Interview)  (3, 4)
         // give the positive money value
         prize = 1000 // challenge.money is currently a string! (easy/medium/hard)
       }
-      answeredChallengeThunk(
-        true,
-        prize,
-        currentPlayer,
-        gameCode,
-        playerIdsArray
+      dispatch(
+        answeredChallengeThunk(
+          //(2, 3, 4)
+          true,
+          prize, //will either be tech category (str) or tech money prize (num)
+          currentPlayer,
+          gameCode,
+          playerIdsArray
+        )
       )
       // render the You Are Right component
       setResultDiv(
         <div>
+          {console.log('what  is prize  NOW?? for me...', prize)}
           <h2>Good job!</h2>
           {typeof prize === 'string' ? (
-            <h4>You win some tech!</h4>
+            <h4>You win some tech!</h4> //(2)
           ) : (
-            <h4>You win ${prize}!</h4>
+            <h4>You win ${prize}!</h4> //(3, 4)
           )}
         </div>
       )
       setResult('right')
     } else {
-      // If you clicked the wrong answer...
+      // If you clicked the wrong answer... (1, 5)
       let prize
+      console.log('category atm......', category)
       if (category === 'Interview') {
+        // (5)
         prize = -3000 // challenge.money is only a string at the moment!
       }
-      answeredChallengeThunk(
-        false,
-        prize,
-        currentPlayer,
-        gameCode,
-        playerIdsArray
+      dispatch(
+        answeredChallengeThunk(
+          //(1, 5)
+          false,
+          prize,
+          currentPlayer,
+          gameCode,
+          playerIdsArray
+        )
       )
       setResultDiv(
         <div>
           <h2>Sorry, wrong answer...</h2>
-          {typeof prize === undefined ? (
+          {prize === undefined ? ( //(1)
             <div>
               <h4>No prizes for you :(</h4>
               <h5>Better luck next time!</h5>
             </div>
           ) : (
+            //(5)
             <div>
+              {console.log('what  is prize...', prize)}
               <h4>You lose ${Math.abs(prize)}!</h4>
               <h5>Interviews aren't cheap for the company, you know...</h5>
             </div>

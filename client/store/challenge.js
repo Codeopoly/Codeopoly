@@ -49,6 +49,7 @@ export const answeredChallengeThunk = (
   gameCode,
   playerIdsArray
 ) => {
+  console.log('running answeredChallengThunk func')
   return async (dispatch, getState, {getFirebase}) => {
     let canIHazCookie = true
     // if I am right, give me somethingggg
@@ -90,11 +91,12 @@ export const answeredChallengeThunk = (
     dispatch(turnEndedThunk(currentPlayer, gameCode, playerIdsArray))
   }
 }
+
 export const turnEndedThunk = (currentPlayer, gameCode, playerIdsArray) => {
   return async (dispatch, getState, {getFirebase}) => {
     try {
       let nextPlayerIndex =
-        playerIdsArray.indexOf(currentPlayer) === playerIdsArray.length() // if it's the last player in the array
+        playerIdsArray.indexOf(currentPlayer) === playerIdsArray.length // if it's the last player in the array
           ? 0
           : // if it's not the last player in the array
             playerIdsArray.indexOf(currentPlayer) + 1
@@ -127,3 +129,11 @@ export default function(state = {}, action) {
       return state
   }
 }
+
+//CHALLENGE cycle must account account for the following circumstances:
+
+//1 category: tech, answer: incorrect --> nothing, show winNothing div --> prize: undefined
+//2 category: tech, answer: correct, hasTech: false --> get tech, show winTech div --> prize: category (str)
+//3 category: tech, answer: correct, hasTech: true --> get money, show winMoney div --> prize: 1000 (hardcoded)
+//4 category: interview, answer: correct --> get money, show winMoney div --> prize: 1000 (hardcoded)
+//5 category: interview, answer: incorrect --> lose money, loseInterviewMoney div --> -3000 (hardcoded)

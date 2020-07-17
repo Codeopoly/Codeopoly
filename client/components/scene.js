@@ -189,7 +189,6 @@ export default class SceneMain extends Phaser.Scene {
       }
     })
 
-
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
     const second = this.add.sprite(280, 200, 'dice')
@@ -357,21 +356,19 @@ export default class SceneMain extends Phaser.Scene {
   update() {
     // this.interviewGroup(this.doge)
     //SPRITE ANIMATION
-    let spriteMovement = {velocity: 8}
-
-    this.placementArr.forEach(placement => {
-      this.physics.add.overlap(
-        this.doge,
-        placement,
-        this.activateFunc,
-        null,
-        this
-        )
-      })
-   
-    activateFunc(player, tile) {
-      console.log('inside the func')
-      tile.disableBody()
-    } 
+    // let spriteMovement = {velocity: 8}
+    // this.placementArr.forEach(placement => {
+    //   this.physics.add.overlap(
+    //     this.doge,
+    //     placement,
+    //     this.activateFunc,
+    //     null,
+    //     this
+    //     )
+    //   })
+    // activateFunc(player, tile) {
+    //   console.log('inside the func')
+    //   tile.disableBody()
+    // }
   }
 }

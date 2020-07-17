@@ -46,7 +46,7 @@ form div {
 
 button {
   margin: 10px;
-  background-color: #e9c46a;
+  background-color: #f4a261;
   border: #e76a4b 2px solid;
   border-radius: 25px;
   font-family: monaco;
@@ -211,24 +211,49 @@ canvas {
 }
 
 /* For the catergories' circle colors */
-#algorithm {
+#Algorithm {
   background-color: #264653;
+  border: 0.2rem solid #264653;
 }
 
-#backend {
-  background-color: #e9c46a;
+#Algorithm.noTech {
+  background-color: gray;
 }
 
-#frontend {
+#Backend {
   background-color: #f4a261;
+  border: 0.2rem solid #f4a261;
 }
 
-#misc {
+#Backend.noTech {
+  background-color: gray;
+}
+
+#Frontend {
+  background-color: #e9c46a;
+  border: 0.2rem solid #e9c46a;
+}
+
+#Frontend.noTech {
+  background-color: gray;
+}
+
+#Misc {
   background-color: #e76a4b;
+  border: 0.2rem solid #e76a4b;
 }
 
-#ui {
+#Misc.noTech {
+  background-color: gray;
+}
+
+#UI {
   background-color: #2a9d8f;
+  border: 0.2rem solid #2a9d8f;
+}
+
+#UI.noTech {
+  background-color: gray;
 }
 
 .modalBox {

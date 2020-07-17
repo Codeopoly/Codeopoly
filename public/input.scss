@@ -1,8 +1,8 @@
 $algorithm: #264653;
 $misc: #e76a4b;
 $ui: #2a9d8f;
-$frontend: #f4a261;
-$backend: #e9c46a;
+$backend: #f4a261;
+$frontend: #e9c46a;
 $background: #fef2eb;
 $text: #0c0909;
 
@@ -211,20 +211,49 @@ canvas {
 }
 
 /* For the catergories' circle colors */
-#algorithm {
-  background-color: #264653;
+#Algorithm {
+  background-color: $algorithm;
+  border: 0.2rem solid $algorithm;
 }
-#backend {
-  background-color: #e9c46a;
+
+#Algorithm.noTech {
+  background-color: gray;
 }
-#frontend {
-  background-color: #f4a261;
+
+#Backend {
+  background-color: $backend;
+  border: 0.2rem solid $backend;
 }
-#misc {
-  background-color: #e76a4b;
+
+#Backend.noTech {
+  background-color: gray;
 }
-#ui {
-  background-color: #2a9d8f;
+
+#Frontend {
+  background-color: $frontend;
+  border: 0.2rem solid $frontend;
+}
+
+#Frontend.noTech {
+  background-color: gray;
+}
+
+#Misc {
+  background-color: $misc;
+  border: 0.2rem solid $misc;
+}
+
+#Misc.noTech {
+  background-color: gray;
+}
+
+#UI {
+  background-color: $ui;
+  border: 0.2rem solid $ui;
+}
+
+#UI.noTech {
+  background-color: gray;
 }
 
 // For the Challenge Component:
