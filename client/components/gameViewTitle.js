@@ -19,7 +19,7 @@ const GameViewTitle = () => {
   )
 
   function getCurrentPlayer() {
-    return Object.values(players)[0]
+    return players[currentPlayerId]
   }
 
   return (
