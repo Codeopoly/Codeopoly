@@ -4,14 +4,18 @@ import {useSelector} from 'react-redux'
 const GameViewTitle = () => {
   const [reload, setReload] = useState(false)
   const players = useSelector(state => state.firestore.data.players)
+  const gameDoc = useSelector(state => state.firestore.data.games)
+  const gameCode = Object.keys(gameDoc)[0]
+  const currentPlayerId = gameDoc[gameCode].currentPlayer
 
+  console.log('what is currentPlayerId?', currentPlayerId)
   console.log('gameviewtile is rendering')
 
   useEffect(
     () => {
       setReload(!reload)
     },
-    [players]
+    [players, gameDoc]
   )
 
   function getCurrentPlayer() {

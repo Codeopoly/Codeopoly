@@ -423,7 +423,7 @@ export default class SceneMain extends Phaser.Scene {
       let array = paramArray.callbacks.onComplete.params
       // console.log('emitPlayer paramArray:', array)
       let challenge = array[3] ? 'challenge' : null
-      phaserE.emit('playerLanded', challenge, array[2])
+      phaserE.emit('playerLanded', challenge, array[2]) // challenge = "challenge" or null, category name (i.e. Frontend)
     }
 
     // Code for the dice:
@@ -551,6 +551,12 @@ export default class SceneMain extends Phaser.Scene {
       second.anims.stopOnFrame(second.anims.currentAnim.frames[frame2])
 
       movePlayer(currentPlayer, die1 + die2)
+      // Then update currentPlayer
+      let nextPlayerIndex = players.indexOf(currentPlayer) + 1
+      if (nextPlayerIndex >= players.length) {
+        nextPlayerIndex = 0
+      }
+      currentPlayer = players[nextPlayerIndex]
     }
 
     // When I see the signal from my client, I will show the roll of the other player:

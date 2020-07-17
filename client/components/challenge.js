@@ -106,6 +106,10 @@ const Challenge = () => {
         // give the positive money value
         prize = 1000 // challenge.money is currently a string! (easy/medium/hard)
       }
+      console.log(
+        'what is challenge.id in Challenge Component??',
+        challenge.cardId
+      )
       dispatch(
         answeredChallengeThunk(
           //(2, 3, 4)
@@ -114,7 +118,8 @@ const Challenge = () => {
           currentPlayer,
           gameCode,
           playerIdsArray,
-          currentMoney
+          currentMoney,
+          challenge.cardId
         )
       )
       // render the You Are Right component
@@ -147,7 +152,8 @@ const Challenge = () => {
           currentPlayer,
           gameCode,
           playerIdsArray,
-          currentMoney
+          currentMoney,
+          challenge.cardId
         )
       )
       setResultDiv(
@@ -213,34 +219,32 @@ const Challenge = () => {
       )
     console.log('this should be rendered by other players', divToRender)
     console.log('this should be the result string', theirResult)
-    // dispatch(turnEndedThunk(currentPlayer, gameCode, playerIdsArray))
     return divToRender
-    // setResult(theirResult)
-    // setResultDiv(<div>Hello</div>)
-    // setTimeout(modalGoAway, 5000)
   }
   // Listening for the signal to execute the someoneAnswered function.
   modalE.setMaxListeners(4)
   modalE.once('socketSaysSomeoneAnswered', (theirResult, prize) => {
     // why do I receive the signal 7 times when it's only emitting ONCE?!!!
-    if (runStep6) {
-      console.log('-------------6--------------')
-      console.log(
-        'The component knows it needs to run someoneAnswered',
-        theirResult,
-        prize
-      )
-      const outputDiv = someoneAnswered(theirResult, prize)
-      console.log("here's the output div we want? to render", outputDiv)
-      runStep6 = false
-      result = theirResult
-      setResultDiv(outputDiv)
-      // dispatch(turnEndedThunk(currentPlayer, gameCode, playerIdsArray))
-      console.log('is result set?', result)
-      console.log('is resultDiv set?', resultDiv)
-      setTimeout(modalGoAway, 5000)
-      // Tell the people to update their firestore on state.
-    }
+    // if (runStep6) {
+    console.log('-------------6--------------')
+    console.log(
+      'The component knows it needs to run someoneAnswered',
+      theirResult,
+      prize
+    )
+    const outputDiv = someoneAnswered(theirResult, prize)
+    console.log("here's the output div we want? to render", outputDiv)
+    runStep6 = false
+    result = theirResult
+    setResultDiv(outputDiv)
+    console.log('is result set?', result)
+    console.log('is resultDiv set?', resultDiv)
+    setTimeout(modalGoAway, 5000)
+    // Tell the people to update their firestore on state.
+    console.log(
+      'this is when I want playerPanels to refresh the firestore reducer'
+    )
+    // }
   })
 
   return (

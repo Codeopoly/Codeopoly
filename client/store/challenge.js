@@ -46,7 +46,8 @@ export const answeredChallengeThunk = (
   currentPlayer,
   gameCode,
   playerIdsArray,
-  currentMoney
+  currentMoney,
+  challengeId
 ) => {
   return async (dispatch, getState, {getFirebase}) => {
     let canIHazCookie = true
@@ -85,11 +86,29 @@ export const answeredChallengeThunk = (
     }
 
     // Regardless of if I'm wrong or right, the game needs to update
-    dispatch(turnEndedThunk(currentPlayer, gameCode, playerIdsArray))
+    console.log(
+      'Is the answeredChallengeThunk getting the right chanllengeId?',
+      challengeId
+    )
+    dispatch(
+      turnEndedThunk(
+        currentPlayer,
+        gameCode,
+        playerIdsArray,
+        prize,
+        challengeId
+      )
+    )
   }
 }
 
-export const turnEndedThunk = (currentPlayer, gameCode, playerIdsArray) => {
+export const turnEndedThunk = (
+  currentPlayer,
+  gameCode,
+  playerIdsArray,
+  prize,
+  challengeId
+) => {
   console.log('turnEndedThunk ran!!!')
   return async (dispatch, getState, {getFirebase}) => {
     try {
@@ -105,7 +124,10 @@ export const turnEndedThunk = (currentPlayer, gameCode, playerIdsArray) => {
         .collection('games')
         .doc(gameCode)
         .update({
-          currentPlayer: playerIdsArray[nextPlayerIndex]
+          currentPlayer: playerIdsArray[nextPlayerIndex],
+          [`deck${prize}`]: firebase.firestore.FieldValue.arrayRemove(
+            challengeId
+          )
         })
       dispatch(answeredChallenge())
     } catch (error) {
