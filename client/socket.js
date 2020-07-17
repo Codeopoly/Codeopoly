@@ -1,6 +1,7 @@
 import io from 'socket.io-client'
 import {newGame} from '../client/components/playerPanels'
 import {phaserE} from './components/scene'
+import {modalE} from './components/challenge'
 
 const socket = io(window.location.origin)
 
@@ -18,6 +19,16 @@ phaserE.on('playerRolled', (die1, die2) => {
 
 socket.on('someoneRolled', (die1, die2) => {
   newGame.emit('socketSaysSomeoneRolled', die1, die2)
+})
+
+modalE.on('playerAnswered', (result, prize) => {
+  console.log('Sending a signal because I answered!!!!')
+  socket.emit('iAnswered', result, prize)
+})
+
+socket.on('someoneAnswered', (result, prize) => {
+  modalE.emit('socketSaysSomeoneAnswered', result, prize)
+  console.log('I got the signal from the other person!!')
 })
 
 socket.on('connect', () => {

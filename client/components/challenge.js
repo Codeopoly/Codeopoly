@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {connect, useSelector, useDispatch} from 'react-redux'
-import {answeredChallengeThunk} from '../store/challenge'
+import {answeredChallengeThunk, turnEndedThunk} from '../store/challenge'
 import {EventEmitter} from 'events'
 
 export const modalE = new EventEmitter()
@@ -73,15 +73,13 @@ const Challenge = () => {
   const answerDiv = createAnswerDiv()
 
   function handleClick(event) {
-    console.log('I clicked an answer', event.target.value) // Not sure if Semantic is ok with this...
+    let prize
     let category =
       challenge.category.slice(0, 1).toUpperCase() + challenge.category.slice(1)
-    console.log('is category now capitalized?', category)
 
     //if correct answer was chosen (2,3,4):
     if (event.target.value === 'answer') {
       // What prize should we give?
-      let prize
       //if player  doesn't yet  have that tech category in their stack (2):
       if (playersObject[currentPlayer][`has${category}`] === 'none') {
         // if the currentPlayer's .hasCategory === false
@@ -116,10 +114,10 @@ const Challenge = () => {
         </div>
       )
       setResult('right')
+      modalE.emit('playerAnswered', result, prize)
       setTimeout(modalGoAway, 5000)
     } else {
       // If you clicked the wrong answer... (1, 5)
-      let prize
       console.log('category atm......', category)
       if (category === 'Interview') {
         // (5)
@@ -154,10 +152,57 @@ const Challenge = () => {
           )}
         </div>
       )
+      console.log("I'm about to send a signal!!!")
       setResult('wrong')
+      modalE.emit('playerAnswered', result, prize)
       setTimeout(modalGoAway, 5000)
     }
   }
+
+  // Function that will run if player receives signal that OTHER player answered
+  const someoneAnswered = (theirResult, prize) => {
+    console.log('someoneAnswered ran!!!!')
+    let currentPlayerName = playersObject[currentPlayer].startupName
+    let divToRender =
+      theirResult === 'right' ? (
+        <div>
+          <h2>Good job, {currentPlayerName}!</h2>
+          {typeof prize === 'string' ? (
+            <h4>They win some tech!</h4> //(2)
+          ) : (
+            <h4>They win ${prize}!</h4> //(3, 4)
+          )}
+        </div>
+      ) : (
+        <div>
+          <h2>Sorry, wrong answer...</h2>
+          {prize === undefined ? ( //(1)
+            <div>
+              <h4>No prizes for {currentPlayerName} :(</h4>
+              <h5>Better luck next time!</h5>
+            </div>
+          ) : (
+            //(5)
+            <div>
+              <h4>
+                {currentPlayerName} lost ${Math.abs(prize)}!
+              </h4>
+              <h5>Interviews aren't cheap for the company, you know...</h5>
+            </div>
+          )}
+        </div>
+      )
+    console.log('this should be rendered by other players', divToRender)
+    console.log('this should be the result string', result)
+    dispatch(turnEndedThunk(currentPlayer, gameCode, playerIdsArray))
+    setResult(result)
+    setResultDiv(<div>Hello</div>)
+    setTimeout(modalGoAway, 5000)
+  }
+  modalE.setMaxListeners(4)
+  modalE.once('socketSaysSomeoneAnswered', (result, prize) => {
+    someoneAnswered(result, prize)
+  })
 
   return (
     <div className="modalBox">

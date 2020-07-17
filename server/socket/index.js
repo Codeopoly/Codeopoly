@@ -14,6 +14,10 @@ module.exports = io => {
       socket.broadcast.emit('someoneRolled', die1, die2)
     })
 
+    socket.on('iAnswered', (result, prize) => {
+      socket.broadcast.emit('someoneAnswered', result, prize)
+    })
+
     // On disconnect:
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
