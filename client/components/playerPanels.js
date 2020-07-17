@@ -30,6 +30,7 @@ const PlayerPanels = () => {
   const playerIdArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray
   )
+
   const [ready, setReady] = useState(false)
   const arrayOfPlayerPathsAndGame = playerIdArray.map(playerId => {
     return {
@@ -44,6 +45,17 @@ const PlayerPanels = () => {
   })
 
   const players = useSelector(state => state.firestore.data.players)
+  // Get currentPlayer name:
+  let currentPlayerId
+  let currentPlayerName
+  if (
+    gamesCollectionObj !== undefined &&
+    gameCode !== undefined &&
+    players !== undefined
+  ) {
+    currentPlayerId = gamesCollectionObj[gameCode].currentPlayer
+    currentPlayerName = players[currentPlayerId].startupName
+  }
 
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
@@ -158,6 +170,9 @@ const PlayerPanels = () => {
   if (ready) {
     centerPanel = (
       <div id="gameView">
+        <div id="gameViewTitle" className="gameStarted">
+          <GameViewTitle currentPlayerName={currentPlayerName} />
+        </div>
         <button id="placeChars" type="button" onClick={triggerEmit}>
           Place players to begin game!
         </button>
