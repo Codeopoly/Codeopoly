@@ -58,7 +58,8 @@ export const createPlayerThunk = (
           hasUI: 'none',
           hasMiddleware: 'none',
           hasAlgorithm: 'none',
-          isHost: isHost
+          isHost: isHost,
+          randomness: Math.random()
         })
       console.log('newPlayerId:', newPlayerDR.id)
 
@@ -70,7 +71,8 @@ export const createPlayerThunk = (
           .doc(gameCode)
           .update({
             host: newPlayerDR.id,
-            currentPlayer: newPlayerDR.id // by default, first player is host (until we come up with another way of determining order)
+            currentPlayer: newPlayerDR.id
+
           })
       }
       // Let's add the player reference to the players array

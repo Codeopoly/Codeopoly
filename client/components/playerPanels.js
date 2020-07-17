@@ -111,8 +111,16 @@ const PlayerPanels = () => {
     const imageNameArray = playerDocs.map(player => {
       return characters[player.image]
     })
+    const hostStatusArray = playerDocs.map(player => {
+      return player.isHost
+    })
 
-    newGame.emit('start', imageNameArray)
+    newGame.emit(
+      'start',
+      imageNameArray,
+      hostStatusArray,
+      gamesCollectionObj[gameCode].randomness
+    )
 
     document.getElementById('placeChars').classList.add('gameStarted')
     const title = document.getElementById('gameViewTitle')

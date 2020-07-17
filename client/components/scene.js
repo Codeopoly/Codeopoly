@@ -5,6 +5,7 @@ import {newGame} from './playerPanels'
 import {EventEmitter} from 'events'
 
 export const phaserE = new EventEmitter()
+let sceneRandomness
 
 export default class SceneMain extends Phaser.Scene {
   constructor() {
@@ -39,134 +40,8 @@ export default class SceneMain extends Phaser.Scene {
     this.keys = this.input.keyboard.createCursorKeys()
 
     let board = this.make.tilemap({key: 'board'})
-    // let boardData = board.addTilesetImage('board')
-    console.log('board is added')
     const tileset = board.addTilesetImage('all tiles', 'background')
-    console.log('tileset added')
     const firstLayer = board.createStaticLayer('Tile Layer 1', tileset, 0, 0)
-    console.log('first layer added')
-
-    // this.physics.world.bounds.width = board.width
-    // this.physics.world.bounds.height = board.height
-
-    //getting object layers from json file
-    const interviewObj = board.getObjectLayer('Interview').objects
-    const drawCardObj = board.getObjectLayer('Draw a card').objects
-    const coffeeBreakObj = board.getObjectLayer('Coffee Break').objects[0]
-    const stealSomeTechObj = board.getObjectLayer('Steal some tech').objects[0]
-    const queuesObj = board.getObjectLayer('Queues').objects[0]
-    const stacksObj = board.getObjectLayer('Stacks').objects[0]
-    const linkedListsObj = board.getObjectLayer('Linked lists').objects[0]
-    const treesObj = board.getObjectLayer('Trees').objects[0]
-    const graphsObj = board.getObjectLayer('Graphs').objects[0]
-    const gotaBugObj = board.getObjectLayer('Got a bug').objects[0]
-    const newInvestorObj = board.getObjectLayer('New Investor').objects[0]
-    const sequelizeObj = board.getObjectLayer('Sequelize').objects[0]
-    const firebaseObj = board.getObjectLayer('Firebase').objects[0]
-    const expressObj = board.getObjectLayer('Express').objects[0]
-    const mongoDBObj = board.getObjectLayer('MongoDB').objects[0]
-    const loseMoneyObj = board.getObjectLayer('Lose money').objects[0]
-    const middlewareObj = board.getObjectLayer('Middleware').objects[0]
-    const authObj = board.getObjectLayer('Auth').objects[0]
-    const codeDesignObj = board.getObjectLayer('Code design').objects[0]
-    const materialUIObj = board.getObjectLayer('MaterialUI').objects[0]
-    const cssObj = board.getObjectLayer('CSS').objects[0]
-    const htmlObj = board.getObjectLayer('HTML').objects[0]
-    const stuckOnBugObj = board.getObjectLayer('Stuck on bug').objects[0]
-    const semanticUIObj = board.getObjectLayer('SemanticUI').objects[0]
-    const reactObj = board.getObjectLayer('React').objects[0]
-    const reactNativeObj = board.getObjectLayer('React native').objects[0]
-    const emberObj = board.getObjectLayer('Ember').objects[0]
-    const vueObj = board.getObjectLayer('Vue').objects[0]
-    const angularObj = board.getObjectLayer('Angular').objects[0]
-    const goObj = board.getObjectLayer('Go').objects[0]
-
-    this.singleTilesArr = [
-      goObj,
-      loseMoneyObj,
-      mongoDBObj,
-      expressObj,
-      firebaseObj,
-      sequelizeObj,
-      newInvestorObj,
-      gotaBugObj,
-      graphsObj,
-      treesObj,
-      linkedListsObj,
-      stacksObj,
-      queuesObj,
-      stealSomeTechObj,
-      coffeeBreakObj,
-      angularObj,
-      vueObj,
-      emberObj,
-      reactNativeObj,
-      reactObj,
-      semanticUIObj,
-      stuckOnBugObj,
-      htmlObj,
-      cssObj,
-      materialUIObj,
-      codeDesignObj,
-      authObj,
-      middlewareObj
-    ]
-
-    console.log('checking draw card props', drawCardObj)
-
-    //CREATING GROUPS FOR TILES BELOW
-    this.interviewGroup = this.physics.add.group({})
-    this.drawCardGroup = this.physics.add.group({})
-
-    this.interviewArr = []
-    interviewObj.forEach(object => {
-      console.log('INTERVIEW PLACEMENT WORKS')
-      let obj = this.interviewGroup.create(object.x, object.y, 'tile')
-      obj.setOrigin(0)
-      obj.body.width = object.width
-      obj.body.height = object.height
-      this.interviewArr.push(obj)
-    })
-    this.drawCardArr = []
-    drawCardObj.forEach(object => {
-      console.log('DRAW CARD PLACEMENT WORKS')
-      let obj = this.drawCardGroup.create(object.x, object.y, 'tile')
-      obj.setOrigin(0)
-      obj.body.width = object.width
-      obj.body.height = object.height
-      this.drawCardArr.push(obj)
-    })
-
-    //SINGLE TILE PLACEMENT BELOW
-    this.placementArr = []
-    this.singleTilesArr.forEach(object => {
-      let obj = this.physics.add.sprite(object.x, object.y, object.name)
-      obj.setOrigin(0)
-      obj.body.width = object.width
-      obj.body.height = object.height
-      this.placementArr.push(obj)
-    })
-
-    // PATH TILES IN ORDER FROM GO TO FINISH
-    this.tilePathArr = this.placementArr
-
-    //insert draw card right at 6th idx
-    this.tilePathArr.splice(6, 0, this.drawCardArr[1])
-    //insert interview right at 8th idx
-    this.tilePathArr.splice(8, 0, this.interviewArr[1])
-    //insert interview top at 13th idx
-    this.tilePathArr.splice(13, 0, this.interviewArr[0])
-    //insert draw card top at 16th idx
-    this.tilePathArr.splice(16, 0, this.drawCardArr[0])
-    //insert interview left at 20th idx
-    this.tilePathArr.splice(20, 0, this.interviewArr[2])
-    //insert draw card left at 24th idx
-    this.tilePathArr.splice(24, 0, this.drawCardArr[2])
-    //insert interview bottom at 31st idx
-    this.tilePathArr.splice(31, 0, this.interviewArr[3])
-    //insert draw card bottom at 32nd idx
-    this.tilePathArr.splice(32, 0, this.drawCardArr[3])
-    console.log(this.tilePathArr)
 
     // Rendering sprites picked for game
     // it's only like this because the template literal WON'T WORK!!!!! don't be mad
@@ -175,19 +50,382 @@ export default class SceneMain extends Phaser.Scene {
     let player3
     let player4
 
-    let players = [player1, player2, player3, player4]
+    let players = []
+    let currentPlayer
+    const playerLocations = {
+      player1Loc: 0,
+      player2Loc: 0
+    }
 
-    newGame.on('start', imageNameArray => {
-      console.log('here it is AGAIN...', imageNameArray)
+    newGame.on('start', (imageNameArray, hostStatusArray, randomParam) => {
+      sceneRandomness = randomParam
       for (let i = 0; i < imageNameArray.length; i++) {
         players[i] = this.physics.add.sprite(
           i % 2 ? 680 : 730,
           i > 1 ? 730 : 680,
-          imageNameArray[i]
+          imageNameArray[i] // This array might not be in the order we want
         )
         players[i].setScale(0.3)
+        if (i > 1) {
+          playerLocations[`player${i + 1}Loc`] = 0
+          console.log('playerLocations map:', playerLocations)
+        }
+        players[i].name = `player${i + 1}`
       }
+      players.filter(player => {
+        return player !== undefined
+      })
+      // For now, our starting player is host
+      currentPlayer = players[hostStatusArray.indexOf(true)]
     })
+
+    const tileInfoObject = {
+      0: {
+        id: 0,
+        x: 680,
+        y: 680,
+        occupied: false,
+        challenge: false,
+        category: null
+      },
+      1: {
+        id: 1,
+        x: 680 - 65 * 1,
+        y: 680,
+        occupied: false,
+        challenge: true,
+        category: 'Misc'
+      },
+      2: {
+        id: 2,
+        x: 680 - 65 * 2,
+        y: 680,
+        occupied: false,
+        challenge: true,
+        category: 'Misc'
+      },
+      3: {
+        id: 3,
+        x: 680 - 65 * 3,
+        y: 680,
+        occupied: false,
+        challenge: true,
+        category: 'Misc'
+      },
+      4: {
+        id: 4,
+        x: 680 - 65 * 4,
+        y: 680,
+        occupied: false,
+        challenge: false,
+        category: 'Callstack'
+      },
+      5: {
+        id: 5,
+        x: 680 - 65 * 5,
+        y: 680,
+        occupied: false,
+        challenge: true,
+        category: 'Interview'
+      },
+      6: {
+        id: 6,
+        x: 680 - 65 * 6,
+        y: 680,
+        occupied: false,
+        challenge: true,
+        category: 'UI'
+      },
+      7: {
+        id: 7,
+        x: 680 - 65 * 7,
+        y: 680,
+        occupied: false,
+        challenge: true,
+        category: 'UI'
+      },
+      8: {
+        id: 8,
+        x: 680 - 65 * 8,
+        y: 680,
+        occupied: false,
+        challenge: true,
+        category: 'UI'
+      },
+      9: {
+        id: 9,
+        x: 680 - 65 * 9,
+        y: 680,
+        occupied: false,
+        challenge: false,
+        category: 'bug'
+      },
+      // Here starts the left side of the board; Semantic UI
+      10: {
+        id: 10,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 1,
+        occupied: false,
+        challenge: true,
+        category: 'UI'
+      },
+      11: {
+        id: 11,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 2,
+        occupied: false,
+        challenge: true,
+        category: 'Frontend'
+      },
+      12: {
+        id: 12,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 3,
+        occupied: false,
+        challenge: false,
+        category: 'Callstack'
+      },
+      13: {
+        id: 13,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 4,
+        occupied: false,
+        challenge: true,
+        category: 'Frontend'
+      },
+      14: {
+        id: 14,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 5,
+        occupied: false,
+        challenge: true,
+        category: 'Frontend'
+      },
+      15: {
+        id: 15,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 6,
+        occupied: false,
+        challenge: true,
+        category: 'Frontend'
+      },
+      16: {
+        id: 16,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 7,
+        occupied: false,
+        challenge: true,
+        category: 'Interview'
+      },
+      17: {
+        id: 17,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 8,
+        occupied: false,
+        challenge: true,
+        category: 'Frontend'
+      },
+      18: {
+        id: 18,
+        x: 680 - 65 * 9,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: false,
+        category: 'Coffee'
+      },
+      // Here starts the top section's StealSomeTech!
+      19: {
+        id: 19,
+        x: 680 - 65 * 8,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: false,
+        category: 'Steal'
+      },
+      20: {
+        id: 20,
+        x: 680 - 65 * 7,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: false,
+        category: 'Callstack'
+      },
+      21: {
+        id: 21,
+        x: 680 - 65 * 6,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: true,
+        category: 'Algorithm'
+      },
+      22: {
+        id: 22,
+        x: 680 - 65 * 5,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: true,
+        category: 'Algorithm'
+      },
+      23: {
+        id: 23,
+        x: 680 - 65 * 4,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: true,
+        category: 'Interview'
+      },
+      24: {
+        id: 24,
+        x: 680 - 65 * 3,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: true,
+        category: 'Algorithm'
+      },
+      25: {
+        id: 25,
+        x: 680 - 65 * 2,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: true,
+        category: 'Algorithm'
+      },
+      26: {
+        id: 26,
+        x: 680 - 65 * 1,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: true,
+        category: 'Algorithm'
+      },
+      27: {
+        id: 27,
+        x: 680,
+        y: 680 - 65 * 9,
+        occupied: false,
+        challenge: false,
+        category: 'GotBug'
+      },
+      // Here starts the right side's Interview!
+      28: {
+        id: 28,
+        x: 680,
+        y: 680 - 65 * 8,
+        occupied: false,
+        challenge: true,
+        category: 'Interview'
+      },
+      29: {
+        id: 29,
+        x: 680,
+        y: 680 - 65 * 7,
+        occupied: false,
+        challenge: false,
+        category: 'Investor'
+      },
+      30: {
+        id: 30,
+        x: 680,
+        y: 680 - 65 * 6,
+        occupied: false,
+        challenge: false,
+        category: 'Callstack'
+      },
+      31: {
+        id: 31,
+        x: 680,
+        y: 680 - 65 * 5,
+        occupied: false,
+        challenge: true,
+        category: 'Backend'
+      },
+      32: {
+        id: 32,
+        x: 680,
+        y: 680 - 65 * 4,
+        occupied: false,
+        challenge: true,
+        category: 'Backend'
+      },
+      33: {
+        id: 33,
+        x: 680,
+        y: 680 - 65 * 3,
+        occupied: false,
+        challenge: true,
+        category: 'Backend'
+      },
+      34: {
+        id: 34,
+        x: 680,
+        y: 680 - 65 * 2,
+        occupied: false,
+        challenge: true,
+        category: 'Backend'
+      },
+      35: {
+        id: 35,
+        x: 680,
+        y: 680 - 65 * 1,
+        occupied: false,
+        challenge: false,
+        category: 'LoseMoney'
+      }
+    }
+
+    const movePlayer = (player, diceRoll) => {
+      console.log('INSIDE MOVEPLAYER:', player, diceRoll)
+      console.log('INSIDE MOVEPLAYER thissssssss:', this)
+      let propertyName = `${player.name}Loc`
+      let currentLoc = playerLocations[propertyName]
+      let newLoc = currentLoc + diceRoll
+      // Adjust if we went past GO
+      if (newLoc > 35) {
+        newLoc = newLoc - 35
+        // Emit signal passed GO
+      }
+      console.log('player locations:', playerLocations)
+      console.log('propertyName:', propertyName)
+      console.log('current location:', currentLoc)
+      console.log('New Location:', newLoc)
+      let newX = tileInfoObject[newLoc].x
+      let newY = tileInfoObject[newLoc].y
+      // Adjust if space is occupied
+      if (tileInfoObject[newLoc].occupied) {
+        if (newLoc <= 9) {
+          // bottom of board
+          newY = newY + 50 // move down
+        } else if (newLoc <= 18) {
+          newX = newX - 50 // move left
+        } else if (newLoc <= 27) {
+          newY = newY - 50 // move up
+        } else if (newLoc <= 35) {
+          newX = newX + 50 // move right
+        }
+      }
+      const playerTween = this.add.tween({
+        targets: player,
+        x: newX,
+        y: newY,
+        duration: 3000,
+        onComplete: emitPlayerLanded,
+        onCompleteParams: [
+          tileInfoObject[newLoc].category,
+          tileInfoObject[newLoc].challenge
+        ]
+      })
+
+      // Edit the playerLocations object:
+      playerLocations[propertyName] = newLoc
+      // And the tileInfoObject:
+      tileInfoObject[currentLoc].occupied = false
+      tileInfoObject[newLoc].occupied = true
+    }
+
+    const emitPlayerLanded = paramArray => {
+      let challenge = paramArray[1] ? 'challenge' : null
+      phaserE.emit('playerLanded', challenge, paramArray[0])
+    }
 
     // Code for the dice:
     const first = this.add.sprite(180, 200, 'dice')
@@ -223,19 +461,35 @@ export default class SceneMain extends Phaser.Scene {
       duration: 50,
       repeat: 10,
       paused: true,
-      onComplete: stopAnims
+      onComplete: stopAnims,
+      onCompleteScope: this
+      // onCompleteParams: currentPlayer
     })
 
     // function called when the tween stops
     function stopAnims() {
+      console.log('inside stopAnim players:', players)
+      console.log('inside stopAnim currentPlayer:', currentPlayer)
       // console.log("stopAnims ran!", first.frame, second.frame)
-      console.log(
-        'You rolled: ',
+      let diceRoll =
         diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
-      )
+      console.log('You rolled: ', diceRoll)
       anim1.pause()
       anim2.pause()
       first.isRolling = false
+      phaserE.emit(
+        'playerRolled',
+        diceFrameMap[first.frame.name],
+        diceFrameMap[second.frame.name]
+      )
+
+      movePlayer(currentPlayer, diceRoll)
+      // Then update currentPlayer
+      let nextPlayerIndex = players.indexOf(currentPlayer) + 1
+      if (nextPlayerIndex >= players.length) {
+        nextPlayerIndex = 0
+      }
+      currentPlayer = players[nextPlayerIndex]
     }
 
     let diceGroup = this.add.group([first, second])
@@ -262,6 +516,50 @@ export default class SceneMain extends Phaser.Scene {
           anim2.resume()
         }
       })
+    })
+
+    // Code for dice roll broadcast:
+    const showRoll = (die1, die2) => {
+      console.log('showRoll ran!! I actually got a broadcast signal!!!')
+      console.log('did I even get the data???', die1, die2)
+      // Create new animations that are hard-coded to land on same frames as the braodcasting player rolled:
+      let dejavu1 = this.anims.create({
+        key: 'dejavu1',
+        repeat: -1,
+        frameRate: 18 + Math.floor(Math.random() * 3),
+        frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
+      })
+      let dejavu2 = this.anims.create({
+        key: 'dejavu2',
+        repeat: -1,
+        frameRate: 18 + Math.floor(Math.random() * 3),
+        frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
+      })
+
+      let frame1
+      let frame2
+      for (let key in diceFrameMap) {
+        if (die1 === diceFrameMap[key]) {
+          frame1 = key
+        }
+        if (die2 === diceFrameMap[key]) {
+          frame2 = key
+        }
+      }
+
+      console.log('the frames to stop on', frame1, frame2)
+      first.play('dejavu1')
+      second.play('dejavu2')
+
+      first.anims.stopOnFrame(first.anims.currentAnim.frames[frame1])
+      second.anims.stopOnFrame(second.anims.currentAnim.frames[frame2])
+
+      movePlayer(currentPlayer, die1 + die2)
+    }
+
+    // When I see the signal from my client, I will show the roll of the other player:
+    newGame.on('socketSaysSomeoneRolled', (die1, die2) => {
+      showRoll(die1, die2)
     })
 
     // Code for Callstack deck:
@@ -353,22 +651,6 @@ export default class SceneMain extends Phaser.Scene {
     // End Callstack Deck code.
   }
 
-  update() {
-    // this.interviewGroup(this.doge)
-    //SPRITE ANIMATION
-    // let spriteMovement = {velocity: 8}
-    // this.placementArr.forEach(placement => {
-    //   this.physics.add.overlap(
-    //     this.doge,
-    //     placement,
-    //     this.activateFunc,
-    //     null,
-    //     this
-    //     )
-    //   })
-    // activateFunc(player, tile) {
-    //   console.log('inside the func')
-    //   tile.disableBody()
-    // }
-  }
+  update() {}
+
 }
