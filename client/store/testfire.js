@@ -23,14 +23,7 @@ export const getAllPlayerActionCreator = data => {
 
 export const playerThunk = data => {
   return async (dispatch, getState, {getFirebase}) => {
-    console.log('hello!')
-    // console.log('this is firestore', getFirestore)
-    // console.log('this is firebase!!!', getFirebase)
-    // console.log('this is firebase invoked!!!', getFirebase())
-    // const fireStore = getFirebase().fireStore()
-    // console.log('hello i am in the player thunk!!!!!')
     try {
-      console.log('try block executed')
       const allPlayers = await getFirebase()
         .firestore()
         .collection('players')
@@ -47,7 +40,6 @@ export const playerThunk = data => {
           image:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSwKVFwjXGAiso3ijDjk6RYWqZZVstt4FSB5w&usqp=CAU'
         })
-      console.log('i am allPlayers', allPlayers)
       dispatch(playerActionCreator(allPlayers))
     } catch (error) {
       console.error(error)

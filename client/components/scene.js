@@ -68,7 +68,6 @@ export default class SceneMain extends Phaser.Scene {
         players[i].setScale(0.3)
         if (i > 1) {
           playerLocations[`player${i + 1}Loc`] = 0
-          console.log('playerLocations map:', playerLocations)
         }
         players[i].name = `player${i + 1}`
       }
@@ -374,8 +373,6 @@ export default class SceneMain extends Phaser.Scene {
     }
 
     const movePlayer = (player, diceRoll) => {
-      console.log('INSIDE MOVEPLAYER:', player, diceRoll)
-      console.log('INSIDE MOVEPLAYER thissssssss:', this)
       let propertyName = `${player.name}Loc`
       let currentLoc = playerLocations[propertyName]
       let newLoc = currentLoc + diceRoll
@@ -424,9 +421,9 @@ export default class SceneMain extends Phaser.Scene {
 
     const emitPlayerLanded = paramArray => {
       let array = paramArray.callbacks.onComplete.params
-      console.log('emitPlayer paramArray:', array)
+      // console.log('emitPlayer paramArray:', array)
       let challenge = array[3] ? 'challenge' : null
-      phaserE.emit('playerLanded', challenge, array[2])
+      phaserE.emit('playerLanded', challenge, array[2]) // challenge = "challenge" or null, category name (i.e. Frontend)
     }
 
     // Code for the dice:
@@ -470,9 +467,6 @@ export default class SceneMain extends Phaser.Scene {
 
     // function called when the tween stops
     function stopAnims() {
-      console.log('inside stopAnim players:', players)
-      console.log('inside stopAnim currentPlayer:', currentPlayer)
-      // console.log("stopAnims ran!", first.frame, second.frame)
       let diceRoll =
         diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
       console.log('You rolled: ', diceRoll)
@@ -557,6 +551,12 @@ export default class SceneMain extends Phaser.Scene {
       second.anims.stopOnFrame(second.anims.currentAnim.frames[frame2])
 
       movePlayer(currentPlayer, die1 + die2)
+      // Then update currentPlayer
+      let nextPlayerIndex = players.indexOf(currentPlayer) + 1
+      if (nextPlayerIndex >= players.length) {
+        nextPlayerIndex = 0
+      }
+      currentPlayer = players[nextPlayerIndex]
     }
 
     // When I see the signal from my client, I will show the roll of the other player:
@@ -625,9 +625,6 @@ export default class SceneMain extends Phaser.Scene {
       })
 
       function switchSprite(tween, targets, gameObject) {
-        console.log('switchSprite ran!')
-        console.log('arguments:', arguments)
-        console.log('targets[0].frame', targets[0].frame)
         targets[0].setFrame(1 - targets[0].frame.name)
         backFlipTween.play()
       }
