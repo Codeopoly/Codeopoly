@@ -423,8 +423,10 @@ export default class SceneMain extends Phaser.Scene {
     }
 
     const emitPlayerLanded = paramArray => {
-      let challenge = paramArray[1] ? 'challenge' : null
-      phaserE.emit('playerLanded', challenge, paramArray[0])
+      let array = paramArray.callbacks.onComplete.params
+      console.log('emitPlayer paramArray:', array)
+      let challenge = array[3] ? 'challenge' : null
+      phaserE.emit('playerLanded', challenge, array[2])
     }
 
     // Code for the dice:
@@ -607,8 +609,6 @@ export default class SceneMain extends Phaser.Scene {
           }
           if (card.canBeDismissed) {
             card.destroy()
-            console.log('how many times??')
-            phaserE.emit('playerLanded', 'challenge', 'frontend')
           }
         },
         this
@@ -652,5 +652,4 @@ export default class SceneMain extends Phaser.Scene {
   }
 
   update() {}
-
 }

@@ -55,23 +55,23 @@ const PlayerPanels = () => {
         console.log("what's the category?", category)
         let deckName
         switch (category) {
-          case 'frontend':
+          case 'Frontend':
             console.log('The case was activated!!!!!!')
             deckName = 'deckFrontend'
             break
-          case 'backend':
+          case 'Backend':
             deckName = 'deckBackend'
             break
-          case 'ui':
+          case 'UI':
             deckName = 'deckUI'
             break
-          case 'algorithm':
+          case 'Algorithm':
             deckName = 'deckAlgorithm'
             break
-          case 'misc':
+          case 'Misc':
             deckName = 'deckMisc'
             break
-          case 'interview':
+          case 'Interview':
             deckName = 'deckInterview'
             break
           default:

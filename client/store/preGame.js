@@ -56,7 +56,7 @@ export const createPlayerThunk = (
           hasFrontend: 'none',
           hasBackend: 'none',
           hasUI: 'none',
-          hasMiddleware: 'none',
+          hasMisc: 'none',
           hasAlgorithm: 'none',
           isHost: isHost,
           randomness: Math.random()
@@ -72,7 +72,6 @@ export const createPlayerThunk = (
           .update({
             host: newPlayerDR.id,
             currentPlayer: newPlayerDR.id
-
           })
       }
       // Let's add the player reference to the players array
