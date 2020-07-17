@@ -27,8 +27,6 @@ const answeredChallenge = () => {
 // chosenCardId should be a string
 export const getChallengeThunk = chosenCardId => {
   return async (dispatch, getState, {getFirebase}) => {
-    console.log('getChallengeThunk is running')
-
     try {
       const theChallenge = await getFirebase()
         .firestore()
@@ -47,9 +45,9 @@ export const answeredChallengeThunk = (
   prize,
   currentPlayer,
   gameCode,
-  playerIdsArray
+  playerIdsArray,
+  currentMoney
 ) => {
-  console.log('running answeredChallengThunk func')
   return async (dispatch, getState, {getFirebase}) => {
     let canIHazCookie = true
     // if I am right, give me somethingggg
@@ -81,8 +79,7 @@ export const answeredChallengeThunk = (
           .collection('players')
           .doc(currentPlayer)
           .update({
-            // I am updating the specific game, arrayUnion
-            seedMoney: firebase.firestore.FieldValue + prize
+            seedMoney: currentMoney + prize
           })
       }
     }
@@ -96,7 +93,7 @@ export const turnEndedThunk = (currentPlayer, gameCode, playerIdsArray) => {
   return async (dispatch, getState, {getFirebase}) => {
     try {
       let nextPlayerIndex =
-        playerIdsArray.indexOf(currentPlayer) === playerIdsArray.length // if it's the last player in the array
+        playerIdsArray.indexOf(currentPlayer) === playerIdsArray.length - 1 // if it's the last player in the array
           ? 0
           : // if it's not the last player in the array
             playerIdsArray.indexOf(currentPlayer) + 1
@@ -109,7 +106,7 @@ export const turnEndedThunk = (currentPlayer, gameCode, playerIdsArray) => {
         .update({
           currentPlayer: playerIdsArray[nextPlayerIndex]
         })
-      dispatch(answeredChallenge)
+      dispatch(answeredChallenge())
     } catch (error) {
       console.log(error)
     }

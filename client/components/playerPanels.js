@@ -6,6 +6,7 @@ import {useFirestoreConnect} from 'react-redux-firebase'
 import {EventEmitter} from 'events'
 import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
+import {modalE} from './challenge'
 import {getChallengeThunk} from '../store/challenge'
 
 export const newGame = new EventEmitter()
@@ -86,10 +87,13 @@ const PlayerPanels = () => {
         setShowModal(true)
         counter = 1
       }
-
-      // showModal = true
     })
   }
+  // Now handle the closing of the modal!
+  modalE.setMaxListeners(4)
+  modalE.on('modalGoAway', () => {
+    setShowModal(false)
+  })
 
   const triggerEmit = () => {
     let characters = {

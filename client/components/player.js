@@ -15,17 +15,20 @@ const Player = props => {
   const player = props.player
   const techs = ['Algorithm', 'Backend', 'Frontend', 'Misc', 'UI']
 
-  useEffect(() => {
-    for (let i = 0; i < techs.length; i++) {
-      // console.log(`has${techs[i]}: player[has${techs[i]}]`)
-      console.log('<--this ran this many times')
-      if (player[`has${techs[i]}`] === true) {
-        console.log('this is the tech that we HAVE:', techs[i])
-        document.getElementById(techs[i]).classList.remove('noTech')
-        techs.splice(i, 1)
+  useEffect(
+    () => {
+      for (let i = 0; i < techs.length; i++) {
+        // console.log(`has${techs[i]}: player[has${techs[i]}]`)
+        console.log('<--this ran this many times')
+        if (player[`has${techs[i]}`] === true) {
+          console.log('this is the tech that we HAVE:', techs[i])
+          document.getElementById(techs[i]).classList.remove('noTech')
+          techs.splice(i, 1)
+        }
       }
-    }
-  }, player) //this updates on player change which is not happening  yet so reload page to see updated circle color
+    },
+    [player]
+  ) //this updates on player change which is not happening  yet so reload page to see updated circle color
 
   console.log('player component props', props)
   return (

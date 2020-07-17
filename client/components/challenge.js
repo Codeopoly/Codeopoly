@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {connect, useSelector, useDispatch} from 'react-redux'
 import {answeredChallengeThunk} from '../store/challenge'
+import {EventEmitter} from 'events'
+
+export const modalE = new EventEmitter()
 
 const Challenge = () => {
   const [result, setResult] = useState(null) // we'll set it to a string ("right" or "wrong" after they answer)
@@ -10,12 +13,14 @@ const Challenge = () => {
   const gameCode = Object.keys(gameObject)[0]
   const currentPlayer = gameObject[gameCode].currentPlayer
   const playersObject = useSelector(state => state.firestore.data.players)
+  const currentMoney = playersObject[currentPlayer].seedMoney
   const dispatch = useDispatch()
   const playerIdsArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray
   )
-  console.log('did we get a challenge from the database???:', challenge)
-  console.log('what is resultDiv?', resultDiv)
+  const modalGoAway = () => {
+    modalE.emit('modalGoAway')
+  }
 
   const createAnswerDiv = () => {
     console.log('createAnswerDiv function was called!')
@@ -94,7 +99,8 @@ const Challenge = () => {
           prize, //will either be tech category (str) or tech money prize (num)
           currentPlayer,
           gameCode,
-          playerIdsArray
+          playerIdsArray,
+          currentMoney
         )
       )
       // render the You Are Right component
@@ -110,6 +116,7 @@ const Challenge = () => {
         </div>
       )
       setResult('right')
+      setTimeout(modalGoAway, 5000)
     } else {
       // If you clicked the wrong answer... (1, 5)
       let prize
@@ -125,7 +132,8 @@ const Challenge = () => {
           prize,
           currentPlayer,
           gameCode,
-          playerIdsArray
+          playerIdsArray,
+          currentMoney
         )
       )
       setResultDiv(
@@ -147,6 +155,7 @@ const Challenge = () => {
         </div>
       )
       setResult('wrong')
+      setTimeout(modalGoAway, 5000)
     }
   }
 
