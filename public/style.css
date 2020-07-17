@@ -28,9 +28,14 @@ nav button {
   margin: 1em;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 form div {
   margin: 1em;
-  display: inline-block;
+  display: flex;
 }
 
 #gameViewTitle {
@@ -41,7 +46,7 @@ form div {
 
 button {
   margin: 10px;
-  background-color: #e9c46a;
+  background-color: #f4a261;
   border: #e76a4b 2px solid;
   border-radius: 25px;
   font-family: monaco;
@@ -206,30 +211,56 @@ canvas {
 }
 
 /* For the catergories' circle colors */
-#algorithm {
+#Algorithm {
   background-color: #264653;
+  border: 0.2rem solid #264653;
 }
 
-#backend {
-  background-color: #e9c46a;
+#Algorithm.noTech {
+  background-color: gray;
 }
 
-#frontend {
+#Backend {
   background-color: #f4a261;
+  border: 0.2rem solid #f4a261;
 }
 
-#misc {
+#Backend.noTech {
+  background-color: gray;
+}
+
+#Frontend {
+  background-color: #e9c46a;
+  border: 0.2rem solid #e9c46a;
+}
+
+#Frontend.noTech {
+  background-color: gray;
+}
+
+#Misc {
   background-color: #e76a4b;
+  border: 0.2rem solid #e76a4b;
 }
 
-#ui {
+#Misc.noTech {
+  background-color: gray;
+}
+
+#UI {
   background-color: #2a9d8f;
+  border: 0.2rem solid #2a9d8f;
+}
+
+#UI.noTech {
+  background-color: gray;
 }
 
 .modalBox {
   display: flex;
   flex-direction: column;
   align-content: center;
+  width: 30rem;
   position: absolute;
   top: 40%;
   left: 33%;
@@ -242,9 +273,31 @@ canvas {
   box-shadow: 1px 1px 400px 80px black;
 }
 
+#underQuestionBox {
+  display: flex;
+  flex-direction: column;
+}
+
 .answerChoices {
   display: flex;
   flex-direction: column;
+  padding: 0rem;
+  margin: 0.1rem;
+}
+
+.answerButton {
+  width: 100%;
+  background-color: #fef2eb;
+  border: 3px solid black;
+  padding: 7px;
+}
+.answerButton:hover {
+  transform: scale(1.1);
+  box-shadow: 1 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.question {
+  text-align: center;
 }
 
 .form-radio {
@@ -253,14 +306,8 @@ canvas {
   justify-content: flex-start;
 }
 
-.form-radio-input {
-  flex-grow: 1;
-  max-width: 5%;
-}
-
-.form-radio label {
-  flex-grow: 5;
-  text-align: left;
+.form-submit {
+  display: flex;
 }
 
 .gameStarted {

@@ -608,7 +608,7 @@ export default class SceneMain extends Phaser.Scene {
           if (card.canBeDismissed) {
             card.destroy()
             console.log('how many times??')
-            phaserE.emit('playerLanded')
+            phaserE.emit('playerLanded', 'challenge', 'frontend')
           }
         },
         this
@@ -652,4 +652,5 @@ export default class SceneMain extends Phaser.Scene {
   }
 
   update() {}
+
 }

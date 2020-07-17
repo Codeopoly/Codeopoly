@@ -72,6 +72,7 @@ export const createPlayerThunk = (
           .update({
             host: newPlayerDR.id,
             currentPlayer: newPlayerDR.id
+
           })
       }
       // Let's add the player reference to the players array
@@ -129,11 +130,12 @@ export const createGameThunk = () => {
         .add({
           isStarted: false,
           completed: false,
-          deckFrontend: createArray(0, 20),
+          deckFrontend: createArray(1, 20),
           deckBackend: createArray(21, 40),
           deckUI: createArray(41, 60),
-          deckMiddleware: createArray(61, 80),
+          deckMisc: createArray(61, 80),
           deckAlgorithm: createArray(81, 100),
+          deckInterview: createArray(101, 120),
           currentPlayer: null,
           host: null,
           playersArray: [], // Host is in here too

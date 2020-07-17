@@ -6,6 +6,8 @@ import {useFirestoreConnect} from 'react-redux-firebase'
 import {EventEmitter} from 'events'
 import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
+import {modalE} from './challenge'
+import {getChallengeThunk} from '../store/challenge'
 
 export const newGame = new EventEmitter()
 
@@ -15,6 +17,7 @@ let counter = 0
 const PlayerPanels = () => {
   // const [counter, setCounter] = useState(0)
   const [showModal, setShowModal] = useState(false)
+  const dispatch = useDispatch()
   // const [showTurn, setShowTurn] = useState(false)
 
   console.log('heres the counter', counter)
@@ -45,14 +48,52 @@ const PlayerPanels = () => {
   // console.log('player docs array!', players)
 
   if (counter < 1) {
-    phaserE.on('playerLanded', () => {
+    phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
       console.log('phaserE received in playerPanels!')
       // setCounter(1)
-      setShowModal(true)
-      counter = 1
-      // showModal = true
+      if (tileType === 'challenge') {
+        console.log("what's the category?", category)
+        let deckName
+        switch (category) {
+          case 'frontend':
+            console.log('The case was activated!!!!!!')
+            deckName = 'deckFrontend'
+            break
+          case 'backend':
+            deckName = 'deckBackend'
+            break
+          case 'ui':
+            deckName = 'deckUI'
+            break
+          case 'algorithm':
+            deckName = 'deckAlgorithm'
+            break
+          case 'misc':
+            deckName = 'deckMisc'
+            break
+          case 'interview':
+            deckName = 'deckInterview'
+            break
+          default:
+            console.log('The DEFAULT was activated---------------')
+            deckName = null
+            break
+        }
+
+        let neededDeckArr = gamesCollectionObj[gameCode][deckName] // should be an array of cards still avaiable to draw for that category
+        console.log('neededdDeckArr???????', neededDeckArr)
+        let cardId = neededDeckArr[0]
+        dispatch(getChallengeThunk(cardId))
+        setShowModal(true)
+        counter = 1
+      }
     })
   }
+  // Now handle the closing of the modal!
+  modalE.setMaxListeners(4)
+  modalE.on('modalGoAway', () => {
+    setShowModal(false)
+  })
 
   const triggerEmit = () => {
     let characters = {
