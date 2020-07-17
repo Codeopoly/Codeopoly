@@ -10,6 +10,9 @@ module.exports = io => {
     //   console.log("Socket received Phaser signal!")
     //   socket.broadcast.emit('challengeTime', category);
     // })
+    socket.on('iRolled', (die1, die2) => {
+      socket.broadcast.emit('someoneRolled', die1, die2)
+    })
 
     // On disconnect:
     socket.on('disconnect', () => {

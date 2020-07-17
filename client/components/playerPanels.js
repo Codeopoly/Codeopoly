@@ -7,6 +7,8 @@ import {EventEmitter} from 'events'
 import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
 import WinModal from './winModal'
+import {modalE} from './challenge'
+import {getChallengeThunk} from '../store/challenge'
 
 export const newGame = new EventEmitter()
 
@@ -19,6 +21,8 @@ const PlayerPanels = () => {
   // const [counter, setCounter] = useState(0)
   const [showChallengeModal, setShowChallengeModal] = useState(false)
   const [showWinModal, setShowWinModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const dispatch = useDispatch()
   // const [showTurn, setShowTurn] = useState(false)
 
   console.log('heres the counter', counter)
@@ -49,7 +53,7 @@ const PlayerPanels = () => {
   // console.log('player docs array!', players)
 
   if (counter < 1) {
-    phaserE.on('playerLanded', () => {
+    phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
       console.log('phaserE received in playerPanels!')
       // setCounter(1)
       //setShowChallengeModal(true)
@@ -58,8 +62,52 @@ const PlayerPanels = () => {
       setShowWinModal(true)
       counter = 1
       // showModal = true
+
+      if (tileType === 'challenge') {
+        console.log("what's the category?", category)
+        let deckName
+        switch (category) {
+          case 'Frontend':
+            console.log('The case was activated!!!!!!')
+            deckName = 'deckFrontend'
+            break
+          case 'Backend':
+            deckName = 'deckBackend'
+            break
+          case 'UI':
+            deckName = 'deckUI'
+            break
+          case 'Algorithm':
+            deckName = 'deckAlgorithm'
+            break
+          case 'Misc':
+            deckName = 'deckMisc'
+            break
+          case 'Interview':
+            deckName = 'deckInterview'
+            break
+          default:
+            console.log('The DEFAULT was activated---------------')
+            deckName = null
+            break
+        }
+
+        let neededDeckArr = gamesCollectionObj[gameCode][deckName] // should be an array of cards still avaiable to draw for that category
+        console.log('neededdDeckArr???????', neededDeckArr)
+        let cardId = neededDeckArr[0]
+        dispatch(getChallengeThunk(cardId))
+        setShowModal(true)
+        counter = 1
+      } else {
+        //coffee break //steal tech //call stack // bug spaces //new investor //lose money
+      }
     })
   }
+  // Now handle the closing of the modal!
+  modalE.setMaxListeners(4)
+  modalE.on('modalGoAway', () => {
+    setShowModal(false)
+  })
 
   const triggerEmit = () => {
     let characters = {
@@ -77,8 +125,16 @@ const PlayerPanels = () => {
     const imageNameArray = playerDocs.map(player => {
       return characters[player.image]
     })
+    const hostStatusArray = playerDocs.map(player => {
+      return player.isHost
+    })
 
-    newGame.emit('start', imageNameArray)
+    newGame.emit(
+      'start',
+      imageNameArray,
+      hostStatusArray,
+      gamesCollectionObj[gameCode].randomness
+    )
 
     document.getElementById('placeChars').classList.add('gameStarted')
     const title = document.getElementById('gameViewTitle')
