@@ -15,6 +15,7 @@ export const newGame = new EventEmitter()
 let counter = 0
 // let showModal = false
 
+// eslint-disable-next-line max-statements
 const PlayerPanels = () => {
   // const [counter, setCounter] = useState(0)
   const [showChallengeModal, setShowChallengeModal] = useState(false)
@@ -49,6 +50,8 @@ const PlayerPanels = () => {
   const players = useSelector(state => state.firestore.data.players)
 
   console.log('players on  line 51!', players)
+
+  phaserE.setMaxListeners(1)
 
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
@@ -87,7 +90,7 @@ const PlayerPanels = () => {
         console.log('neededdDeckArr???????', neededDeckArr)
         let cardId = neededDeckArr[0]
         dispatch(getChallengeThunk(cardId))
-        // setShowChallengeModal(true)
+        setShowChallengeModal(true)
         counter = 1
       }
     })
@@ -98,24 +101,27 @@ const PlayerPanels = () => {
     setShowChallengeModal(false)
   })
 
-  const triggerEmit = () => {
-    //the next few lines will all go in the listener for 'passedGo'
-    let winner = gamesCollectionObj[gameCode].currentPlayer
-    console.log(
-      'heres what winner looks like  before we  set winnerName',
-      winner
-    )
-    console.log(
-      'and heres what players looks like at that  same moment',
-      players
-    )
-    setWinnerName(players[winner].startupName)
-    console.log(
-      'and HERES  what winnerName looks like before setting showWinModal to true',
-      winnerName
-    )
-    setShowWinModal(true)
+  const passedGo = () => {
+    if (players !== undefined && gamesCollectionObj) {
+      console.log('what is undefined........')
+      console.log('is it players?', players)
+      console.log('is it gamesCollectionObj?', gamesCollectionObj)
+      console.log('is it gameCode?', gameCode)
+      let winner = gamesCollectionObj[gameCode].currentPlayer
+      console.log('is it winner?', winner)
+      setWinnerName(players[winner].startupName)
+      setShowWinModal(true)
+    }
+  }
 
+  phaserE.on('playerPassedGo', () => {
+    console.log(
+      '---------player passes go in react ONCE?--------------------------'
+    )
+    passedGo()
+  })
+
+  const triggerEmit = () => {
     let characters = {
       'https://www.pngmart.com/files/11/Doge-Meme-PNG-Photos.png': 'doge',
       'https://img2.pngio.com/pug-head-transparent-png-clipart-free-download-ywd-pug-head-png-1260_900.png':

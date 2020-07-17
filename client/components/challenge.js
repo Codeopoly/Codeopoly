@@ -116,7 +116,7 @@ const Challenge = () => {
         </div>
       )
       setResult('right')
-      setTimeout(modalGoAway, 5000)
+      setTimeout(modalGoAway, 3000)
     } else {
       // If you clicked the wrong answer... (1, 5)
       let prize
