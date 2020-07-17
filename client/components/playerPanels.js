@@ -8,6 +8,7 @@ import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
 import {modalE} from './challenge'
 import {getChallengeThunk} from '../store/challenge'
+import WinModal from './winModal'
 
 export const newGame = new EventEmitter()
 
@@ -16,7 +17,9 @@ let counter = 0
 
 const PlayerPanels = () => {
   // const [counter, setCounter] = useState(0)
-  const [showModal, setShowModal] = useState(false)
+  const [showChallengeModal, setShowChallengeModal] = useState(false)
+  const [showWinModal, setShowWinModal] = useState(false)
+  const [winnerName, setWinnerName] = useState('')
   const dispatch = useDispatch()
   // const [showTurn, setShowTurn] = useState(false)
 
@@ -45,7 +48,7 @@ const PlayerPanels = () => {
 
   const players = useSelector(state => state.firestore.data.players)
 
-  // console.log('player docs array!', players)
+  console.log('players on  line 51!', players)
 
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
@@ -84,7 +87,7 @@ const PlayerPanels = () => {
         console.log('neededdDeckArr???????', neededDeckArr)
         let cardId = neededDeckArr[0]
         dispatch(getChallengeThunk(cardId))
-        setShowModal(true)
+        // setShowChallengeModal(true)
         counter = 1
       }
     })
@@ -92,10 +95,27 @@ const PlayerPanels = () => {
   // Now handle the closing of the modal!
   modalE.setMaxListeners(4)
   modalE.on('modalGoAway', () => {
-    setShowModal(false)
+    setShowChallengeModal(false)
   })
 
   const triggerEmit = () => {
+    //the next few lines will all go in the listener for 'passedGo'
+    let winner = gamesCollectionObj[gameCode].currentPlayer
+    console.log(
+      'heres what winner looks like  before we  set winnerName',
+      winner
+    )
+    console.log(
+      'and heres what players looks like at that  same moment',
+      players
+    )
+    setWinnerName(players[winner].startupName)
+    console.log(
+      'and HERES  what winnerName looks like before setting showWinModal to true',
+      winnerName
+    )
+    setShowWinModal(true)
+
     let characters = {
       'https://www.pngmart.com/files/11/Doge-Meme-PNG-Photos.png': 'doge',
       'https://img2.pngio.com/pug-head-transparent-png-clipart-free-download-ywd-pug-head-png-1260_900.png':
@@ -172,7 +192,8 @@ const PlayerPanels = () => {
             )}
           </div>
           <div id="theGameBox">
-            <ChallengeModal show={showModal} />
+            <ChallengeModal show={showChallengeModal} />
+            <WinModal show={showWinModal} name={winnerName} />
           </div>
           <div className="rightside">
             <div id="player2" className="singlePlayerBox">
