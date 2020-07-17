@@ -8,15 +8,20 @@ import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
 import {modalE} from './challenge'
 import {getChallengeThunk} from '../store/challenge'
+import WinModal from './winModal'
+import {DH_CHECK_P_NOT_SAFE_PRIME} from 'constants'
 
 export const newGame = new EventEmitter()
 
 let counter = 0
 // let showModal = false
 
+// eslint-disable-next-line max-statements
 const PlayerPanels = () => {
   // const [counter, setCounter] = useState(0)
-  const [showModal, setShowModal] = useState(false)
+  const [showChallengeModal, setShowChallengeModal] = useState(false)
+  const [showWinModal, setShowWinModal] = useState(false)
+  const [winnerName, setWinnerName] = useState('')
   const dispatch = useDispatch()
   // const [showTurn, setShowTurn] = useState(false)
 
@@ -44,6 +49,9 @@ const PlayerPanels = () => {
   })
 
   const players = useSelector(state => state.firestore.data.players)
+  console.log('players on  line 51!', players)
+  
+  phaserE.setMaxListeners(1)
 
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
@@ -82,7 +90,7 @@ const PlayerPanels = () => {
         console.log('neededdDeckArr???????', neededDeckArr)
         let cardId = neededDeckArr[0]
         dispatch(getChallengeThunk(cardId))
-        setShowModal(true)
+        setShowChallengeModal(true)
         counter = 1
       }
     })
@@ -90,7 +98,33 @@ const PlayerPanels = () => {
   // Now handle the closing of the modal!
   modalE.setMaxListeners(4)
   modalE.on('modalGoAway', () => {
-    setShowModal(false)
+    setShowChallengeModal(false)
+  })
+
+  phaserE.on('playerPassedGo', () => {
+    if (players !== undefined && gamesCollectionObj !== undefined) {
+      let winner = gamesCollectionObj[gameCode].currentPlayer
+      let meetsWinConditions = false
+      let decks = [
+        'hasFrontend',
+        'hasBackend',
+        'hasUI',
+        'hasAlgorithm',
+        'hasMisc'
+      ]
+      if (winner.seedMoney > 10000) {
+        for (let i = 0; i < decks.length; i++) {
+          if (winner[decks[i]] === 'none') break
+          if (i === decks.length -1) {
+            meetsWinConditions = true
+          }
+        } 
+      }
+      if (meetsWinConditions) {
+        setWinnerName(players[winner].startupName)
+        setShowWinModal(true)
+      }
+    }
   })
 
   const triggerEmit = () => {
@@ -175,7 +209,8 @@ const PlayerPanels = () => {
             )}
           </div>
           <div id="theGameBox">
-            <ChallengeModal show={showModal} />
+            <ChallengeModal show={showChallengeModal} />
+            <WinModal show={showWinModal} name={winnerName} />
           </div>
           <div className="rightside">
             <div id="player2" className="singlePlayerBox">
