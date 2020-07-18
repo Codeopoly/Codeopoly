@@ -385,8 +385,15 @@ export default class SceneMain extends Phaser.Scene {
       console.log('propertyName:', propertyName)
       console.log('current location:', currentLoc)
       console.log('New Location:', newLoc)
-      let newX = tileInfoObject[newLoc].x
-      let newY = tileInfoObject[newLoc].y
+      let newX
+      let newY
+      if (newLoc === 27) {
+        newX = tileInfoObject[9].x
+        newY = tileInfoObject[9].y
+      } else {
+        newX = tileInfoObject[newLoc].x
+        newY = tileInfoObject[newLoc].y
+      }
       // Adjust if space is occupied
       if (tileInfoObject[newLoc].occupied) {
         if (newLoc <= 9) {

@@ -101,7 +101,7 @@ const PlayerPanels = () => {
       } else {
         //coffee break //steal tech //call stack // bug spaces //new investor //lose money
         console.log('OTHER CHALLENGES', challenge)
-        setShowOtherModal(true)
+        //setShowOtherModal(true)
       }
     })
   }
@@ -195,7 +195,7 @@ const PlayerPanels = () => {
           <div id="theGameBox">
             <ChallengeModal show={showChallengeModal} />
             <WinModal show={showWinModal} name={winnerName} />
-            <OtherChallengeModal show={showOtherModal} />
+            {/* <OtherChallengeModal show={showOtherModal} /> */}
           </div>
           <div className="rightside">
             <div id="player2" className="singlePlayerBox">
