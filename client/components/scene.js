@@ -450,7 +450,7 @@ export default class SceneMain extends Phaser.Scene {
       key: 'secondDiceRoll',
       repeat: -1,
       frameRate: 18 + Math.floor(Math.random() * 3),
-      frames: this.anims.generateFrameNumbers('dice', {start: 0, end: 5})
+      frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
 
     // dice tween
@@ -462,7 +462,6 @@ export default class SceneMain extends Phaser.Scene {
       paused: true,
       onComplete: stopAnims,
       onCompleteScope: this
-      // onCompleteParams: currentPlayer
     })
 
     // function called when the tween stops
@@ -522,9 +521,6 @@ export default class SceneMain extends Phaser.Scene {
 
     // Code for dice roll broadcast:
     const showRoll = (die1, die2) => {
-      console.log('showRoll ran!! I actually got a broadcast signal!!!')
-      console.log('did I even get the data???', die1, die2)
-
       let frame1
       let frame2
       for (let key in diceFrameMap) {
@@ -536,7 +532,6 @@ export default class SceneMain extends Phaser.Scene {
         }
       }
 
-      console.log('the frames to stop on', frame1, frame2)
       if (firstTime) {
         first.anims.play('firstDiceRoll')
         second.anims.play('secondDiceRoll')
