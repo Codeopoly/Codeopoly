@@ -450,7 +450,7 @@ export default class SceneMain extends Phaser.Scene {
       key: 'secondDiceRoll',
       repeat: -1,
       frameRate: 18 + Math.floor(Math.random() * 3),
-      frames: this.anims.generateFrameNames('dice', {start: 2, end: -2})
+      frames: this.anims.generateFrameNumbers('dice', {start: 0, end: 5})
     })
 
     // dice tween
@@ -470,8 +470,12 @@ export default class SceneMain extends Phaser.Scene {
       let diceRoll =
         diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
       console.log('You rolled: ', diceRoll)
-      anim1.pause()
-      anim2.pause()
+      first.anims.pause(
+        first.anims.currentAnim.frames[Math.floor(Math.random() * 6)]
+      )
+      second.anims.pause(
+        second.anims.currentAnim.frames[Math.floor(Math.random() * 6)]
+      )
       first.isRolling = false
       phaserE.emit(
         'playerRolled',
@@ -501,15 +505,17 @@ export default class SceneMain extends Phaser.Scene {
 
         if (firstTime) {
           // If it's the first time rolling, we need to play the animation.
+          console.log('Playing firstDiceRoll')
           firstTime = false
           rollingDiceTween.play()
-          first.play('firstDiceRoll')
-          second.play('secondDiceRoll')
+          first.anims.play('firstDiceRoll')
+          second.anims.play('secondDiceRoll')
         } else {
           // All other times, we need to resume the animation.
+          console.log('Resuming firstDiceRoll')
           rollingDiceTween.play()
-          anim1.resume()
-          anim2.resume()
+          first.anims.resume()
+          second.anims.resume()
         }
       })
     })
@@ -518,19 +524,6 @@ export default class SceneMain extends Phaser.Scene {
     const showRoll = (die1, die2) => {
       console.log('showRoll ran!! I actually got a broadcast signal!!!')
       console.log('did I even get the data???', die1, die2)
-      // Create new animations that are hard-coded to land on same frames as the braodcasting player rolled:
-      let dejavu1 = this.anims.create({
-        key: 'dejavu1',
-        repeat: -1,
-        frameRate: 18 + Math.floor(Math.random() * 3),
-        frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
-      })
-      let dejavu2 = this.anims.create({
-        key: 'dejavu2',
-        repeat: -1,
-        frameRate: 18 + Math.floor(Math.random() * 3),
-        frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
-      })
 
       let frame1
       let frame2
@@ -544,14 +537,16 @@ export default class SceneMain extends Phaser.Scene {
       }
 
       console.log('the frames to stop on', frame1, frame2)
-      first.play('dejavu1')
-      second.play('dejavu2')
-      firstTime = true
+      if (firstTime) {
+        first.anims.play('firstDiceRoll')
+        second.anims.play('secondDiceRoll')
+      } else {
+        first.anims.resume()
+        second.anims.resume()
+      }
 
-      //FIX SO THAT DICE ARE NOT STOPPING ON FRAME FOR ACTIVE PLAYER, ONLY FOR BROADCAST
-
-      first.anims.stopOnFrame(first.anims.currentAnim.frames[frame1])
-      second.anims.stopOnFrame(second.anims.currentAnim.frames[frame2])
+      first.anims.pause(first.anims.currentAnim.frames[frame1])
+      second.anims.pause(second.anims.currentAnim.frames[frame2])
 
       movePlayer(currentPlayer, die1 + die2)
       // Then update currentPlayer
