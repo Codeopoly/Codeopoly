@@ -8,7 +8,8 @@ import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
 import WinModal from './winModal'
 import {modalE} from './challenge'
-import {getChallengeThunk} from '../store/challenge'
+import OtherChallengeModal from './otherChallengeModal'
+import challenge, {getChallengeThunk} from '../store/challenge'
 
 export const newGame = new EventEmitter()
 
@@ -23,6 +24,7 @@ const PlayerPanels = () => {
   const [showWinModal, setShowWinModal] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
+  const [showOtherModal, setShowOtherModal] = useState(false)
   // const [showTurn, setShowTurn] = useState(false)
 
   console.log('heres the counter', counter)
@@ -98,11 +100,13 @@ const PlayerPanels = () => {
         counter = 1
       } else {
         //coffee break //steal tech //call stack // bug spaces //new investor //lose money
+        console.log('OTHER CHALLENGES', challenge)
+        setShowOtherModal(true)
       }
     })
   }
   // Now handle the closing of the modal!
-  modalE.setMaxListeners(4)
+  modalE.setMaxListeners(5)
   modalE.on('modalGoAway', () => {
     setShowModal(false)
   })
@@ -191,6 +195,7 @@ const PlayerPanels = () => {
           <div id="theGameBox">
             <ChallengeModal show={showChallengeModal} />
             <WinModal show={showWinModal} name={winnerName} />
+            <OtherChallengeModal show={showOtherModal} />
           </div>
           <div className="rightside">
             <div id="player2" className="singlePlayerBox">
