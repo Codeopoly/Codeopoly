@@ -50,16 +50,14 @@ const PlayerPanels = () => {
 
   const players = useSelector(state => state.firestore.data.players)
 
-  // console.log('player docs array!', players)
-
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
       console.log('phaserE received in playerPanels!')
       // setCounter(1)
       //setShowChallengeModal(true)
-      winnerName =
-        players[gamesCollectionObj[gameCode].currentPlayer].startupName
-      setShowWinModal(true)
+      // winnerName =
+      //   players[gamesCollectionObj[gameCode].currentPlayer].startupName
+      // setShowWinModal(true)
       counter = 1
       // showModal = true
 
@@ -144,6 +142,11 @@ const PlayerPanels = () => {
     // showTurn = true
     // console.log('heres showTurn', showTurn)
   }
+
+  // When a playerAnswers, we want to make sure firestore is updating for everyone.
+  // modalE.once('socketSaysSomeoneAnswered', () => {
+
+  // })
 
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
 

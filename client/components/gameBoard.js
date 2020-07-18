@@ -8,10 +8,8 @@ import config from '../../config/gameConfig'
 const GameBoard = () => {
   let game
   useEffect(() => {
-    console.log('useEffect ran!')
     console.log('Window.innerWidth inside game.js', window.innerWidth)
     if (document.getElementById('theGame')) {
-      console.log(document.getElementById('theGame'))
       game = new Phaser.Game(config) // game creation after componentDidMount (hook-style)
     }
     return function cleanup() {
