@@ -211,48 +211,48 @@ canvas {
 }
 
 /* For the catergories' circle colors */
-#Algorithm {
+.algorithm {
   background-color: #264653;
   border: 0.2rem solid #264653;
 }
 
-#Algorithm.noTech {
+.algorithm.noTech {
   background-color: gray;
 }
 
-#Backend {
+.backend {
   background-color: #f4a261;
   border: 0.2rem solid #f4a261;
 }
 
-#Backend.noTech {
+.backend.noTech {
   background-color: gray;
 }
 
-#Frontend {
+.frontend {
   background-color: #e9c46a;
   border: 0.2rem solid #e9c46a;
 }
 
-#Frontend.noTech {
+.frontend.noTech {
   background-color: gray;
 }
 
-#Misc {
+.misc {
   background-color: #e76a4b;
   border: 0.2rem solid #e76a4b;
 }
 
-#Misc.noTech {
+.misc.noTech {
   background-color: gray;
 }
 
-#UI {
+.UI {
   background-color: #2a9d8f;
   border: 0.2rem solid #2a9d8f;
 }
 
-#UI.noTech {
+.UI.noTech {
   background-color: gray;
 }
 

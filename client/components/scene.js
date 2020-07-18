@@ -56,8 +56,7 @@ export default class SceneMain extends Phaser.Scene {
       player2Loc: 0
     }
 
-    newGame.on('start', (imageNameArray, hostStatusArray, randomParam) => {
-      sceneRandomness = randomParam
+    newGame.on('start', (imageNameArray, hostStatusArray) => {
       for (let i = 0; i < imageNameArray.length; i++) {
         players[i] = this.physics.add.sprite(
           i % 2 ? 680 : 730,
@@ -547,6 +546,9 @@ export default class SceneMain extends Phaser.Scene {
       console.log('the frames to stop on', frame1, frame2)
       first.play('dejavu1')
       second.play('dejavu2')
+      firstTime = true
+
+      //FIX SO THAT DICE ARE NOT STOPPING ON FRAME FOR ACTIVE PLAYER, ONLY FOR BROADCAST
 
       first.anims.stopOnFrame(first.anims.currentAnim.frames[frame1])
       second.anims.stopOnFrame(second.anims.currentAnim.frames[frame2])

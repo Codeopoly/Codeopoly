@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import React, {useState, useEffect} from 'react'
 import {connect, useSelector, useDispatch} from 'react-redux'
 import {GameBoard, GameViewTitle, Player} from './index'
@@ -17,6 +18,7 @@ let counter = 0
 // let showModal = false
 
 // eslint-disable-next-line max-statements
+// eslint-disable-next-line complexity
 const PlayerPanels = () => {
   // const [counter, setCounter] = useState(0)
   const [showChallengeModal, setShowChallengeModal] = useState(false)
@@ -24,8 +26,6 @@ const PlayerPanels = () => {
   const [winnerName, setWinnerName] = useState('')
   const dispatch = useDispatch()
   // const [showTurn, setShowTurn] = useState(false)
-
-  console.log('heres the counter', counter)
 
   const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
   if (gamesCollectionObj === undefined) {
@@ -63,21 +63,15 @@ const PlayerPanels = () => {
     currentPlayerName = players[currentPlayerId].startupName
   }
 
-  console.log('players on  line 51!', players)
-  
   phaserE.setMaxListeners(1)
-
 
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
-      console.log('phaserE received in playerPanels!')
       // setCounter(1)
       if (tileType === 'challenge') {
-        console.log("what's the category?", category)
         let deckName
         switch (category) {
           case 'Frontend':
-            console.log('The case was activated!!!!!!')
             deckName = 'deckFrontend'
             break
           case 'Backend':
@@ -96,13 +90,12 @@ const PlayerPanels = () => {
             deckName = 'deckInterview'
             break
           default:
-            console.log('The DEFAULT was activated---------------')
             deckName = null
             break
         }
 
         let neededDeckArr = gamesCollectionObj[gameCode][deckName] // should be an array of cards still avaiable to draw for that category
-        console.log('neededdDeckArr???????', neededDeckArr)
+        console.log('this is what neededDeckArr looks like NOW', neededDeckArr)
         let cardId = neededDeckArr[0]
         dispatch(getChallengeThunk(cardId))
         setShowChallengeModal(true)
@@ -118,7 +111,6 @@ const PlayerPanels = () => {
 
   phaserE.on('playerPassedGo', () => {
     if (players !== undefined && gamesCollectionObj !== undefined) {
-      let winner = gamesCollectionObj[gameCode].currentPlayer
       let meetsWinConditions = false
       let decks = [
         'hasFrontend',
@@ -127,16 +119,16 @@ const PlayerPanels = () => {
         'hasAlgorithm',
         'hasMisc'
       ]
-      if (winner.seedMoney > 10000) {
+      if (players[currentPlayerId].seedMoney > 10000) {
         for (let i = 0; i < decks.length; i++) {
-          if (winner[decks[i]] === 'none') break
-          if (i === decks.length -1) {
+          if (players[currentPlayerId][decks[i]] === 'none') break
+          if (i === decks.length - 1) {
             meetsWinConditions = true
           }
-        } 
+        }
       }
       if (meetsWinConditions) {
-        setWinnerName(players[winner].startupName)
+        setWinnerName(players[currentPlayerId].startupName)
         setShowWinModal(true)
       }
     }
@@ -162,26 +154,12 @@ const PlayerPanels = () => {
       return player.isHost
     })
 
-    newGame.emit(
-      'start',
-      imageNameArray,
-      hostStatusArray,
-      gamesCollectionObj[gameCode].randomness
-    )
+    newGame.emit('start', imageNameArray, hostStatusArray)
 
     document.getElementById('placeChars').classList.add('gameStarted')
     const title = document.getElementById('gameViewTitle')
-    // title.classList.add('gameStarted')
     title.classList.remove('gameStarted')
-
-    // showTurn = true
-    // console.log('heres showTurn', showTurn)
   }
-
-  // When a playerAnswers, we want to make sure firestore is updating for everyone.
-  // modalE.once('socketSaysSomeoneAnswered', () => {
-
-  // })
 
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
 
@@ -189,10 +167,7 @@ const PlayerPanels = () => {
     () => {
       if (players) {
         if (playerIdArray.length === Object.values(players).length) {
-          console.log('THEY FINALLY MATCH')
           setReady(true)
-        } else {
-          console.log("They don't match yettttttttttttttttt")
         }
       }
     },
@@ -247,9 +222,7 @@ const PlayerPanels = () => {
       </div>
     )
   }
-  console.log(centerPanel, 'CENTER PANEL')
   if (!players) {
-    console.log(players, 'VALUE OF')
     return null
   }
   return <div id="mainScreen">{centerPanel}</div>
