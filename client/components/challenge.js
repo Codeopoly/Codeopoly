@@ -5,13 +5,14 @@ import {EventEmitter} from 'events'
 
 export const modalE = new EventEmitter()
 let result = null
-let prize
+let prize = undefined
 let runStep6 = true
+let modalDiv
 
 const Challenge = () => {
   // const [result, setResult] = useState(null) // we'll set it to a string ("right" or "wrong" after they answer)
   const [resultDiv, setResultDiv] = useState(null)
-  const challenge = useSelector(state => state.challenge)
+  let challenge = useSelector(state => state.challenge)
   const gameObject = useSelector(state => state.firestore.data.games)
   const gameCode = Object.keys(gameObject)[0]
   const currentPlayer = gameObject[gameCode].currentPlayer
@@ -26,6 +27,7 @@ const Challenge = () => {
     prize = undefined
     runStep6 = true
     modalE.emit('modalGoAway')
+    // return (<div></div>)
   }
 
   // useEffect(() => {
@@ -37,10 +39,17 @@ const Challenge = () => {
   //   }
   // }, [])
 
+  // useEffect(()=> {
+  //   return () => {
+  //     console.log("cleanup function ran!")
+  //     modalDiv = <div></div>
+  //   }
+  // }, [])
+
   const createAnswerDiv = () => {
     console.log('createAnswerDiv function was called!')
     let divArray = [
-      <div className="form-radio" key="a">
+      <div className="form-radio" id="a" key={`${challenge.cardId}buttonA`}>
         <button
           type="button"
           name="answerChoices"
@@ -52,7 +61,7 @@ const Challenge = () => {
         </button>
       </div>,
 
-      <div className="form-radio" key="b">
+      <div className="form-radio" id="b" key={`${challenge.cardId}buttonB`}>
         <button
           type="button"
           name="answerChoices"
@@ -64,7 +73,7 @@ const Challenge = () => {
         </button>
       </div>,
 
-      <div className="form-radio" key="c">
+      <div className="form-radio" id="c" key={`${challenge.cardId}buttonC`}>
         <button
           type="button"
           name="answerChoices"
@@ -78,14 +87,38 @@ const Challenge = () => {
     ]
 
     return (
-      <div className="answerChoices">
-        {divArray.splice(Math.floor(Math.random() * 3), 1)}
-        {divArray.splice(Math.floor(Math.random() * 2), 1)}
-        {divArray[0]}
+      <div className="answerChoices" key={`${challenge.cardId}AnswerChoices`}>
+        <div key={`${challenge.cardId}A`}>
+          {divArray.splice(Math.floor(Math.random() * 3), 1)}
+        </div>
+        <div key={`${challenge.cardId}B`}>
+          {divArray.splice(Math.floor(Math.random() * 2), 1)}
+        </div>
+        <div key={`${challenge.cardId}C`}>{divArray[0]}</div>
       </div>
     )
   }
   const answerDiv = createAnswerDiv()
+  modalDiv = challenge ? (
+    <div className="modalBox" key={`${challenge.cardId}ModalBox`}>
+      {result ? (
+        <div key={`${challenge.cardId}ResultDiv`}>{resultDiv}</div>
+      ) : (
+        <div key={`${challenge.cardId}QDiv`}>
+          <div className="question">
+            <h2>{challenge.question}</h2>
+          </div>
+          <div className="underQuestionBox">
+            <div className="answerChoices">
+              <div className="answerChoices">{answerDiv}</div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  ) : (
+    <div key="noChallengeYet" />
+  )
 
   function handleClick(event) {
     console.log('---------------1----------------')
@@ -137,7 +170,6 @@ const Challenge = () => {
       result = 'right'
       modalE.emit('playerAnswered', result, prize)
       setTimeout(modalGoAway, 5000)
-
     } else {
       // If you clicked the wrong answer... (1, 5)
       console.log('category atm......', category)
@@ -161,13 +193,13 @@ const Challenge = () => {
         <div>
           <h2>Sorry, wrong answer...</h2>
           {prize === undefined ? ( //(1)
-            <div>
+            <div key={`${challenge.cardId}NoPrize`}>
               <h4>No prizes for you :(</h4>
               <h5>Better luck next time!</h5>
             </div>
           ) : (
             //(5)
-            <div>
+            <div key={`${challenge.cardId}Prize`}>
               {console.log('what  is prize...', prize)}
               <h4>You lose ${Math.abs(prize)}!</h4>
               <h5>Interviews aren't cheap for the company, you know...</h5>
@@ -191,25 +223,29 @@ const Challenge = () => {
     let currentPlayerName = playersObject[currentPlayer].startupName
     let divToRender =
       theirResult === 'right' ? (
-        <div>
+        <div key={`${challenge.cardId}Right`}>
           <h2>Good job, {currentPlayerName}!</h2>
           {typeof prize === 'string' ? (
-            <h4>They win some tech!</h4> //(2)
+            <h4 key={`${challenge.cardId}BroadcastTech`}>
+              They win some tech!
+            </h4> //(2)
           ) : (
-            <h4>They win ${prize}!</h4> //(3, 4)
+            <h4 key={`${challenge.cardId}BroadcastMoney`}>
+              They win ${prize}!
+            </h4> //(3, 4)
           )}
         </div>
       ) : (
-        <div>
+        <div key={`${challenge.cardId}Wrong`}>
           <h2>Sorry, wrong answer...</h2>
           {prize === undefined ? ( //(1)
-            <div>
+            <div key={`${challenge.cardId}BroadcastNoPrize`}>
               <h4>No prizes for {currentPlayerName} :(</h4>
               <h5>Better luck next time!</h5>
             </div>
           ) : (
             //(5)
-            <div>
+            <div key={`${challenge.cardId}BroadcastPenalty`}>
               <h4>
                 {currentPlayerName} lost ${Math.abs(prize)}!
               </h4>
@@ -248,24 +284,7 @@ const Challenge = () => {
     // }
   })
 
-  return (
-    <div className="modalBox">
-      {result ? (
-        resultDiv
-      ) : (
-        <div>
-          <div className="question">
-            <h2>{challenge.question}</h2>
-          </div>
-          <div className="underQuestionBox">
-            <div className="answerChoices">
-              <div className="answerChoices">{answerDiv}</div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
+  return modalDiv
 }
 
 export default Challenge

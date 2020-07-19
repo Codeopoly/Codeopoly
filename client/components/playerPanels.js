@@ -10,11 +10,19 @@ import {phaserE} from './scene'
 import {modalE} from './challenge'
 import {getChallengeThunk} from '../store/challenge'
 import WinModal from './winModal'
-import {DH_CHECK_P_NOT_SAFE_PRIME} from 'constants'
 
 export const newGame = new EventEmitter()
 
 let counter = 0
+// Although Firestore updates whenever the gameDoc changes, the useSelector variables do not refresh...
+// so we set these deck variables in a useEffect hook that runs whenever gameDoc changes.
+let deckFrontend
+let deckBackend
+let deckUI
+let deckAlgorithm
+let deckMisc
+let deckInterview
+let areDecksAssigned = false
 // let showModal = false
 
 // eslint-disable-next-line max-statements
@@ -32,6 +40,7 @@ const PlayerPanels = () => {
     return <Redirect to="/rejoin" />
   }
   const gameCode = Object.keys(gamesCollectionObj)[0]
+  const gameDoc = useSelector(state => state.firestore.data.games[gameCode])
   const playerIdArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray
   )
@@ -68,38 +77,42 @@ const PlayerPanels = () => {
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
       // setCounter(1)
-      if (tileType === 'challenge') {
-        let deckName
+      if (tileType === 'challenge' && areDecksAssigned) {
+        let cardId
         switch (category) {
           case 'Frontend':
-            deckName = 'deckFrontend'
+            cardId = deckFrontend[0]
             break
           case 'Backend':
-            deckName = 'deckBackend'
+            cardId = deckBackend[0]
             break
           case 'UI':
-            deckName = 'deckUI'
+            cardId = deckUI[0]
             break
           case 'Algorithm':
-            deckName = 'deckAlgorithm'
+            cardId = deckAlgorithm[0]
             break
           case 'Misc':
-            deckName = 'deckMisc'
+            cardId = deckMisc[0]
             break
           case 'Interview':
-            deckName = 'deckInterview'
+            cardId = deckInterview[0]
             break
           default:
-            deckName = null
+            cardId = null
             break
         }
 
-        let neededDeckArr = gamesCollectionObj[gameCode][deckName] // should be an array of cards still avaiable to draw for that category
-        console.log('this is what neededDeckArr looks like NOW', neededDeckArr)
-        let cardId = neededDeckArr[0]
+        // let readOnlyDeckArr = gameDoc[deckName] // should be an array of cards still avaiable to draw for that category
+        // // let copyOfDeck = [...readOnlyDeckArr]
+        // console.log('this is what readOnlyDeckArr looks like BEFORE shifting', readOnlyDeckArr)
+        // console.log("what does gameDoc look like?", gameDoc)
+        // let cardId = readOnlyDeckArr[0]
+        console.log('cardId', cardId)
         dispatch(getChallengeThunk(cardId))
         setShowChallengeModal(true)
         counter = 1
+        // console.log("AFTER shifting", copyOfDeck)
       }
     })
   }
@@ -172,6 +185,19 @@ const PlayerPanels = () => {
       }
     },
     [playerIdArray, players]
+  )
+
+  useEffect(
+    () => {
+      console.log('gameDoc changed!', gameDoc)
+      areDecksAssigned = true
+      deckFrontend = gameDoc.deckFrontend
+      deckBackend = gameDoc.deckBackend
+      deckUI = gameDoc.deckUI
+      deckMisc = gameDoc.deckMisc
+      deckInterview = gameDoc.deckInterview
+    },
+    [gameDoc]
   )
 
   // Our redux state now has:
