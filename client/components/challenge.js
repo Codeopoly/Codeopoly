@@ -7,7 +7,6 @@ export const modalE = new EventEmitter()
 let result = null
 let prize = undefined
 let runStep6 = true
-let modalDiv
 
 const Challenge = () => {
   // const [result, setResult] = useState(null) // we'll set it to a string ("right" or "wrong" after they answer)
@@ -27,24 +26,7 @@ const Challenge = () => {
     prize = undefined
     runStep6 = true
     modalE.emit('modalGoAway')
-    // return (<div></div>)
   }
-
-  // useEffect(() => {
-  //   const abortController = new AbortController()
-  //   const signal = abortController.signal
-
-  //   return function cleanup() {
-  //     abortController.abort()
-  //   }
-  // }, [])
-
-  // useEffect(()=> {
-  //   return () => {
-  //     console.log("cleanup function ran!")
-  //     modalDiv = <div></div>
-  //   }
-  // }, [])
 
   const createAnswerDiv = () => {
     console.log('createAnswerDiv function was called!')
@@ -99,26 +81,6 @@ const Challenge = () => {
     )
   }
   const answerDiv = createAnswerDiv()
-  modalDiv = challenge ? (
-    <div className="modalBox" key={`${challenge.cardId}ModalBox`}>
-      {result ? (
-        <div key={`${challenge.cardId}ResultDiv`}>{resultDiv}</div>
-      ) : (
-        <div key={`${challenge.cardId}QDiv`}>
-          <div className="question">
-            <h2>{challenge.question}</h2>
-          </div>
-          <div className="underQuestionBox">
-            <div className="answerChoices">
-              <div className="answerChoices">{answerDiv}</div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  ) : (
-    <div key="noChallengeYet" />
-  )
 
   function handleClick(event) {
     console.log('---------------1----------------')
@@ -284,7 +246,24 @@ const Challenge = () => {
     // }
   })
 
-  return modalDiv
+  return (
+    <div className="modalBox" key={`${challenge.cardId}ModalBox`}>
+      {result ? (
+        <div key={`${challenge.cardId}ResultDiv`}>{resultDiv}</div>
+      ) : (
+        <div key={`${challenge.cardId}QDiv`}>
+          <div className="question">
+            <h2>{challenge.question}</h2>
+          </div>
+          <div className="underQuestionBox">
+            <div className="answerChoices">
+              <div className="answerChoices">{answerDiv}</div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default Challenge
