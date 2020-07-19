@@ -466,15 +466,15 @@ export default class SceneMain extends Phaser.Scene {
 
     // function called when the tween stops
     function stopAnims() {
-      let diceRoll =
-        diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
-      console.log('You rolled: ', diceRoll)
       first.anims.pause(
         first.anims.currentAnim.frames[Math.floor(Math.random() * 6)]
       )
       second.anims.pause(
         second.anims.currentAnim.frames[Math.floor(Math.random() * 6)]
       )
+      let diceRoll =
+        diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
+      console.log('You rolled: ', diceRoll)
       first.isRolling = false
       phaserE.emit(
         'playerRolled',
