@@ -443,13 +443,13 @@ export default class SceneMain extends Phaser.Scene {
     const anim1 = this.anims.create({
       key: 'firstDiceRoll',
       repeat: -1,
-      frameRate: 15 + Math.floor(Math.random() * 3),
+      frameRate: 15 + Math.floor(Math.random() * 7),
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
     const anim2 = this.anims.create({
       key: 'secondDiceRoll',
       repeat: -1,
-      frameRate: 18 + Math.floor(Math.random() * 3),
+      frameRate: 18 + Math.floor(Math.random() * 7),
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
 
