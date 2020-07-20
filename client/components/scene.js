@@ -2,6 +2,7 @@
 import AlignGrid from '../../utility/alignGrid'
 import EventDispatcher from '../../utility/eventDispatcher'
 import {newGame} from './playerPanels'
+import {loseTurn} from './otherChallengeModal'
 import {EventEmitter} from 'events'
 
 export const phaserE = new EventEmitter()
@@ -371,40 +372,49 @@ export default class SceneMain extends Phaser.Scene {
         category: 'LoseMoney'
       }
     }
-
+    loseTurn.on('loseATurn', () => {
+      console.log('this player will lose a turn')
+    })
     const movePlayer = (player, diceRoll) => {
       let propertyName = `${player.name}Loc`
       let currentLoc = playerLocations[propertyName]
       let newLoc = currentLoc + diceRoll
-      // Adjust if we went past GO
-      if (newLoc > 35) {
-        newLoc = newLoc - 35
-        // Emit signal passed GO
-      }
-      console.log('player locations:', playerLocations)
-      console.log('propertyName:', propertyName)
-      console.log('current location:', currentLoc)
-      console.log('New Location:', newLoc)
+      //check if player was sent to the bug tile
       let newX
       let newY
-      if (newLoc === 27) {
-        newX = tileInfoObject[9].x
-        newY = tileInfoObject[9].y
+      if (player.bug === true) {
+        playerLocations[propertyName] = 9
+        return (player.bug = false)
       } else {
-        newX = tileInfoObject[newLoc].x
-        newY = tileInfoObject[newLoc].y
-      }
-      // Adjust if space is occupied
-      if (tileInfoObject[newLoc].occupied) {
-        if (newLoc <= 9) {
-          // bottom of board
-          newY = newY + 50 // move down
-        } else if (newLoc <= 18) {
-          newX = newX - 50 // move left
-        } else if (newLoc <= 27) {
-          newY = newY - 50 // move up
-        } else if (newLoc <= 35) {
-          newX = newX + 50 // move right
+        // Adjust if we went past GO
+        if (newLoc > 35) {
+          newLoc = newLoc - 35
+          // Emit signal passed GO
+        }
+        console.log('player locations:', playerLocations)
+        console.log('propertyName:', propertyName)
+        console.log('current location:', currentLoc)
+        console.log('New Location:', newLoc)
+        if (newLoc === 27) {
+          newX = tileInfoObject[9].x
+          newY = tileInfoObject[9].y
+          player.bug = true
+        } else {
+          newX = tileInfoObject[newLoc].x
+          newY = tileInfoObject[newLoc].y
+        }
+        // Adjust if space is occupied
+        if (tileInfoObject[newLoc].occupied) {
+          if (newLoc <= 9) {
+            // bottom of board
+            newY = newY + 50 // move down
+          } else if (newLoc <= 18) {
+            newX = newX - 50 // move left
+          } else if (newLoc <= 27) {
+            newY = newY - 50 // move up
+          } else if (newLoc <= 35) {
+            newX = newX + 50 // move right
+          }
         }
       }
       const playerTween = this.add.tween({
@@ -674,7 +684,7 @@ export default class SceneMain extends Phaser.Scene {
           if (card.canBeDismissed) {
             card.destroy()
             console.log('how many times??')
-            phaserE.emit('playerLanded')
+            phaserE.emit('playerLanded', player)
           }
         },
         this
