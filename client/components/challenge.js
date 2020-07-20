@@ -91,6 +91,7 @@ const Challenge = () => {
   const answerDiv = createAnswerDiv()
 
   // Ternary to create the entire modal; question and answers:
+  let modalDiv
   modalDiv = challenge ? (
     <div className="modalBox" key={`${challenge.cardId}ModalBox`}>
       {result ? (
@@ -161,7 +162,7 @@ const Challenge = () => {
 
       result = 'right'
       modalE.emit('playerAnswered', result, prize)
-      setTimeout(modalGoAway, 2000)
+      setTimeout(modalGoAway, 3000)
     } else {
       // If you clicked the wrong answer... (1, 5)
       if (category === 'Interview') {
@@ -203,7 +204,7 @@ const Challenge = () => {
       result = 'wrong'
       console.log("this is the result that's being emitted:", result)
       modalE.emit('playerAnswered', result, prize)
-      setTimeout(modalGoAway, 2000)
+      setTimeout(modalGoAway, 3000)
     }
   }
 
@@ -260,7 +261,7 @@ const Challenge = () => {
     setResultDiv(outputDiv)
     // console.log('is result set?', result)
     // console.log('is resultDiv set?', resultDiv)
-    setTimeout(modalGoAway, 5000)
+    setTimeout(modalGoAway, 3000)
     // Tell the people to update their firestore on state.
     // console.log(
     //   'this is when I want playerPanels to refresh the firestore reducer'
