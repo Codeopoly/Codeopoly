@@ -327,4 +327,8 @@ canvas {
   display: none;
 }
 
+#winModal {
+  text-align: center;
+}
+
 /*# sourceMappingURL=style.css.map */

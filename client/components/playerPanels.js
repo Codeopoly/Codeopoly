@@ -1,15 +1,15 @@
 /* eslint-disable max-statements */
 import React, {useState, useEffect} from 'react'
-import {connect, useSelector, useDispatch} from 'react-redux'
-import {GameBoard, GameViewTitle, Player} from './index'
+import {useSelector, useDispatch} from 'react-redux'
+import {GameViewTitle, Player} from './index'
 import {Redirect} from 'react-router-dom'
 import {useFirestoreConnect} from 'react-redux-firebase'
 import {EventEmitter} from 'events'
 import ChallengeModal from './challengeModal'
+import WinModal from './winModal'
 import {phaserE} from './scene'
 import {modalE} from './challenge'
 import {getChallengeThunk} from '../store/challenge'
-import WinModal from './winModal'
 
 export const newGame = new EventEmitter()
 
@@ -23,17 +23,15 @@ let deckAlgorithm
 let deckMisc
 let deckInterview
 let areDecksAssigned = false
-// let showModal = false
 
 // eslint-disable-next-line max-statements
 // eslint-disable-next-line complexity
 const PlayerPanels = () => {
-  // const [counter, setCounter] = useState(0)
   const [showChallengeModal, setShowChallengeModal] = useState(false)
   const [showWinModal, setShowWinModal] = useState(false)
   const [winnerName, setWinnerName] = useState('')
+  const [ready, setReady] = useState(false)
   const dispatch = useDispatch()
-  // const [showTurn, setShowTurn] = useState(false)
 
   const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
   if (gamesCollectionObj === undefined) {
@@ -41,24 +39,46 @@ const PlayerPanels = () => {
   }
   const gameCode = Object.keys(gamesCollectionObj)[0]
   const gameDoc = useSelector(state => state.firestore.data.games[gameCode])
+  const players = useSelector(state => state.firestore.data.players)
   const playerIdArray = useSelector(
     state => state.firestore.data.games[gameCode].playersArray
   )
-
-  const [ready, setReady] = useState(false)
   const arrayOfPlayerPathsAndGame = playerIdArray.map(playerId => {
     return {
       collection: 'players',
       doc: playerId
     }
   })
-
   arrayOfPlayerPathsAndGame.push({
     collection: 'games',
     doc: gameCode
   })
 
-  const players = useSelector(state => state.firestore.data.players)
+  // Function used when player clicks "Place Players" to start game:
+  const triggerEmit = () => {
+    let characters = {
+      'https://www.pngmart.com/files/11/Doge-Meme-PNG-Photos.png': 'doge',
+      'https://img2.pngio.com/pug-head-transparent-png-clipart-free-download-ywd-pug-head-png-1260_900.png':
+        'cody',
+      'https://ya-webdesign.com/images250_/cat-face-png-2.png': 'cat',
+      'https://i.ya-webdesign.com/images/baby-success-meme-png-2.png': 'kid',
+      'https://i.ya-webdesign.com/images/kermit-the-frog-png-8.png': 'kermit',
+      'https://vignette.wikia.nocookie.net/animalcrossing/images/8/80/Marshal_HHD.png/revision/latest?cb=20161013032212':
+        'marshall'
+    }
+    let playerDocs = Object.values(players)
+    const imageNameArray = playerDocs.map(player => {
+      return characters[player.image]
+    })
+    const hostStatusArray = playerDocs.map(player => {
+      return player.isHost
+    })
+
+    newGame.emit('start', imageNameArray, hostStatusArray) // Phaser catches this signal and renders the characters in use
+    document.getElementById('placeChars').classList.add('gameStarted') // Edit CSS to remove the button and add the turn text.
+    const title = document.getElementById('gameViewTitle')
+    title.classList.remove('gameStarted')
+  }
 
   // Get currentPlayer name:
   let currentPlayerId
@@ -72,11 +92,10 @@ const PlayerPanels = () => {
     currentPlayerName = players[currentPlayerId].startupName
   }
 
+  // Handle receiving signal from Phaser:
   phaserE.setMaxListeners(1)
-
   if (counter < 1) {
     phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
-      // setCounter(1)
       if (tileType === 'challenge' && areDecksAssigned) {
         let cardId
         switch (category) {
@@ -102,26 +121,21 @@ const PlayerPanels = () => {
             cardId = null
             break
         }
-
-        // let readOnlyDeckArr = gameDoc[deckName] // should be an array of cards still avaiable to draw for that category
-        // // let copyOfDeck = [...readOnlyDeckArr]
-        // console.log('this is what readOnlyDeckArr looks like BEFORE shifting', readOnlyDeckArr)
-        // console.log("what does gameDoc look like?", gameDoc)
-        // let cardId = readOnlyDeckArr[0]
-        console.log('cardId', cardId)
-        dispatch(getChallengeThunk(cardId))
-        setShowChallengeModal(true)
+        // console.log('cardId', cardId)
+        dispatch(getChallengeThunk(cardId)) // Get the challenge and put it in Redux state
+        setShowChallengeModal(true) // Render the Challenge Modal, which uses the challenge Redux state
         counter = 1
-        // console.log("AFTER shifting", copyOfDeck)
       }
     })
   }
-  // Now handle the closing of the modal!
+
+  // Handle the closing of the modal:
   modalE.setMaxListeners(4)
   modalE.on('modalGoAway', () => {
     setShowChallengeModal(false)
   })
 
+  // Handle signal from Phaser when player passes GO:
   phaserE.on('playerPassedGo', () => {
     if (players !== undefined && gamesCollectionObj !== undefined) {
       let meetsWinConditions = false
@@ -132,7 +146,7 @@ const PlayerPanels = () => {
         'hasAlgorithm',
         'hasMisc'
       ]
-      if (players[currentPlayerId].seedMoney > 10000) {
+      if (players[currentPlayerId].seedMoney > 1000) {
         for (let i = 0; i < decks.length; i++) {
           if (players[currentPlayerId][decks[i]] === 'none') break
           if (i === decks.length - 1) {
@@ -147,35 +161,14 @@ const PlayerPanels = () => {
     }
   })
 
-  const triggerEmit = () => {
-    let characters = {
-      'https://www.pngmart.com/files/11/Doge-Meme-PNG-Photos.png': 'doge',
-      'https://img2.pngio.com/pug-head-transparent-png-clipart-free-download-ywd-pug-head-png-1260_900.png':
-        'cody',
-      'https://ya-webdesign.com/images250_/cat-face-png-2.png': 'cat',
-      'https://i.ya-webdesign.com/images/baby-success-meme-png-2.png': 'kid',
-      'https://i.ya-webdesign.com/images/kermit-the-frog-png-8.png': 'kermit',
-      'https://vignette.wikia.nocookie.net/animalcrossing/images/8/80/Marshal_HHD.png/revision/latest?cb=20161013032212':
-        'marshall'
-    }
-    let playerDocs = Object.values(players)
-
-    const imageNameArray = playerDocs.map(player => {
-      return characters[player.image]
-    })
-    const hostStatusArray = playerDocs.map(player => {
-      return player.isHost
-    })
-
-    newGame.emit('start', imageNameArray, hostStatusArray)
-
-    document.getElementById('placeChars').classList.add('gameStarted')
-    const title = document.getElementById('gameViewTitle')
-    title.classList.remove('gameStarted')
-  }
-
+  // Updates the state.firestore whenever a change happens in any player document or the game document:
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
+  // Our redux state now has:
+  // state.firestore.data.games[gameCode] for the game document
+  // AND
+  // state.firestore.data.players[playerId] for each player document
 
+  // Makes sure we only render player panels when we've loaded all player data:
   useEffect(
     () => {
       if (players) {
@@ -187,12 +180,14 @@ const PlayerPanels = () => {
     [playerIdArray, players]
   )
 
+  // Keep the game up-to-date with the database changes to the decks:
   useEffect(
     () => {
       console.log('gameDoc changed!', gameDoc)
       areDecksAssigned = true
       deckFrontend = gameDoc.deckFrontend
       deckBackend = gameDoc.deckBackend
+      deckAlgorithm = gameDoc.deckAlgorithm
       deckUI = gameDoc.deckUI
       deckMisc = gameDoc.deckMisc
       deckInterview = gameDoc.deckInterview
@@ -200,13 +195,9 @@ const PlayerPanels = () => {
     [gameDoc]
   )
 
-  // Our redux state now has:
-  // state.firestore.data.games[gameCode] for the game document
-  // AND
-  // state.firestore.data.players[playerId] for each player document
-  let centerPanel
+  let reactGamePanels
   if (ready) {
-    centerPanel = (
+    reactGamePanels = (
       <div id="gameView">
         <div id="aboveGameBar">
           <div id="gameViewTitle" className="gameStarted">
@@ -250,10 +241,12 @@ const PlayerPanels = () => {
       </div>
     )
   }
+
+  // Our return/render statements:
   if (!players) {
     return null
   }
-  return <div id="mainScreen">{centerPanel}</div>
+  return <div id="mainScreen">{reactGamePanels}</div>
 }
 
 export default PlayerPanels
