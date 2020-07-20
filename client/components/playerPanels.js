@@ -8,7 +8,7 @@ import ChallengeModal from './challengeModal'
 import {phaserE} from './scene'
 import WinModal from './winModal'
 import {modalE} from './challenge'
-import OtherChallengeModal from './otherChallengeModal'
+import StuckOnABug from './stuckonabug'
 import challenge, {getChallengeThunk} from '../store/challenge'
 
 export const newGame = new EventEmitter()
@@ -24,7 +24,7 @@ const PlayerPanels = () => {
   const [showWinModal, setShowWinModal] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
-  const [showOtherModal, setShowOtherModal] = useState(false)
+  const [showStuckOnBugModal, setStuckOnBugModal] = useState(false)
   // const [showTurn, setShowTurn] = useState(false)
 
   console.log('heres the counter', counter)
@@ -104,9 +104,13 @@ const PlayerPanels = () => {
         //setShowOtherModal(true)
       }
     })
+    phaserE.on('playerOnBug', player => {
+      console.log('player on a bug', player)
+      setStuckOnBugModal(true)
+    })
   }
   // Now handle the closing of the modal!
-  modalE.setMaxListeners(5)
+  modalE.setMaxListeners(6)
   modalE.on('modalGoAway', () => {
     setShowModal(false)
   })
@@ -195,7 +199,7 @@ const PlayerPanels = () => {
           <div id="theGameBox">
             <ChallengeModal show={showChallengeModal} />
             <WinModal show={showWinModal} name={winnerName} />
-            {/* <OtherChallengeModal show={showOtherModal} /> */}
+            <StuckOnABug show={showStuckOnBugModal} />
           </div>
           <div className="rightside">
             <div id="player2" className="singlePlayerBox">
