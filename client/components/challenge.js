@@ -1,16 +1,15 @@
-import React, {useState, useEffect} from 'react'
-import {connect, useSelector, useDispatch} from 'react-redux'
-import {answeredChallengeThunk, turnEndedThunk} from '../store/challenge'
+import React, {useState} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {answeredChallengeThunk} from '../store/challenge'
 import {EventEmitter} from 'events'
 
 export const modalE = new EventEmitter()
-let result = null
+let result = null // we'll set it to a string ("right" or "wrong" after they answer)
 let prize = undefined
 let runStep6 = true
 let modalDiv
 
 const Challenge = () => {
-  // const [result, setResult] = useState(null) // we'll set it to a string ("right" or "wrong" after they answer)
   const [resultDiv, setResultDiv] = useState(null)
   let challenge = useSelector(state => state.challenge)
   const gameObject = useSelector(state => state.firestore.data.games)
@@ -46,6 +45,7 @@ const Challenge = () => {
   //   }
   // }, [])
 
+  // Function that creates and returns div to display randomized answer options:
   const createAnswerDiv = () => {
     console.log('createAnswerDiv function was called!')
     let divArray = [
@@ -99,6 +99,8 @@ const Challenge = () => {
     )
   }
   const answerDiv = createAnswerDiv()
+
+  // Ternary to create the entire modal; question and answers:
   modalDiv = challenge ? (
     <div className="modalBox" key={`${challenge.cardId}ModalBox`}>
       {result ? (
@@ -126,10 +128,10 @@ const Challenge = () => {
     let category =
       challenge.category.slice(0, 1).toUpperCase() + challenge.category.slice(1)
 
-    //if correct answer was chosen (2,3,4):
+    // if correct answer was chosen (scenarios 2,3,4):
     if (event.target.value === 'answer') {
       // What prize should we give?
-      //if player  doesn't yet  have that tech category in their stack (2):
+      // if player  doesn't yet  have that tech category in their stack (2):
       if (playersObject[currentPlayer][`has${category}`] === 'none') {
         // if the currentPlayer's .hasCategory === false
         // give the category
@@ -166,16 +168,15 @@ const Challenge = () => {
           )}
         </div>
       )
-      // setResult('right')
+
       result = 'right'
       modalE.emit('playerAnswered', result, prize)
       setTimeout(modalGoAway, 5000)
     } else {
       // If you clicked the wrong answer... (1, 5)
-      console.log('category atm......', category)
       if (category === 'Interview') {
         // (5)
-        prize = -3000 // challenge.money is only a string at the moment!
+        prize = -300 // challenge.money is only a string at the moment!
       }
       dispatch(
         answeredChallengeThunk(
@@ -209,7 +210,6 @@ const Challenge = () => {
       )
       console.log('-------------2--------------')
       console.log("I'm about to send a signal!!!")
-      // setResult('wrong')
       result = 'wrong'
       console.log("this is the result that's being emitted:", result)
       modalE.emit('playerAnswered', result, prize)
@@ -218,27 +218,28 @@ const Challenge = () => {
   }
 
   // Function that will run if player receives signal that OTHER player answered
-  const someoneAnswered = (theirResult, prize) => {
-    console.log('someoneAnswered ran!!!!')
+  const someoneAnswered = (theirResult, theirPrize) => {
+    console.log('---------------someoneAnswered ran!!!!-----------------')
+    console.log('NEED TO CHECK THEIR RESULT AND PRIZE', theirResult, theirPrize)
     let currentPlayerName = playersObject[currentPlayer].startupName
     let divToRender =
       theirResult === 'right' ? (
         <div key={`${challenge.cardId}Right`}>
           <h2>Good job, {currentPlayerName}!</h2>
-          {typeof prize === 'string' ? (
+          {typeof theirPrize === 'string' ? (
             <h4 key={`${challenge.cardId}BroadcastTech`}>
               They win some tech!
             </h4> //(2)
           ) : (
             <h4 key={`${challenge.cardId}BroadcastMoney`}>
-              They win ${prize}!
+              They win ${theirPrize}!
             </h4> //(3, 4)
           )}
         </div>
       ) : (
         <div key={`${challenge.cardId}Wrong`}>
           <h2>Sorry, wrong answer...</h2>
-          {prize === undefined ? ( //(1)
+          {theirPrize === null ? ( //(1)
             <div key={`${challenge.cardId}BroadcastNoPrize`}>
               <h4>No prizes for {currentPlayerName} :(</h4>
               <h5>Better luck next time!</h5>
@@ -247,40 +248,40 @@ const Challenge = () => {
             //(5)
             <div key={`${challenge.cardId}BroadcastPenalty`}>
               <h4>
-                {currentPlayerName} lost ${Math.abs(prize)}!
+                {currentPlayerName} lost ${Math.abs(theirPrize)}!
               </h4>
               <h5>Interviews aren't cheap for the company, you know...</h5>
             </div>
           )}
         </div>
       )
-    console.log('this should be rendered by other players', divToRender)
-    console.log('this should be the result string', theirResult)
+    // console.log('this should be rendered by other players', divToRender)
+    // console.log('this should be the result string', theirResult)
     return divToRender
   }
   // Listening for the signal to execute the someoneAnswered function.
   modalE.setMaxListeners(4)
-  modalE.once('socketSaysSomeoneAnswered', (theirResult, prize) => {
+  modalE.once('socketSaysSomeoneAnswered', (theirResult, theirPrize) => {
     // why do I receive the signal 7 times when it's only emitting ONCE?!!!
     // if (runStep6) {
     console.log('-------------6--------------')
-    console.log(
-      'The component knows it needs to run someoneAnswered',
-      theirResult,
-      prize
-    )
-    const outputDiv = someoneAnswered(theirResult, prize)
+    // console.log(
+    //   'The component knows it needs to run someoneAnswered',
+    //   theirResult,
+    //   theirPrize
+    // )
+    const outputDiv = someoneAnswered(theirResult, theirPrize)
     console.log("here's the output div we want? to render", outputDiv)
     runStep6 = false
     result = theirResult
     setResultDiv(outputDiv)
-    console.log('is result set?', result)
-    console.log('is resultDiv set?', resultDiv)
+    // console.log('is result set?', result)
+    // console.log('is resultDiv set?', resultDiv)
     setTimeout(modalGoAway, 5000)
     // Tell the people to update their firestore on state.
-    console.log(
-      'this is when I want playerPanels to refresh the firestore reducer'
-    )
+    // console.log(
+    //   'this is when I want playerPanels to refresh the firestore reducer'
+    // )
     // }
   })
 
