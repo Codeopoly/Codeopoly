@@ -27,6 +27,15 @@ const Challenge = () => {
     modalE.emit('modalGoAway')
   }
 
+  // useEffect(() => {
+  //   const abortController = new AbortController()
+  //   const signal = abortController.signal
+
+  //   return function cleanup() {
+  //     abortController.abort()
+  //   }
+  // }, [])
+
   const createAnswerDiv = () => {
     console.log('createAnswerDiv function was called!')
     let divArray = [
@@ -238,8 +247,6 @@ const Challenge = () => {
           )}
         </div>
       )
-    // console.log('this should be rendered by other players', divToRender)
-    // console.log('this should be the result string', theirResult)
     return divToRender
   }
   // Listening for the signal to execute the someoneAnswered function.
@@ -248,11 +255,6 @@ const Challenge = () => {
     // why do I receive the signal 7 times when it's only emitting ONCE?!!!
     // if (runStep6) {
     console.log('-------------6--------------')
-    // console.log(
-    //   'The component knows it needs to run someoneAnswered',
-    //   theirResult,
-    //   theirPrize
-    // )
     const outputDiv = someoneAnswered(theirResult, theirPrize)
     console.log("here's the output div we want? to render", outputDiv)
     runStep6 = false
@@ -265,7 +267,6 @@ const Challenge = () => {
     // console.log(
     //   'this is when I want playerPanels to refresh the firestore reducer'
     // )
-    // }
   })
 
   return (

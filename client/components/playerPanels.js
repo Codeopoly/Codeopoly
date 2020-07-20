@@ -8,12 +8,15 @@ import {EventEmitter} from 'events'
 import ChallengeModal from './challengeModal'
 import WinModal from './winModal'
 import {phaserE} from './scene'
+import WinModal from './winModal'
 import {modalE} from './challenge'
-import {getChallengeThunk} from '../store/challenge'
+import StuckOnABug from './stuckonabug'
+import challenge, {getChallengeThunk} from '../store/challenge'
 
 export const newGame = new EventEmitter()
 
 let counter = 0
+
 // Although Firestore updates whenever the gameDoc changes, the useSelector variables do not refresh...
 // so we set these deck variables in a useEffect hook that runs whenever gameDoc changes.
 let deckFrontend
@@ -31,6 +34,7 @@ const PlayerPanels = () => {
   const [showWinModal, setShowWinModal] = useState(false)
   const [winnerName, setWinnerName] = useState('')
   const [ready, setReady] = useState(false)
+  const [showStuckOnBugModal, setStuckOnBugModal] = useState(false)
   const dispatch = useDispatch()
 
   const gamesCollectionObj = useSelector(state => state.firestore.data.games) // Hook into redux store
@@ -125,7 +129,15 @@ const PlayerPanels = () => {
         dispatch(getChallengeThunk(cardId)) // Get the challenge and put it in Redux state
         setShowChallengeModal(true) // Render the Challenge Modal, which uses the challenge Redux state
         counter = 1
+      } else {
+        //coffee break //steal tech //call stack // bug spaces //new investor //lose money
+        console.log('OTHER CHALLENGES', challenge)
+        //setShowOtherModal(true)
       }
+    })
+    phaserE.on('playerOnBug', player => {
+      console.log('player on a bug', player)
+      setStuckOnBugModal(true)
     })
   }
 
@@ -160,7 +172,7 @@ const PlayerPanels = () => {
       }
     }
   })
-
+    
   // Updates the state.firestore whenever a change happens in any player document or the game document:
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
   // Our redux state now has:
@@ -223,6 +235,7 @@ const PlayerPanels = () => {
           <div id="theGameBox">
             <ChallengeModal show={showChallengeModal} />
             <WinModal show={showWinModal} name={winnerName} />
+            <StuckOnABug show={showStuckOnBugModal} />
           </div>
           <div className="rightside">
             <div id="player2" className="singlePlayerBox">

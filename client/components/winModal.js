@@ -19,4 +19,5 @@ const WinModal = props => {
     return <div />
   }
 }
+
 export default WinModal
