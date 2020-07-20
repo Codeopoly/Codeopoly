@@ -57,15 +57,19 @@ export const answeredChallengeThunk = (
       // if it is a tech stack:
       if (typeof prize === 'string') {
         // i.e. "Frontend"
-        canIHazCookie = false
-        await getFirebase()
-          .firestore()
-          .collection('players')
-          .doc(currentPlayer)
-          .update({
-            // I am updating the specific game, arrayUnion
-            [`has${prize}`]: true
-          })
+        try {
+          canIHazCookie = false
+          await getFirebase()
+            .firestore()
+            .collection('players')
+            .doc(currentPlayer)
+            .update({
+              // I am updating the specific game, arrayUnion
+              [`has${prize}`]: true
+            })
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
 
@@ -74,14 +78,18 @@ export const answeredChallengeThunk = (
       // you didn't get a tech stack, but still get a repercussion (either win or lose money)
       if (typeof prize === 'number') {
         // i.e. -300 or 1000
-        canIHazCookie = false
-        await getFirebase()
-          .firestore()
-          .collection('players')
-          .doc(currentPlayer)
-          .update({
-            seedMoney: currentMoney + prize
-          })
+        try {
+          canIHazCookie = false
+          await getFirebase()
+            .firestore()
+            .collection('players')
+            .doc(currentPlayer)
+            .update({
+              seedMoney: currentMoney + prize
+            })
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
 
@@ -110,6 +118,8 @@ export const turnEndedThunk = (
   challengeId
 ) => {
   console.log('turnEndedThunk ran!!!')
+  console.log('prize better be a category or undefined', prize)
+
   return async (dispatch, getState, {getFirebase}) => {
     try {
       let nextPlayerIndex =
@@ -117,7 +127,34 @@ export const turnEndedThunk = (
           ? 0
           : // if it's not the last player in the array
             playerIdsArray.indexOf(currentPlayer) + 1
+      // Just in case prize is undefined for some reason, set value of prize based on challengeId:
+      if (prize === undefined || prize === null || typeof prize === 'number') {
+        console.log(
+          "we hit a prize that's not a category!!!!! Time to SWITCH it"
+        )
+        let challengeIdNum = parseInt(challengeId)
 
+        if (typeof prize === 'number') {
+          if (challengeIdNum < 21) {
+            prize = 'Frontend'
+          } else if (challengeIdNum < 41) {
+            prize = 'Backend'
+          } else if (challengeIdNum < 61) {
+            prize = 'UI'
+          } else if (challengeIdNum < 81) {
+            prize = 'Misc'
+          } else if (challengeIdNum < 101) {
+            prize = 'Algorithm'
+          } else if (challengeIdNum < 121) {
+            prize = 'Interview'
+          }
+        }
+      }
+
+      console.log(
+        'what is PRIZE when we update the gameDoc? It better be a Category',
+        prize
+      )
       // Then update Firestore's game:
       await getFirebase()
         .firestore()

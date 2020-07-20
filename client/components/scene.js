@@ -1,11 +1,10 @@
 /* eslint-disable max-statements */
-import AlignGrid from '../../utility/alignGrid'
 import EventDispatcher from '../../utility/eventDispatcher'
 import {newGame} from './playerPanels'
 import {EventEmitter} from 'events'
+import {tileInfoObject} from '../../utility/tileInfoObject'
 
 export const phaserE = new EventEmitter()
-let sceneRandomness
 
 export default class SceneMain extends Phaser.Scene {
   constructor() {
@@ -57,8 +56,7 @@ export default class SceneMain extends Phaser.Scene {
       player2Loc: 0
     }
 
-    newGame.on('start', (imageNameArray, hostStatusArray, randomParam) => {
-      sceneRandomness = randomParam
+    newGame.on('start', (imageNameArray, hostStatusArray) => {
       for (let i = 0; i < imageNameArray.length; i++) {
         players[i] = this.physics.add.sprite(
           i % 2 ? 680 : 730,
@@ -78,304 +76,11 @@ export default class SceneMain extends Phaser.Scene {
       currentPlayer = players[hostStatusArray.indexOf(true)]
     })
 
-    const tileInfoObject = {
-      0: {
-        id: 0,
-        x: 680,
-        y: 680,
-        occupied: false,
-        challenge: false,
-        category: null
-      },
-      1: {
-        id: 1,
-        x: 680 - 65 * 1,
-        y: 680,
-        occupied: false,
-        challenge: true,
-        category: 'Misc'
-      },
-      2: {
-        id: 2,
-        x: 680 - 65 * 2,
-        y: 680,
-        occupied: false,
-        challenge: true,
-        category: 'Misc'
-      },
-      3: {
-        id: 3,
-        x: 680 - 65 * 3,
-        y: 680,
-        occupied: false,
-        challenge: true,
-        category: 'Misc'
-      },
-      4: {
-        id: 4,
-        x: 680 - 65 * 4,
-        y: 680,
-        occupied: false,
-        challenge: false,
-        category: 'Callstack'
-      },
-      5: {
-        id: 5,
-        x: 680 - 65 * 5,
-        y: 680,
-        occupied: false,
-        challenge: true,
-        category: 'Interview'
-      },
-      6: {
-        id: 6,
-        x: 680 - 65 * 6,
-        y: 680,
-        occupied: false,
-        challenge: true,
-        category: 'UI'
-      },
-      7: {
-        id: 7,
-        x: 680 - 65 * 7,
-        y: 680,
-        occupied: false,
-        challenge: true,
-        category: 'UI'
-      },
-      8: {
-        id: 8,
-        x: 680 - 65 * 8,
-        y: 680,
-        occupied: false,
-        challenge: true,
-        category: 'UI'
-      },
-      9: {
-        id: 9,
-        x: 680 - 65 * 9,
-        y: 680,
-        occupied: false,
-        challenge: false,
-        category: 'bug'
-      },
-      // Here starts the left side of the board; Semantic UI
-      10: {
-        id: 10,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 1,
-        occupied: false,
-        challenge: true,
-        category: 'UI'
-      },
-      11: {
-        id: 11,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 2,
-        occupied: false,
-        challenge: true,
-        category: 'Frontend'
-      },
-      12: {
-        id: 12,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 3,
-        occupied: false,
-        challenge: false,
-        category: 'Callstack'
-      },
-      13: {
-        id: 13,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 4,
-        occupied: false,
-        challenge: true,
-        category: 'Frontend'
-      },
-      14: {
-        id: 14,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 5,
-        occupied: false,
-        challenge: true,
-        category: 'Frontend'
-      },
-      15: {
-        id: 15,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 6,
-        occupied: false,
-        challenge: true,
-        category: 'Frontend'
-      },
-      16: {
-        id: 16,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 7,
-        occupied: false,
-        challenge: true,
-        category: 'Interview'
-      },
-      17: {
-        id: 17,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 8,
-        occupied: false,
-        challenge: true,
-        category: 'Frontend'
-      },
-      18: {
-        id: 18,
-        x: 680 - 65 * 9,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: false,
-        category: 'Coffee'
-      },
-      // Here starts the top section's StealSomeTech!
-      19: {
-        id: 19,
-        x: 680 - 65 * 8,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: false,
-        category: 'Steal'
-      },
-      20: {
-        id: 20,
-        x: 680 - 65 * 7,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: false,
-        category: 'Callstack'
-      },
-      21: {
-        id: 21,
-        x: 680 - 65 * 6,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: true,
-        category: 'Algorithm'
-      },
-      22: {
-        id: 22,
-        x: 680 - 65 * 5,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: true,
-        category: 'Algorithm'
-      },
-      23: {
-        id: 23,
-        x: 680 - 65 * 4,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: true,
-        category: 'Interview'
-      },
-      24: {
-        id: 24,
-        x: 680 - 65 * 3,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: true,
-        category: 'Algorithm'
-      },
-      25: {
-        id: 25,
-        x: 680 - 65 * 2,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: true,
-        category: 'Algorithm'
-      },
-      26: {
-        id: 26,
-        x: 680 - 65 * 1,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: true,
-        category: 'Algorithm'
-      },
-      27: {
-        id: 27,
-        x: 680,
-        y: 680 - 65 * 9,
-        occupied: false,
-        challenge: false,
-        category: 'GotBug'
-      },
-      // Here starts the right side's Interview!
-      28: {
-        id: 28,
-        x: 680,
-        y: 680 - 65 * 8,
-        occupied: false,
-        challenge: true,
-        category: 'Interview'
-      },
-      29: {
-        id: 29,
-        x: 680,
-        y: 680 - 65 * 7,
-        occupied: false,
-        challenge: false,
-        category: 'Investor'
-      },
-      30: {
-        id: 30,
-        x: 680,
-        y: 680 - 65 * 6,
-        occupied: false,
-        challenge: false,
-        category: 'Callstack'
-      },
-      31: {
-        id: 31,
-        x: 680,
-        y: 680 - 65 * 5,
-        occupied: false,
-        challenge: true,
-        category: 'Backend'
-      },
-      32: {
-        id: 32,
-        x: 680,
-        y: 680 - 65 * 4,
-        occupied: false,
-        challenge: true,
-        category: 'Backend'
-      },
-      33: {
-        id: 33,
-        x: 680,
-        y: 680 - 65 * 3,
-        occupied: false,
-        challenge: true,
-        category: 'Backend'
-      },
-      34: {
-        id: 34,
-        x: 680,
-        y: 680 - 65 * 2,
-        occupied: false,
-        challenge: true,
-        category: 'Backend'
-      },
-      35: {
-        id: 35,
-        x: 680,
-        y: 680 - 65 * 1,
-        occupied: false,
-        challenge: false,
-        category: 'LoseMoney'
-      }
-    }
-
     const movePlayer = (player, diceRoll) => {
       let propertyName = `${player.name}Loc`
       let currentLoc = playerLocations[propertyName]
       let newLoc = currentLoc + diceRoll
+      let locDifference = newLoc - currentLoc
       let newX
       let newY
       // if player is already stuck on a bug
@@ -387,6 +92,8 @@ export default class SceneMain extends Phaser.Scene {
         if (newLoc > 35) {
           newLoc = newLoc - 35
           // Emit signal passed GO
+          console.log('i passed go!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+          phaserE.emit('playerPassedGo')
         }
         console.log('player locations:', playerLocations)
         console.log('propertyName:', propertyName)
@@ -420,7 +127,7 @@ export default class SceneMain extends Phaser.Scene {
         targets: player,
         x: newX,
         y: newY,
-        duration: 3000,
+        duration: 300 * locDifference,
         onComplete: emitPlayerLanded,
         onCompleteParams: [
           tileInfoObject[newLoc].category,
@@ -459,14 +166,14 @@ export default class SceneMain extends Phaser.Scene {
     const anim1 = this.anims.create({
       key: 'firstDiceRoll',
       repeat: -1,
-      frameRate: 15 + Math.floor(Math.random() * 3), // randomness to avoid the same rolling patterns
+      frameRate: 15 + Math.floor(Math.random() * 7),
       frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
     const anim2 = this.anims.create({
       key: 'secondDiceRoll',
       repeat: -1,
-      frameRate: 18 + Math.floor(Math.random() * 3),
-      frames: this.anims.generateFrameNames('dice', {start: 2, end: -2})
+      frameRate: 18 + Math.floor(Math.random() * 7),
+      frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
     })
 
     // dice tween
@@ -478,16 +185,19 @@ export default class SceneMain extends Phaser.Scene {
       paused: true,
       onComplete: stopAnims,
       onCompleteScope: this
-      // onCompleteParams: currentPlayer
     })
 
     // function called when the tween stops
     function stopAnims() {
+      first.anims.pause(
+        first.anims.currentAnim.frames[Math.floor(Math.random() * 6)]
+      )
+      second.anims.pause(
+        second.anims.currentAnim.frames[Math.floor(Math.random() * 6)]
+      )
       let diceRoll =
         diceFrameMap[first.frame.name] + diceFrameMap[second.frame.name]
       console.log('You rolled: ', diceRoll)
-      anim1.pause()
-      anim2.pause()
       first.isRolling = false
       phaserE.emit(
         'playerRolled',
@@ -517,37 +227,23 @@ export default class SceneMain extends Phaser.Scene {
 
         if (firstTime) {
           // If it's the first time rolling, we need to play the animation.
+          console.log('Playing firstDiceRoll')
           firstTime = false
           rollingDiceTween.play()
-          first.play('firstDiceRoll')
-          second.play('secondDiceRoll')
+          first.anims.play('firstDiceRoll')
+          second.anims.play('secondDiceRoll')
         } else {
           // All other times, we need to resume the animation.
+          console.log('Resuming firstDiceRoll')
           rollingDiceTween.play()
-          anim1.resume()
-          anim2.resume()
+          first.anims.resume()
+          second.anims.resume()
         }
       })
     })
 
     // Code for dice roll broadcast:
     const showRoll = (die1, die2) => {
-      console.log('showRoll ran!! I actually got a broadcast signal!!!')
-      console.log('did I even get the data???', die1, die2)
-      // Create new animations that are hard-coded to land on same frames as the braodcasting player rolled:
-      let dejavu1 = this.anims.create({
-        key: 'dejavu1',
-        repeat: -1,
-        frameRate: 18 + Math.floor(Math.random() * 3),
-        frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
-      })
-      let dejavu2 = this.anims.create({
-        key: 'dejavu2',
-        repeat: -1,
-        frameRate: 18 + Math.floor(Math.random() * 3),
-        frames: this.anims.generateFrameNames('dice', {start: 0, end: 5})
-      })
-
       let frame1
       let frame2
       for (let key in diceFrameMap) {
@@ -559,12 +255,16 @@ export default class SceneMain extends Phaser.Scene {
         }
       }
 
-      console.log('the frames to stop on', frame1, frame2)
-      first.play('dejavu1')
-      second.play('dejavu2')
+      if (firstTime) {
+        first.anims.play('firstDiceRoll')
+        second.anims.play('secondDiceRoll')
+      } else {
+        first.anims.resume()
+        second.anims.resume()
+      }
 
-      first.anims.stopOnFrame(first.anims.currentAnim.frames[frame1])
-      second.anims.stopOnFrame(second.anims.currentAnim.frames[frame2])
+      first.anims.pause(first.anims.currentAnim.frames[frame1])
+      second.anims.pause(second.anims.currentAnim.frames[frame2])
 
       movePlayer(currentPlayer, die1 + die2)
       // Then update currentPlayer
