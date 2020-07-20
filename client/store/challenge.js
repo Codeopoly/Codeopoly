@@ -110,6 +110,50 @@ export const answeredChallengeThunk = (
   }
 }
 
+export const callstackThunk = (
+  currentPlayer,
+  gameCode,
+  playerIdsArray,
+  currentMoney,
+  callstackId
+) => {
+  return async (dispatch, getState, {getFirebase}) => {
+    console.log('callstackThunk ran!!!')
+
+    try {
+      // use callstackId to get the callstack card's document from Firestore
+      const theCallstackCard = await getFirebase()
+        .firestore()
+        .collection('callstack')
+        .doc(callstackId)
+        .get()
+
+      // then update currentPlayer based on its .alterMoney
+      let data = theCallstackCard.data()
+      console.log('what IS data?', data)
+      // await getFirebase()
+      //   .firestore()
+      //   .collection('players')
+      //   .doc(currentPlayer)
+      //   .update({
+      //     seedMoney: currentMoney + data.alterMoney
+      //   })
+    } catch (error) {
+      console.log(error)
+    }
+
+    dispatch(
+      turnEndedThunk(
+        currentPlayer,
+        gameCode,
+        playerIdsArray,
+        null,
+        300 // One that doesn't exist
+      )
+    )
+  }
+}
+
 export const turnEndedThunk = (
   currentPlayer,
   gameCode,
@@ -117,10 +161,13 @@ export const turnEndedThunk = (
   prize,
   challengeId
 ) => {
-  console.log('turnEndedThunk ran!!!')
-  console.log('prize better be a category or undefined', prize)
-
   return async (dispatch, getState, {getFirebase}) => {
+    console.log('turnEndedThunk ran!!!')
+    console.log('prize better be a category, number, or null', prize)
+    console.log('currentPlayer', currentPlayer)
+    console.log('gameCode', gameCode)
+    console.log('playerIdsArray', playerIdsArray)
+    console.log('challengeId', challengeId)
     try {
       let nextPlayerIndex =
         playerIdsArray.indexOf(currentPlayer) === playerIdsArray.length - 1 // if it's the last player in the array
@@ -156,16 +203,29 @@ export const turnEndedThunk = (
         prize
       )
       // Then update Firestore's game:
-      await getFirebase()
-        .firestore()
-        .collection('games')
-        .doc(gameCode)
-        .update({
-          currentPlayer: playerIdsArray[nextPlayerIndex],
-          [`deck${prize}`]: firebase.firestore.FieldValue.arrayRemove(
-            challengeId
-          )
-        })
+      if (prize === null) {
+        // This runs if the player landed on a space that's not a challenge
+        console.log('YAY this should fix the player turn bug!!')
+        await getFirebase()
+          .firestore()
+          .collection('games')
+          .doc(gameCode)
+          .update({
+            currentPlayer: playerIdsArray[nextPlayerIndex]
+          })
+      } else {
+        await getFirebase()
+          .firestore()
+          .collection('games')
+          .doc(gameCode)
+          .update({
+            currentPlayer: playerIdsArray[nextPlayerIndex],
+            [`deck${prize}`]: firebase.firestore.FieldValue.arrayRemove(
+              challengeId
+            )
+          })
+      }
+
       dispatch(answeredChallenge())
     } catch (error) {
       console.log(error)

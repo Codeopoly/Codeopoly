@@ -10,7 +10,11 @@ import WinModal from './winModal'
 import {phaserE} from './scene'
 import {modalE} from './challenge'
 import StuckOnABug from './stuckonabug'
-import {getChallengeThunk} from '../store/challenge'
+import {
+  getChallengeThunk,
+  turnEndedThunk,
+  callstackThunk
+} from '../store/challenge'
 
 export const newGame = new EventEmitter()
 
@@ -98,40 +102,64 @@ const PlayerPanels = () => {
   // Handle receiving signal from Phaser:
   phaserE.setMaxListeners(1)
   if (counter < 1) {
-    phaserE.on('playerLanded', (tileType, category = null, cardName = null) => {
-      if (tileType === 'challenge' && areDecksAssigned) {
-        let cardId
-        switch (category) {
-          case 'Frontend':
-            cardId = deckFrontend[0]
-            break
-          case 'Backend':
-            cardId = deckBackend[0]
-            break
-          case 'UI':
-            cardId = deckUI[0]
-            break
-          case 'Algorithm':
-            cardId = deckAlgorithm[0]
-            break
-          case 'Misc':
-            cardId = deckMisc[0]
-            break
-          case 'Interview':
-            cardId = deckInterview[0]
-            break
-          default:
-            cardId = null
-            break
+    phaserE.on(
+      'playerLanded',
+      (tileType, category = null, callstackId = null) => {
+        if (tileType === 'challenge' && areDecksAssigned) {
+          let cardId
+          switch (category) {
+            case 'Frontend':
+              cardId = deckFrontend[0]
+              break
+            case 'Backend':
+              cardId = deckBackend[0]
+              break
+            case 'UI':
+              cardId = deckUI[0]
+              break
+            case 'Algorithm':
+              cardId = deckAlgorithm[0]
+              break
+            case 'Misc':
+              cardId = deckMisc[0]
+              break
+            case 'Interview':
+              cardId = deckInterview[0]
+              break
+            default:
+              cardId = null
+              break
+          }
+          // console.log('cardId', cardId)
+          dispatch(getChallengeThunk(cardId)) // Get the challenge and put it in Redux state
+          setShowChallengeModal(true) // Render the Challenge Modal, which uses the challenge Redux state
+          counter = 1
+        } else if (tileType === null && category === 'Callstack') {
+          console.log('React sees player landed on callstack')
+          dispatch(
+            callstackThunk(
+              currentPlayerId,
+              gameCode,
+              playerIdArray,
+              players[currentPlayerId].seedMoney,
+              callstackId
+            )
+          )
+        } else {
+          //coffee break //steal tech //call stack // bug spaces //new investor //lose money
+          console.log('we reached the generic spot else to dispatch turnEnded')
+          dispatch(
+            turnEndedThunk(
+              currentPlayerId,
+              gameCode,
+              playerIdArray,
+              null, // no prize for now
+              300 // nonexistant challenge Id for now
+            )
+          )
         }
-        // console.log('cardId', cardId)
-        dispatch(getChallengeThunk(cardId)) // Get the challenge and put it in Redux state
-        setShowChallengeModal(true) // Render the Challenge Modal, which uses the challenge Redux state
-        counter = 1
-      } else {
-        //coffee break //steal tech //call stack // bug spaces //new investor //lose money
       }
-    })
+    )
     phaserE.on('playerOnBug', player => {
       console.log('player on a bug', player)
       setStuckOnBugModal(true)
@@ -203,6 +231,10 @@ const PlayerPanels = () => {
       deckUI = gameDoc.deckUI
       deckMisc = gameDoc.deckMisc
       deckInterview = gameDoc.deckInterview
+      currentPlayerId = gamesCollectionObj[gameCode].currentPlayer
+      if (players) {
+        currentPlayerName = players[currentPlayerId].startupName
+      }
     },
     [gameDoc]
   )

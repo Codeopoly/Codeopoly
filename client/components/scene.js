@@ -146,7 +146,13 @@ export default class SceneMain extends Phaser.Scene {
       let array = paramArray.callbacks.onComplete.params
       // console.log('emitPlayer paramArray:', array)
       let challenge = array[3] ? 'challenge' : null
-      phaserE.emit('playerLanded', challenge, array[2]) // challenge = "challenge" or null, category name (i.e. Frontend)
+      let callstackId = 1 // default to the one card we have lol
+      if (array[2] === 'Callstack') {
+        // flip a card
+        phaserE.emit('flipCard')
+        // Theoretically set callstackId based on the shuffled deck of cards that Phaser should be keeping track of.
+      }
+      phaserE.emit('playerLanded', challenge, array[2], callstackId) // challenge = "challenge" or null, category name (i.e. Frontend)
     }
 
     // Code for the dice:
@@ -309,26 +315,41 @@ export default class SceneMain extends Phaser.Scene {
 
     // For each card, make it clickable and assign it functions/tweens to run when clicked.
     callstackCards.forEach(card => {
-      card.setInteractive()
-      card.on(
-        'pointerdown',
-        function() {
-          // if the card is not flipping:
-          console.log('I clicked the card!')
-          if (!card.isFlipping) {
-            // make it flip now!
-            card.isFlipping = true
-            console.log('card scale', card.scale)
-            console.log('card scaleX', card.scaleX)
-            console.log('card scaleY', card.scaleY)
-            myFlipTween.play()
-          }
-          if (card.canBeDismissed) {
-            card.destroy()
-          }
-        },
-        this
-      )
+      // card.setInteractive()
+      // card.on(
+      //   'pointerdown',
+      //   function() {
+      //     // if the card is not flipping:
+      //     console.log('I clicked the card!')
+      //     if (!card.isFlipping) {
+      //       // make it flip now!
+      //       card.isFlipping = true
+      //       console.log('card scale', card.scale)
+      //       console.log('card scaleX', card.scaleX)
+      //       console.log('card scaleY', card.scaleY)
+      //       myFlipTween.play()
+      //     }
+      //     if (card.canBeDismissed) {
+      //       card.destroy()
+      //     }
+      //   },
+      //   this
+      // )
+      phaserE.on('flipCard', () => {
+        console.log('I landed on callstack!')
+        if (!card.isFlipping) {
+          // make it flip now!
+          card.isFlipping = true
+          console.log('card scale', card.scale)
+          console.log('card scaleX', card.scaleX)
+          console.log('card scaleY', card.scaleY)
+          myFlipTween.play()
+        }
+        setTimeout(5000, () => {
+          console.log('DESTROY THE CARD')
+          card.destroy()
+        })
+      })
 
       const myFlipTween = this.tweens.add({
         targets: card,
@@ -367,29 +388,29 @@ export default class SceneMain extends Phaser.Scene {
         console.log('backFlipDone ran!')
         card.canBeDismissed = true
       }
-      card.on(
-        'pointerdown',
-        function() {
-          // if the card is not flipping:
-          console.log('I clicked the card!')
-          if (!card.isFlipping) {
-            // make it flip now!
-            card.isFlipping = true
-            console.log('card scale', card.scale)
-            console.log('card scaleX', card.scaleX)
-            console.log('card scaleY', card.scaleY)
-            myFlipTween.play()
-          }
-          if (card.canBeDismissed) {
-            card.destroy()
-            console.log('how many times??')
-            phaserE.emit('playerLanded', player)
-          }
-        },
-        this
-      )
+      // card.on(
+      //   'pointerdown',
+      //   function() {
+      //     // if the card is not flipping:
+      //     console.log('I clicked the card!')
+      //     if (!card.isFlipping) {
+      //       // make it flip now!
+      //       card.isFlipping = true
+      //       console.log('card scale', card.scale)
+      //       console.log('card scaleX', card.scaleX)
+      //       console.log('card scaleY', card.scaleY)
+      //       myFlipTween.play()
+      //     }
+      //     if (card.canBeDismissed) {
+      //       card.destroy()
+      //       console.log('how many times??')
+      //       phaserE.emit('playerLanded', player)
+      //     }
+      //   },
+      //   this
+      // )
     })
-    //console.log('TARGET', this.target)
+
     // End Callstack Deck code.
   }
 
