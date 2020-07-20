@@ -175,7 +175,7 @@ const Challenge = () => {
       result = 'wrong'
       console.log("this is the result that's being emitted:", result)
       modalE.emit('playerAnswered', result, prize)
-      setTimeout(modalGoAway, 5000)
+      setTimeout(modalGoAway, 2000)
     }
   }
 
