@@ -2,7 +2,6 @@
 import AlignGrid from '../../utility/alignGrid'
 import EventDispatcher from '../../utility/eventDispatcher'
 import {newGame} from './playerPanels'
-import {loseTurn} from './otherChallengeModal'
 import {EventEmitter} from 'events'
 
 export const phaserE = new EventEmitter()
@@ -372,16 +371,14 @@ export default class SceneMain extends Phaser.Scene {
         category: 'LoseMoney'
       }
     }
-    loseTurn.on('loseATurn', () => {
-      console.log('this player will lose a turn')
-    })
+
     const movePlayer = (player, diceRoll) => {
       let propertyName = `${player.name}Loc`
       let currentLoc = playerLocations[propertyName]
       let newLoc = currentLoc + diceRoll
-      //check if player was sent to the bug tile
       let newX
       let newY
+      // if player is already stuck on a bug
       if (player.bug === true) {
         playerLocations[propertyName] = 9
         return (player.bug = false)
@@ -395,10 +392,12 @@ export default class SceneMain extends Phaser.Scene {
         console.log('propertyName:', propertyName)
         console.log('current location:', currentLoc)
         console.log('New Location:', newLoc)
+        // when a player gets sent to the stuck on a bug tile
         if (newLoc === 27) {
           newX = tileInfoObject[9].x
           newY = tileInfoObject[9].y
           player.bug = true
+          phaserE.emit('playerOnBug', player)
         } else {
           newX = tileInfoObject[newLoc].x
           newY = tileInfoObject[newLoc].y
