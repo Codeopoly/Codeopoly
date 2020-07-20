@@ -90,7 +90,6 @@ const Challenge = () => {
   }
   const answerDiv = createAnswerDiv()
 
-
   // Ternary to create the entire modal; question and answers:
   modalDiv = challenge ? (
     <div className="modalBox" key={`${challenge.cardId}ModalBox`}>
@@ -112,7 +111,6 @@ const Challenge = () => {
   ) : (
     <div key="noChallengeYet" />
   )
-
 
   function handleClick(event) {
     console.log('---------------1----------------')
@@ -163,7 +161,7 @@ const Challenge = () => {
 
       result = 'right'
       modalE.emit('playerAnswered', result, prize)
-      setTimeout(modalGoAway, 5000)
+      setTimeout(modalGoAway, 2000)
     } else {
       // If you clicked the wrong answer... (1, 5)
       if (category === 'Interview') {

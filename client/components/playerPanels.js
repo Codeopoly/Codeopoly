@@ -8,10 +8,9 @@ import {EventEmitter} from 'events'
 import ChallengeModal from './challengeModal'
 import WinModal from './winModal'
 import {phaserE} from './scene'
-import WinModal from './winModal'
 import {modalE} from './challenge'
 import StuckOnABug from './stuckonabug'
-import challenge, {getChallengeThunk} from '../store/challenge'
+import {getChallengeThunk} from '../store/challenge'
 
 export const newGame = new EventEmitter()
 
@@ -131,13 +130,14 @@ const PlayerPanels = () => {
         counter = 1
       } else {
         //coffee break //steal tech //call stack // bug spaces //new investor //lose money
-        console.log('OTHER CHALLENGES', challenge)
-        //setShowOtherModal(true)
       }
     })
     phaserE.on('playerOnBug', player => {
       console.log('player on a bug', player)
       setStuckOnBugModal(true)
+      setTimeout(() => {
+        setStuckOnBugModal(false)
+      }, 3000)
     })
   }
 
@@ -172,7 +172,7 @@ const PlayerPanels = () => {
       }
     }
   })
-    
+
   // Updates the state.firestore whenever a change happens in any player document or the game document:
   useFirestoreConnect(arrayOfPlayerPathsAndGame)
   // Our redux state now has:
