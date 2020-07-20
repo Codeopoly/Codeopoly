@@ -50,6 +50,18 @@ form div {
   color: white;
 }
 
+#aboveGameBar {
+  height: 5rem;
+  display: flex;
+  padding: 1rem;
+}
+
+#placeChars {
+  padding: 0.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 button {
   margin: 10px;
   background-color: $backend;
@@ -133,7 +145,8 @@ canvas {
   border-width: 5px;
   position: absolute;
   top: 11rem;
-  left: 23%;
+  left: 25%;
+  margin: 3rem;
 }
 #insideTheGame {
   position: absolute;
@@ -310,12 +323,7 @@ canvas {
   display: none;
 }
 
-#topBar {
-  display: flex;
-  justify-content: center;
-  min-height: 4vmax;
-}
-
 #winModal {
   text-align: center;
 }
+

@@ -199,12 +199,14 @@ const PlayerPanels = () => {
   if (ready) {
     reactGamePanels = (
       <div id="gameView">
-        <div id="gameViewTitle" className="gameStarted">
-          <GameViewTitle currentPlayerName={currentPlayerName} />
+        <div id="aboveGameBar">
+          <div id="gameViewTitle" className="gameStarted">
+            <GameViewTitle currentPlayerName={currentPlayerName} />
+          </div>
+          <button id="placeChars" type="button" onClick={triggerEmit}>
+            Place players to begin game!
+          </button>
         </div>
-        <button id="placeChars" type="button" onClick={triggerEmit}>
-          Place players to begin game!
-        </button>
         <div id="panelsBox">
           <div className="leftside">
             <div id="player1" className="singlePlayerBox">
