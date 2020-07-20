@@ -23,7 +23,15 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.(gif|svg|jpg|png)$/,
+        loader: 'file-loader'
+        // options: {
+        //   esModule: false,
+        // }
       }
+
       // {
       //   test: /\.(png|svg|jpe?g|gif)$/,
       //   include: /images/,

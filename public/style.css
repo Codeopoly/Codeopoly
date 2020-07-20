@@ -320,4 +320,8 @@ canvas {
   min-height: 4vmax;
 }
 
+#winModal {
+  text-align: center;
+}
+
 /*# sourceMappingURL=style.css.map */

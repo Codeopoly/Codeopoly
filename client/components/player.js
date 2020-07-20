@@ -23,7 +23,13 @@ const Player = props => {
       for (let i = 0; i < techs.length; i++) {
         // console.log(`has${techs[i]}: player[has${techs[i]}]`)
         if (player[`has${techs[i]}`] === true) {
-          console.log('this is the tech that we HAVE:', techs[i])
+          console.log('------------LOOPING THROUGH PLAYER TECHS-----------')
+          // console.log('this is the tech that we HAVE:', techs[i])
+          console.log(
+            'this is the player.startupName and techs[i]:',
+            player.startupName,
+            techs[i]
+          )
           document
             .getElementById(`${player.startupName}${techs[i]}`)
             .classList.remove('noTech')
