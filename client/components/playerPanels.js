@@ -158,7 +158,7 @@ const PlayerPanels = () => {
         'hasAlgorithm',
         'hasMisc'
       ]
-      if (players[currentPlayerId].seedMoney > 1000) {
+      if (players[currentPlayerId].seedMoney > 3000) {
         for (let i = 0; i < decks.length; i++) {
           if (players[currentPlayerId][decks[i]] === 'none') break
           if (i === decks.length - 1) {
