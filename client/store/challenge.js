@@ -164,9 +164,9 @@ export const turnEndedThunk = (
   return async (dispatch, getState, {getFirebase}) => {
     console.log('turnEndedThunk ran!!!')
     console.log('prize better be a category, number, or null', prize)
-    console.log('currentPlayer', currentPlayer)
+    console.log('--------currentPlayer-----------', currentPlayer)
     console.log('gameCode', gameCode)
-    console.log('playerIdsArray', playerIdsArray)
+    console.log('--------playerIdsArray----------', playerIdsArray)
     console.log('challengeId', challengeId)
     try {
       let nextPlayerIndex =
@@ -203,7 +203,7 @@ export const turnEndedThunk = (
         prize
       )
       // Then update Firestore's game:
-      if (prize === null) {
+      if (prize === null && challengeId === '300') {
         // This runs if the player landed on a space that's not a challenge
         console.log('YAY this should fix the player turn bug!!')
         await getFirebase()

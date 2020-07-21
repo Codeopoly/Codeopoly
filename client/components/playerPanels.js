@@ -91,7 +91,7 @@ const PlayerPanels = () => {
     gameCode !== undefined &&
     players !== undefined
   ) {
-    currentPlayerId = gamesCollectionObj[gameCode].currentPlayer
+    currentPlayerId = gameDoc.currentPlayer
     currentPlayerName = players[currentPlayerId].startupName
   }
 
@@ -128,15 +128,17 @@ const PlayerPanels = () => {
         dispatch(getChallengeThunk(cardId)) // Get the challenge and put it in Redux state
         setShowChallengeModal(true) // Render the Challenge Modal, which uses the challenge Redux state
         counter = 1
-      } else {
+      } else if (category !== 'bug') {
         //coffee break //steal tech //call stack // bug spaces //new investor //lose money
+        // currentPlayerId = gameDoc.currentPlayer
+        // For some reason, currentPlayerId is always host...?
         dispatch(
           turnEndedThunk(
             currentPlayerId,
             gameCode,
             playerIdArray,
             null, // no prize for now
-            300 // nonexistant challenge Id for now
+            '300' // nonexistant challenge Id for now
           )
         )
       }
@@ -212,7 +214,7 @@ const PlayerPanels = () => {
       deckUI = gameDoc.deckUI
       deckMisc = gameDoc.deckMisc
       deckInterview = gameDoc.deckInterview
-      currentPlayerId = gamesCollectionObj[gameCode].currentPlayer
+      currentPlayerId = gameDoc.currentPlayer
       if (players) {
         currentPlayerName = players[currentPlayerId].startupName
       }

@@ -51,7 +51,7 @@ const Player = props => {
           {player.startupName}
         </div>
         <div id="scoreMoney" className="scoreBar">
-          {player.seedMoney}
+          ${player.seedMoney}
         </div>
       </div>
       <div id="scoreTech">

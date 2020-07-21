@@ -3,7 +3,7 @@ import React from 'react'
 const Instructions = props => {
   if (props.show) {
     return (
-      <div className="welcome">
+      <div className="welcome modalBox">
         <div id="title">
           <h1>[Code]opoly Instructions</h1>
         </div>

@@ -131,7 +131,8 @@ input {
 #panelsBox {
   display: flex;
   justify-content: space-between;
-  width: 95vw;
+  // width: 95vw;
+  width: 90rem;
 }
 .leftside {
   display: flex;
@@ -143,15 +144,39 @@ canvas {
   border-style: solid;
   border-color: black;
   border-width: 5px;
+  width: 800px;
+  // position: absolute;
+  // top: 11rem;
+  // left: 25%;
+  // margin: 3rem;
+}
+// canvas {
+//   padding-left: 0;
+//   padding-right: 0;
+//   margin-left: auto;
+//   margin-right: auto;
+//   // display: block;
+//   position: absolute;
+//   width: 800px;
+//   top: 11rem;
+//   left: 25%
+// }
+div#theGame {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
   position: absolute;
-  top: 11rem;
-  left: 25%;
-  margin: 3rem;
+  width: auto;
+  top: 11.7rem;
+  height: 100vh;
+  left: 29.1%;
 }
 #insideTheGame {
   position: absolute;
-  top: 100px;
-  left: 100px;
+  // top: 100px;
+  // left: 100px;
 }
 .rightside {
   display: flex;
@@ -276,7 +301,7 @@ canvas {
   align-content: center;
   width: 30rem;
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 33%;
   z-index: 1;
   padding: 2rem;
@@ -327,3 +352,7 @@ canvas {
   text-align: center;
 }
 
+.responsive-img-win-modal {
+  height: 14rem;
+  margin: 10px;
+}
