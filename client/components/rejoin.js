@@ -5,7 +5,7 @@ import {useFirestoreConnect} from 'react-redux-firebase'
 import {getGameThunk} from '../store/preGame'
 
 const Rejoin = () => {
-  const [gameCode, setGameCode] = useState('nqEQoKwKKzlk3qKYG0KF')
+  const [gameCode, setGameCode] = useState('2TTOdSkPHiApJqey8FjX')
   const [redirectNow, setRedirectNow] = useState(false)
   const [clicked, setClicked] = useState(false)
   const dispatch = useDispatch()

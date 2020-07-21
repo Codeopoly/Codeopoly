@@ -1,5 +1,4 @@
-.responsive-img-lobby,
-.responsive-img {
+.responsive-img-lobby, .responsive-img {
   height: 5rem;
   margin: 10px;
 }
@@ -146,7 +145,7 @@ div#theGame {
   width: auto;
   top: 11.7rem;
   height: 100vh;
-  left: 29.1%;
+  left: 29.4%;
 }
 
 #insideTheGame {
@@ -171,7 +170,7 @@ div#theGame {
   width: 200px;
   flex-basis: 250px;
   max-width: 200px;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 }
 
 .singlePlayer {
@@ -205,6 +204,7 @@ div#theGame {
   flex-grow: 2;
   justify-content: center;
   margin-bottom: 0.75rem;
+  height: 120px;
 }
 
 #scoreBarsBox {
@@ -283,8 +283,8 @@ div#theGame {
   align-content: center;
   width: 30rem;
   position: absolute;
-  top: 30%;
-  left: 33%;
+  top: 22%;
+  left: 35%;
   z-index: 1;
   padding: 2rem;
   background-color: #a39bb0;
