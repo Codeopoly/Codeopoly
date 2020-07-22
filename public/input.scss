@@ -6,6 +6,8 @@ $frontend: #e9c46a;
 $background: #fef2eb;
 $text: #0c0909;
 
+$test: calc(50% - 400px);
+
 %character-img {
   height: 5rem;
   margin: 10px;
@@ -171,7 +173,8 @@ div#theGame {
   width: auto;
   top: 11.7rem;
   height: 100vh;
-  left: 29.4%;
+  // left: 29.4%; // This is the 'hardcoded version'
+  left: $test;
 }
 #insideTheGame {
   position: absolute;

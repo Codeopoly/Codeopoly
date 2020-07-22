@@ -1,4 +1,5 @@
-.responsive-img-lobby, .responsive-img {
+.responsive-img-lobby,
+.responsive-img {
   height: 5rem;
   margin: 10px;
 }
@@ -145,7 +146,7 @@ div#theGame {
   width: auto;
   top: 11.7rem;
   height: 100vh;
-  left: 29.4%;
+  left: calc(50% - 400px);
 }
 
 #insideTheGame {
