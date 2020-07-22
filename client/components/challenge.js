@@ -185,13 +185,13 @@ const Challenge = () => {
         <div>
           <h2>Sorry, wrong answer...</h2>
           {prize === undefined ? ( //(1)
-            <div key={`${challenge.cardId}NoPrize`}>
+            <div>
               <h4>No prizes for you :(</h4>
               <h5>Better luck next time!</h5>
             </div>
           ) : (
             //(5)
-            <div key={`${challenge.cardId}Prize`}>
+            <div>
               {console.log('what  is prize...', prize)}
               <h4>You lose ${Math.abs(prize)}!</h4>
               <h5>Interviews aren't cheap for the company, you know...</h5>
@@ -215,29 +215,25 @@ const Challenge = () => {
     let currentPlayerName = playersObject[currentPlayer].startupName
     let divToRender =
       theirResult === 'right' ? (
-        <div key={`${challenge.cardId}Right`}>
+        <div>
           <h2>Good job, {currentPlayerName}!</h2>
           {typeof theirPrize === 'string' ? (
-            <h4 key={`${challenge.cardId}BroadcastTech`}>
-              They win some tech!
-            </h4> //(2)
+            <h4>They win some tech!</h4> //(2)
           ) : (
-            <h4 key={`${challenge.cardId}BroadcastMoney`}>
-              They win ${theirPrize}!
-            </h4> //(3, 4)
+            <h4>They win ${theirPrize}!</h4> //(3, 4)
           )}
         </div>
       ) : (
-        <div key={`${challenge.cardId}Wrong`}>
+        <div>
           <h2>Sorry, wrong answer...</h2>
           {theirPrize === null ? ( //(1)
-            <div key={`${challenge.cardId}BroadcastNoPrize`}>
+            <div>
               <h4>No prizes for {currentPlayerName} :(</h4>
               <h5>Better luck next time!</h5>
             </div>
           ) : (
             //(5)
-            <div key={`${challenge.cardId}BroadcastPenalty`}>
+            <div>
               <h4>
                 {currentPlayerName} lost ${Math.abs(theirPrize)}!
               </h4>

@@ -6,6 +6,8 @@ $frontend: #e9c46a;
 $background: #fef2eb;
 $text: #0c0909;
 
+$test: calc(50% - 400px);
+
 %character-img {
   height: 5rem;
   margin: 10px;
@@ -131,7 +133,8 @@ input {
 #panelsBox {
   display: flex;
   justify-content: space-between;
-  width: 95vw;
+  // width: 95vw;
+  width: 90rem;
 }
 .leftside {
   display: flex;
@@ -143,15 +146,40 @@ canvas {
   border-style: solid;
   border-color: black;
   border-width: 5px;
+  width: 800px;
+  // position: absolute;
+  // top: 11rem;
+  // left: 25%;
+  // margin: 3rem;
+}
+// canvas {
+//   padding-left: 0;
+//   padding-right: 0;
+//   margin-left: auto;
+//   margin-right: auto;
+//   // display: block;
+//   position: absolute;
+//   width: 800px;
+//   top: 11rem;
+//   left: 25%
+// }
+div#theGame {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
   position: absolute;
-  top: 11rem;
-  left: 25%;
-  margin: 3rem;
+  width: auto;
+  top: 11.7rem;
+  height: 100vh;
+  // left: 29.4%; // This is the 'hardcoded version'
+  left: $test;
 }
 #insideTheGame {
   position: absolute;
-  top: 100px;
-  left: 100px;
+  // top: 100px;
+  // left: 100px;
 }
 .rightside {
   display: flex;
@@ -170,7 +198,7 @@ canvas {
   width: 200px;
   flex-basis: 250px;
   max-width: 200px;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 }
 .singlePlayer {
   display: flex;
@@ -201,6 +229,7 @@ canvas {
   flex-grow: 2;
   justify-content: center;
   margin-bottom: 0.75rem;
+  height: 120px;
 }
 #scoreBarsBox {
   display: flex;
@@ -276,8 +305,8 @@ canvas {
   align-content: center;
   width: 30rem;
   position: absolute;
-  top: 40%;
-  left: 33%;
+  top: 22%;
+  left: 35%;
   z-index: 1;
   padding: 2rem;
   background-color: #a39bb0;
@@ -327,3 +356,7 @@ canvas {
   text-align: center;
 }
 
+.responsive-img-win-modal {
+  height: 14rem;
+  margin: 10px;
+}

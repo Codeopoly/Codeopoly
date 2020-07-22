@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -7,20 +7,40 @@ import {playerThunk, getAllPlayers} from '../store/testfire'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import Instructions from './instructions'
 
-const Navbar = () => (
-  <div>
-    <nav>
-      <Link to="/">
-        <button type="button">Play</button>
-      </Link>
-      <Link to="/instructions">
-        <button type="button">Instructions</button>
-      </Link>
-    </nav>
-    <hr />
-  </div>
-)
+const Navbar = () => {
+  const [showIntructions, setShowInstructions] = useState(false)
+  const showModal = () => {
+    setShowInstructions(true)
+  }
+  const hideModal = () => {
+    setShowInstructions(false)
+  }
+
+  return (
+    <div>
+      <nav>
+        <Link to="/">
+          <button type="button">Home</button>
+        </Link>
+        {showIntructions ? (
+          <button type="button" onClick={hideModal}>
+            Hide Instructions
+          </button>
+        ) : (
+          <button type="button" onClick={showModal}>
+            Instructions
+          </button>
+        )}
+      </nav>
+      <hr />
+      <div>
+        <Instructions show={showIntructions} />
+      </div>
+    </div>
+  )
+}
 
 /**
  * CONTAINER
