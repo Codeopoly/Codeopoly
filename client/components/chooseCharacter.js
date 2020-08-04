@@ -84,21 +84,21 @@ const chooseCharacter = props => {
             id="doge"
             alt="Doge"
             onClick={handleImg}
-            src="https://www.pngmart.com/files/11/Doge-Meme-PNG-Photos.png"
+            src="assets/doge.png"
           />
           <img
             className="responsive-img"
             id="cody"
             alt="Cody"
             onClick={handleImg}
-            src="https://img2.pngio.com/pug-head-transparent-png-clipart-free-download-ywd-pug-head-png-1260_900.png"
+            src="assets/cody.png"
           />
           <img
             className="responsive-img"
             id="cat"
             alt="Cat"
             onClick={handleImg}
-            src="https://ya-webdesign.com/images250_/cat-face-png-2.png"
+            src="assets/cat.png"
           />
         </div>
         <div id="secondRow">
@@ -107,21 +107,21 @@ const chooseCharacter = props => {
             id="successKid"
             alt="Success Kid"
             onClick={handleImg}
-            src="https://i.ya-webdesign.com/images/baby-success-meme-png-2.png"
+            src="assets/kid.png"
           />
           <img
             className="responsive-img"
             id="kermit"
             alt="Kermit"
             onClick={handleImg}
-            src="https://i.ya-webdesign.com/images/kermit-the-frog-png-8.png"
+            src="assets/kermit.png"
           />
           <img
             className="responsive-img"
             id="marshall"
             alt="Marshall"
             onClick={handleImg}
-            src="https://vignette.wikia.nocookie.net/animalcrossing/images/8/80/Marshal_HHD.png/revision/latest?cb=20161013032212"
+            src="assets/marshall.png"
           />
         </div>
       </div>
