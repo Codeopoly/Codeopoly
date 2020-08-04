@@ -59,14 +59,6 @@ const PlayerPanels = () => {
 
   // Function used when player clicks "Place Players" to start game:
   const triggerEmit = () => {
-    let characters = {
-      'http://localhost:3000/assets/doge.png': 'doge',
-      'http://localhost:3000/assets/cody.png': 'cody',
-      'http://localhost:3000/assets/cat.png': 'cat',
-      'http://localhost:3000/assets/kid.png': 'kid',
-      'http://localhost:3000/assets/kermit.png': 'kermit',
-      'http://localhost:3000/assets/marshall.png': 'marshall'
-    }
     let playerDocs = Object.values(players)
     const imageNameArray = playerDocs.map(player => {
       return player.image
@@ -74,7 +66,6 @@ const PlayerPanels = () => {
     const hostStatusArray = playerDocs.map(player => {
       return player.isHost
     })
-
     newGame.emit('start', imageNameArray, hostStatusArray) // Phaser catches this signal and renders the characters in use
     document.getElementById('placeChars').classList.add('gameStarted') // Edit CSS to remove the button and add the turn text.
     const title = document.getElementById('gameViewTitle')
