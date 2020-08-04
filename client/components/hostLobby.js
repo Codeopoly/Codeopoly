@@ -55,7 +55,10 @@ const HostLobby = () => {
             return player.isHost === false ? (
               <div key={`player${index}`}>
                 <div>
-                  <img className="responsive-img-lobby" src={player.avatar} />
+                  <img
+                    className="responsive-img-lobby"
+                    src={`../assets/${player.avatar}.png`}
+                  />
                 </div>
                 <div className="playerName">{player.name}</div>
               </div>

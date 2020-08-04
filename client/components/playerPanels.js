@@ -69,7 +69,7 @@ const PlayerPanels = () => {
     }
     let playerDocs = Object.values(players)
     const imageNameArray = playerDocs.map(player => {
-      return characters[player.image]
+      return player.image
     })
     const hostStatusArray = playerDocs.map(player => {
       return player.isHost

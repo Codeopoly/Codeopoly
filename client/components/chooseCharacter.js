@@ -37,7 +37,10 @@ const chooseCharacter = props => {
   const handleImg = event => {
     // event.target.src is a giant link... maybe we just want to handle the alt text
     // console.log('event.target.alt:', event.target.alt)
-    setImg(event.target.src)
+    //setImg as only part of event.target.src
+    let slashIdx = event.target.src.lastIndexOf('/')
+    let imageName = event.target.src.slice(slashIdx + 1, -4)
+    setImg(imageName)
     const chars = document.getElementsByClassName('responsive-img')
     for (let i = 0; i < chars.length; i++) {
       if (chars[i].id !== event.target.id) {

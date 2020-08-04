@@ -44,7 +44,7 @@ const Player = props => {
   return (
     <div className="singlePlayer">
       <div id="scoreIcon">
-        <img src={player.image} />
+        <img src={`assets/${player.image}.png`} />
       </div>
       <div id="scoreBarsBox">
         <div id="scoreName" className="scoreBar">

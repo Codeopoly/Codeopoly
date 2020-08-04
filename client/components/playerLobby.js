@@ -51,7 +51,10 @@ const PlayerLobby = () => {
           {localHost !== undefined && localHost !== null ? (
             <div key="host" className="playerInLobby">
               <div>
-                <img className="responsive-img-lobby" src={localHost.avatar} />
+                <img
+                  className="responsive-img-lobby"
+                  src={`../assets/${localHost.avatar}.png`}
+                />
               </div>
               <div className="playerName">{localHost.name}</div>
             </div>
@@ -65,7 +68,10 @@ const PlayerLobby = () => {
             return player.isHost === false ? (
               <div key={`player${index}`} className="playerInLobby">
                 <div>
-                  <img className="responsive-img-lobby" src={player.avatar} />
+                  <img
+                    className="responsive-img-lobby"
+                    src={`../assets/${player.avatar}.png`}
+                  />
                 </div>
                 <div className="playerName">{player.name}</div>
               </div>
