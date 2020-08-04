@@ -60,14 +60,12 @@ const PlayerPanels = () => {
   // Function used when player clicks "Place Players" to start game:
   const triggerEmit = () => {
     let characters = {
-      'https://www.pngmart.com/files/11/Doge-Meme-PNG-Photos.png': 'doge',
-      'https://img2.pngio.com/pug-head-transparent-png-clipart-free-download-ywd-pug-head-png-1260_900.png':
-        'cody',
-      'https://ya-webdesign.com/images250_/cat-face-png-2.png': 'cat',
-      'https://i.ya-webdesign.com/images/baby-success-meme-png-2.png': 'kid',
-      'https://i.ya-webdesign.com/images/kermit-the-frog-png-8.png': 'kermit',
-      'https://vignette.wikia.nocookie.net/animalcrossing/images/8/80/Marshal_HHD.png/revision/latest?cb=20161013032212':
-        'marshall'
+      'http://localhost:3000/assets/doge.png': 'doge',
+      'http://localhost:3000/assets/cody.png': 'cody',
+      'http://localhost:3000/assets/cat.png': 'cat',
+      'http://localhost:3000/assets/kid.png': 'kid',
+      'http://localhost:3000/assets/kermit.png': 'kermit',
+      'http://localhost:3000/assets/marshall.png': 'marshall'
     }
     let playerDocs = Object.values(players)
     const imageNameArray = playerDocs.map(player => {
