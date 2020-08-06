@@ -265,3 +265,189 @@
 // }
 
 // export default CurrentGame
+
+///////////////////////////////////////////////////////////
+//
+//  CARD FLIP ANIMATION on CLICK
+//
+///////////////////////////////////////////////////////////
+// callstackCards.forEach(card => {
+//   // card.setInteractive()
+//   // card.on(
+//   //   'pointerdown',
+//   //   function() {
+//   //     // if the card is not flipping:
+//   //     console.log('I clicked the card!')
+//   //     if (!card.isFlipping) {
+//   //       // make it flip now!
+//   //       card.isFlipping = true
+//   //       console.log('card scale', card.scale)
+//   //       console.log('card scaleX', card.scaleX)
+//   //       console.log('card scaleY', card.scaleY)
+//   //       myFlipTween.play()
+//   //     }
+//   //     if (card.canBeDismissed) {
+//   //       card.destroy()
+//   //     }
+//   //   },
+//   //   this
+//   // )
+//   phaserE.on('flipCard', () => {
+//     console.log('I landed on callstack!')
+//     if (!card.isFlipping) {
+//       // make it flip now!
+//       card.isFlipping = true
+//       console.log('card scale', card.scale)
+//       console.log('card scaleX', card.scaleX)
+//       console.log('card scaleY', card.scaleY)
+//       myFlipTween.play()
+//     }
+//     setTimeout(5000, () => {
+//       console.log('DESTROY THE CARD')
+//       card.destroy()
+//     })
+//   })
+
+//   const myFlipTween = this.tweens.add({
+//     targets: card,
+//     scaleX: 0,
+//     scaleY: gameOptions.flipZoom,
+//     duration: gameOptions.flipSpeed / 2,
+//     paused: true,
+//     onComplete: switchSprite,
+//     onCompleteParams: [card]
+//   })
+
+//   function switchSprite(tween, targets, gameObject) {
+//     targets[0].setFrame(1 - targets[0].frame.name)
+//     backFlipTween.play()
+//   }
+
+//   const backFlipTween = this.tweens.add({
+//     targets: card,
+//     scaleX: 1,
+//     scaleY: 1,
+//     rotation: 0,
+//     duration: gameOptions.flipSpeed / 2,
+//     paused: true,
+//     onComplete: backFlipDone
+//   })
+
+//   function switchSprite(tween, targets, gameObject) {
+//     console.log('switchSprite ran!')
+//     console.log('arguments:', arguments)
+//     console.log('targets[0].frame', targets[0].frame)
+//     targets[0].setFrame(1 - targets[0].frame.name)
+//     backFlipTween.play()
+//   }
+
+//   function backFlipDone() {
+//     console.log('backFlipDone ran!')
+//     card.canBeDismissed = true
+//   }
+//   // card.on(
+//   //   'pointerdown',
+//   //   function() {
+//   //     // if the card is not flipping:
+//   //     console.log('I clicked the card!')
+//   //     if (!card.isFlipping) {
+//   //       // make it flip now!
+//   //       card.isFlipping = true
+//   //       console.log('card scale', card.scale)
+//   //       console.log('card scaleX', card.scaleX)
+//   //       console.log('card scaleY', card.scaleY)
+//   //       myFlipTween.play()
+//   //     }
+//   //     if (card.canBeDismissed) {
+//   //       card.destroy()
+//   //       console.log('how many times??')
+//   //       phaserE.emit('playerLanded', player)
+//   //     }
+//   //   },
+//   //   this
+//   // )
+// })
+
+///////////////////////////////////////////////////////////
+//
+//  TESTING COMPONENT THAT CAME WITH BOILERMAKER
+//
+///////////////////////////////////////////////////////////
+//     /* global describe beforeEach it */
+
+// import {expect} from 'chai'
+// import React from 'react'
+// import enzyme, {shallow} from 'enzyme'
+// import Adapter from 'enzyme-adapter-react-16'
+// import {UserHome} from './user-home'
+
+// const adapter = new Adapter()
+// enzyme.configure({adapter})
+
+// describe('UserHome', () => {
+//   let userHome
+
+//   beforeEach(() => {
+//     userHome = shallow(<UserHome email="cody@email.com" />)
+//   })
+
+//   it('renders the email in an h3', () => {
+//     expect(userHome.find('h3').text()).to.be.equal('Welcome, cody@email.com')
+//   })
+// })
+
+///////////////////////////////////////////////////////////
+//
+//  TESTING STORE FILE THAT CAME WITH BOILERMAKER
+//
+///////////////////////////////////////////////////////////
+// /* global describe beforeEach afterEach it */
+
+// import {expect} from 'chai'
+// import {me, logout} from './user'
+// import axios from 'axios'
+// import MockAdapter from 'axios-mock-adapter'
+// import configureMockStore from 'redux-mock-store'
+// import thunkMiddleware from 'redux-thunk'
+// import history from '../history'
+
+// const middlewares = [thunkMiddleware]
+// const mockStore = configureMockStore(middlewares)
+
+// describe('thunk creators', () => {
+//   let store
+//   let mockAxios
+
+//   const initialState = {user: {}}
+
+//   beforeEach(() => {
+//     mockAxios = new MockAdapter(axios)
+//     store = mockStore(initialState)
+//   })
+
+//   afterEach(() => {
+//     mockAxios.restore()
+//     store.clearActions()
+//   })
+
+//   describe('me', () => {
+//     it('eventually dispatches the GET USER action', async () => {
+//       const fakeUser = {email: 'Cody'}
+//       mockAxios.onGet('/auth/me').replyOnce(200, fakeUser)
+//       await store.dispatch(me())
+//       const actions = store.getActions()
+//       expect(actions[0].type).to.be.equal('GET_USER')
+//       expect(actions[0].user).to.be.deep.equal(fakeUser)
+//     })
+//   })
+
+//   describe('logout', () => {
+//     it('logout: eventually dispatches the REMOVE_USER action', async () => {
+//       mockAxios.onPost('/auth/logout').replyOnce(204)
+//       await store.dispatch(logout())
+//       const actions = store.getActions()
+//       expect(actions[0].type).to.be.equal('REMOVE_USER')
+//       expect(history.location.pathname).to.be.equal('/login')
+//     })
+//   })
+// })
