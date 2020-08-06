@@ -10,7 +10,6 @@ const PlayerLobby = () => {
   const [localHost, setLocalHost] = useState(null)
   const [redirectNow, setRedirectNow] = useState(false)
   const dispatch = useDispatch() // Hook into dispatch; go ahead and dispatch actions
-  // let host = playersArray.filter(player => player.isHost === true)
 
   useFirestoreConnect([{collection: 'games', doc: gameCode}])
   const gameFromFirestore = useSelector(({firestore: {data}}) => data)
@@ -79,18 +78,6 @@ const PlayerLobby = () => {
               <div key={`player${index}`} />
             )
           })}
-          {/* {players.map((player, index) => {
-            return player.isHost === false ? (
-              <div key={`player${index}`} className="playerInLobby">
-                <div>
-                  <img className="responsive-img" src={player.avatar} />
-                </div>
-                <div>{player.name}</div>
-              </div>
-            ) : (
-              <div key={`player${index}`} />
-            )
-          })} */}
         </div>
         <h5>Waiting for host to start game...</h5>
       </div>

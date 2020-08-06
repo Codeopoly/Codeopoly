@@ -113,7 +113,7 @@ const PlayerPanels = () => {
             cardId = null
             break
         }
-        // console.log('cardId', cardId)
+
         dispatch(getChallengeThunk(cardId)) // Get the challenge and put it in Redux state
         setShowChallengeModal(true) // Render the Challenge Modal, which uses the challenge Redux state
         counter = 1

@@ -7,7 +7,6 @@ import {getGameThunk} from '../store/preGame'
 const Rejoin = () => {
   const [gameCode, setGameCode] = useState('2TTOdSkPHiApJqey8FjX')
   const [redirectNow, setRedirectNow] = useState(false)
-  const [clicked, setClicked] = useState(false)
   const dispatch = useDispatch()
 
   function handleChange(event) {
@@ -16,18 +15,7 @@ const Rejoin = () => {
   async function handleClick() {
     await dispatch(getGameThunk(gameCode))
     setRedirectNow(true)
-    // setClicked(true)
   }
-
-  // if (clicked) {
-  //   // useFirestoreConnect([{collection: 'games', doc: gameCode}])
-  //   setRedirectNow(true)
-  // }
-
-  // useEffect () {
-  //   if ()
-  //   setRedirectNow(true)
-  // }
 
   if (redirectNow) {
     return <Redirect to="/loading" />

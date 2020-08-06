@@ -2,10 +2,9 @@ import {ReactReduxFirebaseProvider} from 'react-redux-firebase'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import {Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 import {createFirestoreInstance} from 'redux-firestore'
 import firebase from '../config/fbConfig'
-import history from './history'
 import store from './store'
 import App from './app'
 
@@ -26,9 +25,9 @@ const rrfProps = {
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <Router history={history}>
+      <BrowserRouter>
         <App />
-      </Router>
+      </BrowserRouter>
     </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById('app')

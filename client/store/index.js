@@ -10,13 +10,11 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 // Imported Reducers:
-import user from './user'
 import preGame from './preGame'
 import players from './players'
 import challenge from './challenge'
 
 const reducer = combineReducers({
-  user,
   preGame,
   players,
   challenge,
@@ -32,4 +30,3 @@ const middleware = composeWithDevTools(
 const store = createStore(reducer, middleware)
 
 export default store
-export * from './user'
